@@ -1,4 +1,4 @@
-package com.michelfilho.cookly.model.recipe;
+package com.michelfilho.cookly.post.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -21,8 +21,12 @@ public class StepToPrepare {
     private Integer stepOrder;
     private String description;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "recipe_id", referencedColumnName = "id", nullable = false)
     private Recipe recipe;
 
+    public StepToPrepare(Integer stepOrder, String description) {
+        this.stepOrder = stepOrder;
+        this.description = description;
+    }
 }

@@ -1,14 +1,17 @@
 package com.michelfilho.cookly.post.model;
 
 import com.michelfilho.cookly.person.model.Person;
-import com.michelfilho.cookly.model.recipe.Recipe;
 import jakarta.persistence.*;
+import lombok.*;
 
 import java.time.Instant;
 import java.util.List;
 
 @Table(name = "post")
 @Entity
+@NoArgsConstructor
+@Getter
+@Setter
 public class Post {
 
     @Id
@@ -32,4 +35,8 @@ public class Post {
 
     private Instant createdAt = Instant.now();
 
+    public Post(Recipe recipe, Person person) {
+        this.recipe = recipe;
+        this.person = person;
+    }
 }

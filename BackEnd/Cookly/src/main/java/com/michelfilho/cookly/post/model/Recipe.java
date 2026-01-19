@@ -1,4 +1,4 @@
-package com.michelfilho.cookly.model.recipe;
+package com.michelfilho.cookly.post.model;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -29,4 +29,14 @@ public class Recipe {
     @OrderBy("stepOrder ASC")
     private List<StepToPrepare> stepByStep;
 
+    public Recipe(List<StepToPrepare> stepByStep, Integer prepareTime, String name) {
+        this.stepByStep = stepByStep;
+        this.prepareTime = prepareTime;
+        this.name = name;
+    }
+
+    public void addStep(StepToPrepare step) {
+        step.setRecipe(this);
+        this.stepByStep.add(step);
+    }
 }

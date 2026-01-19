@@ -2,6 +2,7 @@ package com.michelfilho.cookly.person.model;
 
 import com.michelfilho.cookly.authentication.model.User;
 import jakarta.persistence.*;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
@@ -33,4 +34,6 @@ public class Person {
         this.birthDay = birthDay;
         this.user = user;
     }
+
+    public Person() {}
 }
