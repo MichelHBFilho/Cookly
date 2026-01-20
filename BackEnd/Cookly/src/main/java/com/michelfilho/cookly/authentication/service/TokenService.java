@@ -27,14 +27,6 @@ public class TokenService {
     @Value("${api.security.token.secret}")
     private String secret;
 
-    private Clock clock = Clock.systemDefaultZone();
-
-
-    //Just for tests
-    protected void setClock(Clock clock) {
-        this.clock = clock;
-    }
-
     protected void setSecret(String secret) {
         this.secret = secret;
     }
@@ -68,7 +60,7 @@ public class TokenService {
     }
 
     private Instant generateExpirationDate() {
-        return Instant.now(clock)
+        return Instant.now()
                 .plus(2, ChronoUnit.HOURS);
     }
 }
