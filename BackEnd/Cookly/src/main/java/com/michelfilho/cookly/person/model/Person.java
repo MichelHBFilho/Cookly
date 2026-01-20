@@ -3,11 +3,13 @@ package com.michelfilho.cookly.person.model;
 import com.michelfilho.cookly.authentication.model.User;
 import jakarta.persistence.*;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDate;
 
 @Table(name = "person")
 @Entity
+@Setter
 public class Person {
 
     @Id

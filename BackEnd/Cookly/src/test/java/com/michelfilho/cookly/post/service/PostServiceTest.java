@@ -1,10 +1,12 @@
 package com.michelfilho.cookly.post.service;
 
 import com.michelfilho.cookly.CooklyApplication;
+import com.michelfilho.cookly.authentication.model.User;
 import com.michelfilho.cookly.person.model.Person;
 import com.michelfilho.cookly.person.repository.PersonRepository;
 import com.michelfilho.cookly.post.dto.NewPostDTO;
 import com.michelfilho.cookly.post.model.Post;
+import com.michelfilho.cookly.post.model.Recipe;
 import com.michelfilho.cookly.post.model.StepToPrepare;
 import com.michelfilho.cookly.post.repository.PostRepository;
 import org.junit.jupiter.api.Test;
@@ -20,6 +22,8 @@ import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -39,43 +43,47 @@ class PostServiceTest {
     private PostService postService;
 
     @Test
-    void publishAPost() {
+    public void shouldPublishValidPost() {
+        // Create the post
         NewPostDTO dto = new NewPostDTO(
-                "Bolo de laranja",
+                "RecipeName",
+                "This is my recipe",
                 15,
-                List.of("Ligar o forno", "Colocar o bolo", "Retirar do forno")
+                List.of("Cook", "Uncook")
         );
+        Person person = new Person();
+        User user = new User("TestUser", "password");
+        when(personRepository.findByUserUsername("TestUser"))
+                .thenReturn(person);
+        postService.publishAPost(dto, user);
 
-        Person person = mock(Person.class);
+        // Get the saved post
+        ArgumentCaptor<Post> postArgumentCaptor = ArgumentCaptor.forClass(Post.class);
 
-        when(userDetails.getUsername()).thenReturn("michel");
-        when(personRepository.findByUserUsername("michel")).thenReturn(person);
+        verify(postRepository).save(postArgumentCaptor.capture());
 
-        ArgumentCaptor<Post> postCaptor = ArgumentCaptor.forClass(Post.class);
+        Post savedPost = postArgumentCaptor.getValue();
 
-        postService.publishAPost(dto, userDetails);
+        // Assert
+        assertAll(
+                () -> assertEquals(person, savedPost.getPerson()),
+                () -> assertEquals("This is my recipe", savedPost.getDescription()),
 
-        verify(personRepository).findByUserUsername("michel");
-        verify(postRepository).save(postCaptor.capture());
+                () -> {
+                    Recipe recipe = savedPost.getRecipe();
 
-        Post savedPost = postCaptor.getValue();
+                    assertAll(
+                            () -> assertEquals("RecipeName", recipe.getName()),
+                            () -> assertEquals(15, recipe.getPrepareTime()),
+                            () -> assertEquals(2, recipe.getStepByStep().size()),
 
-        assertThat(savedPost.getPerson()).isEqualTo(person);
+                            () -> assertEquals(1, recipe.getStepByStep().get(0).getStepOrder()),
+                            () -> assertEquals("Cook", recipe.getStepByStep().get(0).getDescription()),
 
-        assertThat(savedPost.getRecipe().getPrepareTime()).isEqualTo(15);
-        assertThat(savedPost.getRecipe().getName()).isEqualTo("Bolo de laranja");
-
-        List<StepToPrepare> steps = savedPost.getRecipe().getStepByStep();
-        assertThat(steps).hasSize(3);
-
-        assertThat(steps.get(0).getStepOrder()).isEqualTo(1);
-        assertThat(steps.get(0).getDescription()).isEqualTo("Ligar o forno");
-
-        assertThat(steps.get(1).getStepOrder()).isEqualTo(2);
-        assertThat(steps.get(1).getDescription()).isEqualTo("Colocar o bolo");
-
-        assertThat(steps.get(2).getStepOrder()).isEqualTo(3);
-        assertThat(steps.get(2).getDescription()).isEqualTo("Retirar do forno");
-
+                            () -> assertEquals(2, recipe.getStepByStep().get(1).getStepOrder()),
+                            () -> assertEquals("Uncook", recipe.getStepByStep().get(1).getDescription())
+                    );
+                }
+        );
     }
 }

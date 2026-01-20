@@ -41,7 +41,8 @@ public class PostService {
 
         Post newPost = new Post(
                 newRecipe,
-                person
+                person,
+                data.description()
         );
 
         postRepository.save(newPost);

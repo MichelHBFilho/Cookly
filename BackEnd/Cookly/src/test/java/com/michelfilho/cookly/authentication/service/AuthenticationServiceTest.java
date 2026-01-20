@@ -44,7 +44,7 @@ class AuthenticationServiceTest {
     }
 
     @Test
-    void loginWithRealUser() {
+    void shouldLoginWithRealUser() {
         User user = new User(
                 "Michel",
                 new BCryptPasswordEncoder().encode("password")
@@ -60,7 +60,7 @@ class AuthenticationServiceTest {
     }
 
     @Test
-    void loginWithRealUserWrongPassword() {
+    void shouldNotLoginWithRealUserWrongPassword() {
         User user = new User(
                 "Michel",
                 new BCryptPasswordEncoder().encode("password")
@@ -76,7 +76,7 @@ class AuthenticationServiceTest {
     }
 
     @Test
-    void loginWithFalseUser() {
+    void shouldNotLoginWithFalseUser() {
         User user = new User(
                 "Michel",
                 new BCryptPasswordEncoder().encode("password")
@@ -92,7 +92,7 @@ class AuthenticationServiceTest {
     }
 
     @Test
-    void registerValidUser() {
+    void shouldRegisterValidUser() {
         RegisterDTO dto = new RegisterDTO(
                 "mhbFilho",
                 "password",
@@ -110,7 +110,7 @@ class AuthenticationServiceTest {
     }
 
     @Test
-    void registerInvalidUser() {
+    void ShouldNotRegisterInvalidUser() {
         User user = new User(
                 "mhbFilho",
                 new BCryptPasswordEncoder().encode("password")

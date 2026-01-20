@@ -27,6 +27,8 @@ public class Post {
     @JoinColumn(name = "person_id", referencedColumnName = "id", nullable = false)
     private Person person;
 
+    private String description;
+
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "post")
     private List<PostLike> postLikes;
 
@@ -35,8 +37,9 @@ public class Post {
 
     private Instant createdAt = Instant.now();
 
-    public Post(Recipe recipe, Person person) {
+    public Post(Recipe recipe, Person person, String description) {
         this.recipe = recipe;
         this.person = person;
+        this.description = description;
     }
 }

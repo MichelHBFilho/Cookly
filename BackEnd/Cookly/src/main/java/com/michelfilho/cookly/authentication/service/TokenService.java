@@ -5,22 +5,40 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.michelfilho.cookly.authentication.model.User;
+import com.michelfilho.cookly.common.exception.InvalidTokenException;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.time.Clock;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.time.temporal.ChronoUnit;
 
 @Service
-@Setter
+@NoArgsConstructor
 public class TokenService {
 
     @Value("${api.security.token.secret}")
     private String secret;
+
+    private Clock clock = Clock.systemDefaultZone();
+
+
+    //Just for tests
+    protected void setClock(Clock clock) {
+        this.clock = clock;
+    }
+
+    protected void setSecret(String secret) {
+        this.secret = secret;
+    }
+
 
     public String generateToken(String username) {
         try {
@@ -45,14 +63,12 @@ public class TokenService {
                     .verify(token)
                     .getSubject();
         } catch(JWTVerificationException exception) {
-            return "";
+            throw new InvalidTokenException();
         }
     }
 
     private Instant generateExpirationDate() {
-        return LocalDateTime.now()
-                .plusHours(2)
-                .toInstant(ZoneOffset.of("-03:00"));
+        return Instant.now(clock)
+                .plus(2, ChronoUnit.HOURS);
     }
-
 }
