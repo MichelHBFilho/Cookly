@@ -1,29 +1,27 @@
 package com.michelfilho.cookly.post.service;
 
-import com.michelfilho.cookly.CooklyApplication;
 import com.michelfilho.cookly.authentication.model.User;
+import com.michelfilho.cookly.common.exception.PostNotFoundException;
+import com.michelfilho.cookly.common.exception.UnauthorizedException;
 import com.michelfilho.cookly.person.model.Person;
 import com.michelfilho.cookly.person.repository.PersonRepository;
 import com.michelfilho.cookly.post.dto.NewPostDTO;
 import com.michelfilho.cookly.post.model.Post;
 import com.michelfilho.cookly.post.model.Recipe;
-import com.michelfilho.cookly.post.model.StepToPrepare;
 import com.michelfilho.cookly.post.repository.PostRepository;
+import org.instancio.Instancio;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Profile;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -55,7 +53,7 @@ class PostServiceTest {
         User user = new User("TestUser", "password");
         when(personRepository.findByUserUsername("TestUser"))
                 .thenReturn(person);
-        postService.publishAPost(dto, user);
+        postService.publishPost(dto, user);
 
         // Get the saved post
         ArgumentCaptor<Post> postArgumentCaptor = ArgumentCaptor.forClass(Post.class);
@@ -85,5 +83,47 @@ class PostServiceTest {
                     );
                 }
         );
+    }
+
+    @Test
+    public void shouldRemoveValidPost() {
+        String postId = "id";
+        User user = Instancio.of(User.class).create();
+        Person person = Instancio.of(Person.class).create();
+
+        when(personRepository.findByUserUsername(user.getUsername())).thenReturn(person);
+        when(postRepository.existsById(postId)).thenReturn(true);
+        when(postRepository.existsByIdAndPerson(postId, person)).thenReturn(true);
+
+        postService.removePost(postId, user);
+
+        verify(postRepository).deleteById(postId);
+    }
+
+    @Test
+    public void shouldNotRemoveInexistentPost() {
+        String postId = "id";
+        User user = Instancio.of(User.class).create();
+
+        when(postRepository.existsById(postId)).thenReturn(false);
+
+        assertThrows(PostNotFoundException.class, () -> {
+            postService.removePost(postId, user);
+        });
+    }
+
+    @Test
+    public void shouldNotRemoveUnauthorizedPost() {
+        String postId = "id";
+        User user = Instancio.of(User.class).create();
+        Person person = Instancio.of(Person.class).create();
+
+        when(personRepository.findByUserUsername(user.getUsername())).thenReturn(person);
+        when(postRepository.existsById(postId)).thenReturn(true);
+        when(postRepository.existsByIdAndPerson(postId, person)).thenReturn(false);
+
+        assertThrows(UnauthorizedException.class, () -> {
+            postService.removePost(postId, user);
+        });
     }
 }

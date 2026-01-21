@@ -2,9 +2,6 @@ package com.michelfilho.cookly.post.controller;
 
 import com.google.gson.Gson;
 import com.michelfilho.cookly.CooklyApplication;
-import com.michelfilho.cookly.authentication.model.User;
-import com.michelfilho.cookly.person.model.Person;
-import com.michelfilho.cookly.person.repository.PersonRepository;
 import com.michelfilho.cookly.post.dto.NewPostDTO;
 import com.michelfilho.cookly.post.service.PostService;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,19 +15,17 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.assertj.MockMvcTester;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.verify;
 
 @SpringBootTest(classes = CooklyApplication.class)
 @AutoConfigureMockMvc
@@ -55,8 +50,6 @@ class PostControllerTest {
     @Test
     @WithMockUser(username = "TestUser")
     public void shouldPostValidPost() throws Exception {
-        doNothing().when(postService).publishAPost(any(), any());
-
         NewPostDTO dto = new NewPostDTO(
                 "RecipeName",
                 "This is my recipe",
@@ -73,8 +66,6 @@ class PostControllerTest {
 
     @Test
     public void shouldNotPostUnlogged() throws Exception {
-        doNothing().when(postService).publishAPost(any(), any());
-
         NewPostDTO dto = new NewPostDTO(
                 "RecipeName",
                 "This is my recipe",
@@ -92,8 +83,6 @@ class PostControllerTest {
     @Test
     @WithMockUser(username = "TestUser")
     public void shouldNotPostInvalidDTO_lessThan1Step() throws Exception {
-        doNothing().when(postService).publishAPost(any(), any());
-
         NewPostDTO dto = new NewPostDTO(
                 "RecipeName",
                 "This is my recipe",
@@ -111,8 +100,6 @@ class PostControllerTest {
     @Test
     @WithMockUser(username = "TestUser")
     public void shouldNotPostInvalidDTO_moreThan15Step() throws Exception {
-        doNothing().when(postService).publishAPost(any(), any());
-
         ArrayList<String> steps = new ArrayList<>();
         for(int i = 0; i < 16; i++) {
             steps.add("step " + i);
@@ -131,5 +118,17 @@ class PostControllerTest {
                         .content(gson.toJson(dto))
         ).andExpect(MockMvcResultMatchers.status().isBadRequest());
     }
+
+    @Test
+    @WithMockUser(username = "TestUser")
+    public void shouldRemovePostWhenAuthenticated() throws Exception {
+        mockMvc.perform(
+                MockMvcRequestBuilders.delete("/post/delete/idtodelete")
+        ).andExpect(MockMvcResultMatchers.status().isOk());
+
+        verify(postService).removePost(eq("idtodelete"), any());
+    }
+
+
 
 }
