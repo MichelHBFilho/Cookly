@@ -12,6 +12,7 @@ public interface PostRepository extends JpaRepository<Post, String> {
 
     List<Post> findAllByPerson(Person person);
 
+
     Page<Post> findAllByPersonUserUsernameOrderByCreatedAtDesc(String username, Pageable pageable);
 
     Boolean existsByIdAndPerson(String id, Person person);

@@ -6,6 +6,7 @@ import com.michelfilho.cookly.common.exception.UnauthorizedException;
 import com.michelfilho.cookly.person.model.Person;
 import com.michelfilho.cookly.person.repository.PersonRepository;
 import com.michelfilho.cookly.post.dto.NewPostDTO;
+import com.michelfilho.cookly.post.dto.ReadPostDTO;
 import com.michelfilho.cookly.post.model.Post;
 import com.michelfilho.cookly.post.model.Recipe;
 import com.michelfilho.cookly.post.repository.PostRepository;
@@ -16,6 +17,10 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.test.context.ActiveProfiles;
 
@@ -125,5 +130,36 @@ class PostServiceTest {
         assertThrows(UnauthorizedException.class, () -> {
             postService.removePost(postId, user);
         });
+    }
+
+    @Test
+    public void shouldReturnValidDTOS() {
+        User user = Instancio.of(User.class).create();
+        List<Post> posts = Instancio.ofList(Post.class)
+                .size(10)
+                .create();
+
+        List<ReadPostDTO> postDTOS = posts.stream().map(postService::postToReadDTO).toList();
+
+        when(postRepository.findAllByPersonUserUsernameOrderByCreatedAtDesc(user.getUsername(), PageRequest.of(1, 10))).thenReturn(new PageImpl<Post>(posts, PageRequest.of(1,10), 10));
+
+        List<ReadPostDTO> returnedPosts = postService.findPostsByUsername(user.getUsername(), 1);
+
+        assertThat(returnedPosts)
+                .usingRecursiveComparison()
+                .isEqualTo(postDTOS);
+
+    }
+
+    @Test
+    public void shouldReturnEvenWithoutPosts() {
+        User user = Instancio.of(User.class).create();
+
+        when(postRepository.findAllByPersonUserUsernameOrderByCreatedAtDesc(user.getUsername(), PageRequest.of(1, 10))).thenReturn(Page.empty());
+
+        List<ReadPostDTO> returnedPosts = postService.findPostsByUsername(user.getUsername(), 1);
+
+        assertThat(returnedPosts)
+                .isNotNull();
     }
 }

@@ -2,11 +2,13 @@ package com.michelfilho.cookly.post.model;
 
 import com.michelfilho.cookly.person.model.Person;
 import jakarta.persistence.*;
+import lombok.Getter;
 
 import java.time.Instant;
 
 @Table(name = "comment")
 @Entity
+@Getter
 public class Comment {
 
     @Id

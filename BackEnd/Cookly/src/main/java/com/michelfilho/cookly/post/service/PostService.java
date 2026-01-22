@@ -5,11 +5,16 @@ import com.michelfilho.cookly.common.exception.PostNotFoundException;
 import com.michelfilho.cookly.common.exception.UnauthorizedException;
 import com.michelfilho.cookly.person.model.Person;
 import com.michelfilho.cookly.person.repository.PersonRepository;
+import com.michelfilho.cookly.post.dto.CommentDTO;
 import com.michelfilho.cookly.post.dto.NewPostDTO;
+import com.michelfilho.cookly.post.dto.ReadPostDTO;
+import com.michelfilho.cookly.post.dto.ReadRecipeDTO;
+import com.michelfilho.cookly.post.model.Comment;
 import com.michelfilho.cookly.post.model.Post;
 import com.michelfilho.cookly.post.model.Recipe;
 import com.michelfilho.cookly.post.model.StepToPrepare;
 import com.michelfilho.cookly.post.repository.PostRepository;
+import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -18,6 +23,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class PostService {
@@ -65,8 +71,49 @@ public class PostService {
         postRepository.deleteById(id);
     }
 
-    public Page<Post> findPostsByUsername(String username, Integer page) {
-        return postRepository.findAllByPersonUserUsernameOrderByCreatedAtDesc(username, PageRequest.of(page, 10));
+    public List<ReadPostDTO> findPostsByUsername(String username, Integer page) {
+        if(page <= 0) throw new IllegalArgumentException();
+
+        return postRepository
+                .findAllByPersonUserUsernameOrderByCreatedAtDesc(username, PageRequest.of(page, 10))
+                .stream()
+                .map(this::postToReadDTO)
+                .toList();
     }
 
+    protected ReadPostDTO postToReadDTO(Post post) {
+        Recipe recipe = post.getRecipe();
+        ReadRecipeDTO recipeDTO = new ReadRecipeDTO(
+                recipe.getName(),
+                recipe.getPrepareTime(),
+                recipe.getStepByStep()
+                        .stream()
+                        .map(StepToPrepare::getDescription)
+                        .toList()
+        );
+
+        List<Comment> comments = post.getComments();
+        List<CommentDTO> commentDTO = comments
+                .stream()
+                .map((Comment comment) -> {
+                    return new CommentDTO(
+                            comment.getPerson().getFullName(),
+                            comment.getContent(),
+                            comment.getCreatedAt()
+                    );
+                })
+                .toList();
+
+        Integer likesCount = post.getPostLikes().size();
+
+        return new ReadPostDTO(
+                post.getId(),
+                recipeDTO,
+                commentDTO,
+                likesCount,
+                post.getPerson().getUser().getUsername(),
+                post.getDescription(),
+                post.getCreatedAt()
+        );
+    }
 }
