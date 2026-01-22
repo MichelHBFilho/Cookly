@@ -32,7 +32,7 @@ public class PostController {
         return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity delete(@PathVariable String id, @AuthenticationPrincipal UserDetails user) {
         postService.removePost(id, user);
         return ResponseEntity.ok().build();
@@ -52,6 +52,21 @@ public class PostController {
     @DeleteMapping("/{id}/like")
     public ResponseEntity dislikePost(@PathVariable String id, @AuthenticationPrincipal UserDetails user) {
         interactPostService.dislike(user, id);
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/{id}/comment")
+    public ResponseEntity comment(@PathVariable String id, @AuthenticationPrincipal UserDetails user, @RequestBody String content) {
+        interactPostService.comment(user, id, content);
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("/comment/{commentId}")
+    public ResponseEntity removeComment(
+            @AuthenticationPrincipal UserDetails user,
+            @PathVariable String commentId
+    ) {
+        interactPostService.removeComment(user, commentId);
         return ResponseEntity.ok().build();
     }
 

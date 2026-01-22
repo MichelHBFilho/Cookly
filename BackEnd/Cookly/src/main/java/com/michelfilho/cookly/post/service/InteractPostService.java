@@ -5,10 +5,13 @@ import com.michelfilho.cookly.common.exception.PostNotFoundException;
 import com.michelfilho.cookly.person.model.Person;
 import com.michelfilho.cookly.person.repository.PersonRepository;
 import com.michelfilho.cookly.post.dto.ReadCommentDTO;
+import com.michelfilho.cookly.post.model.Comment;
 import com.michelfilho.cookly.post.model.Post;
 import com.michelfilho.cookly.post.model.PostLike;
+import com.michelfilho.cookly.post.repository.CommentRepository;
 import com.michelfilho.cookly.post.repository.PostLikeRepository;
 import com.michelfilho.cookly.post.repository.PostRepository;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -24,6 +27,9 @@ public class InteractPostService {
 
     @Autowired
     private PostLikeRepository postLikeRepository;
+
+    @Autowired
+    private CommentRepository commentRepository;
 
     public void like(UserDetails user, String postId) {
         if(postLikeRepository.existsByPostIdAndPersonUserUsername(postId, user.getUsername()))
@@ -43,6 +49,26 @@ public class InteractPostService {
             throw new InvalidPostInteractionStateException("This post isn't liked.");
 
         postLikeRepository.deleteByPostIdAndPersonUserUsername(postId, user.getUsername());
+    }
+
+    public void comment(UserDetails user, String postId, @NotNull String content) {
+        Person person = personRepository.findByUserUsername(user.getUsername());
+        Post post = postRepository.findById(postId).orElseThrow(PostNotFoundException::new);
+
+        post.addComment(person, content);
+
+        postRepository.save(post);
+    }
+
+    public void removeComment(UserDetails user, String commentId) {
+        if(!commentRepository.existsById(commentId))
+            throw new InvalidPostInteractionStateException("This comment does not exist");
+
+        if(!commentRepository.existsByIdAndPersonUserUsername(commentId, user.getUsername()))
+            throw new InvalidPostInteractionStateException("This comment is not yours");
+
+        commentRepository.deleteById(commentId);
+
     }
 
 }

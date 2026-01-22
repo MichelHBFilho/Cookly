@@ -26,6 +26,13 @@ public class Comment {
 
     private String content;
 
-    private Instant createdAt;
+    private Instant createdAt = Instant.now();
 
+    public Comment(Post post, Person person, String content) {
+        this.post = post;
+        this.person = person;
+        this.content = content;
+    }
+
+    public Comment() {}
 }

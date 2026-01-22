@@ -92,6 +92,7 @@ public class PostService {
                 .stream()
                 .map((Comment comment) -> {
                     return new ReadCommentDTO(
+                            comment.getId(),
                             comment.getPerson().getFullName(),
                             comment.getContent(),
                             comment.getCreatedAt()

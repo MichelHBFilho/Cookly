@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Table(name = "post")
@@ -47,6 +48,14 @@ public class Post {
         this.postLikes.add(new PostLike(
                 person,
                 this
+        ));
+    }
+
+    public void addComment(Person person, String text) {
+        this.comments.add(new Comment(
+                this,
+                person,
+                text
         ));
     }
 }

@@ -5,11 +5,14 @@ import com.michelfilho.cookly.common.exception.InvalidPostInteractionStateExcept
 import com.michelfilho.cookly.common.exception.PostNotFoundException;
 import com.michelfilho.cookly.person.model.Person;
 import com.michelfilho.cookly.person.repository.PersonRepository;
+import com.michelfilho.cookly.post.model.Comment;
 import com.michelfilho.cookly.post.model.Post;
 import com.michelfilho.cookly.post.model.PostLike;
+import com.michelfilho.cookly.post.repository.CommentRepository;
 import com.michelfilho.cookly.post.repository.PostLikeRepository;
 import com.michelfilho.cookly.post.repository.PostRepository;
 import org.instancio.Instancio;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -36,6 +39,9 @@ class InteractPostServiceTest {
 
     @Mock
     private PostLikeRepository postLikeRepository;
+
+    @Mock
+    private CommentRepository commentRepository;
 
     @InjectMocks
     private InteractPostService service;
@@ -127,6 +133,87 @@ class InteractPostServiceTest {
         when(postLikeRepository.existsByPostIdAndPersonUserUsername(post.getId(), user.getUsername())).thenReturn(false);
 
         assertThrows(InvalidPostInteractionStateException.class, () -> service.dislike(user, post.getId()));
+    }
+
+    @Test
+    public void shouldCommentThePost() {
+        UserDetails user = new User();
+
+        Person person = Instancio.of(Person.class)
+                .set(field("user"), user)
+                .create();
+
+        Post post = Instancio.of(Post.class)
+                .set(field("person"), person)
+                .create();
+
+        String content = Instancio.of(String.class).create();
+
+        when(postRepository.findById(post.getId())).thenReturn(Optional.of(post));
+        when(personRepository.findByUserUsername(user.getUsername())).thenReturn(person);
+
+        service.comment(user, post.getId(), content);
+
+        verify(postRepository).save(post);
+    }
+
+    @Test
+    public void shouldNotCommentUnexistentPost() {
+        UserDetails user = new User();
+
+        Person person = Instancio.of(Person.class)
+                .set(field("user"), user)
+                .create();
+
+        String postId = "false-id";
+
+        String content = Instancio.of(String.class).create();
+
+        when(postRepository.findById(postId)).thenReturn(Optional.empty());
+        when(personRepository.findByUserUsername(user.getUsername())).thenReturn(person);
+
+
+        Assertions.assertThrows(PostNotFoundException.class, () -> {
+            service.comment(user, postId, content);
+        });
+    }
+
+    @Test
+    public void shouldRemoveComment() {
+        UserDetails user = Instancio.of(User.class).create();
+
+        Comment comment = Instancio.of(Comment.class).create();
+
+        when(commentRepository.existsByIdAndPersonUserUsername(comment.getId(), user.getUsername())).thenReturn(true);
+        when(commentRepository.existsById(comment.getId())).thenReturn(true);
+
+        service.removeComment(user, comment.getId());
+
+        verify(commentRepository).deleteById(comment.getId());
+    }
+
+    @Test
+    public void shouldNotRemoveUnexistentComment() {
+        UserDetails user = Instancio.of(User.class).create();
+
+        String commentId = "false-id";
+
+        Assertions.assertThrows(InvalidPostInteractionStateException.class, () -> {
+            service.removeComment(user, commentId);
+        });
+    }
+
+    @Test
+    public void shouldNotRemoveNotMyComment() {
+        UserDetails user = Instancio.of(User.class).create();
+
+        Comment comment = Instancio.of(Comment.class).create();
+
+        when(commentRepository.existsById(comment.getId())).thenReturn(false);
+
+        Assertions.assertThrows(InvalidPostInteractionStateException.class, () -> {
+            service.removeComment(user, comment.getId());
+        });
     }
 
 }
