@@ -39,7 +39,7 @@ public class PostController {
     }
 
     @GetMapping("/{username}")
-    public List<ReadPostDTO> getAllByUsername(@PathVariable String username, @RequestParam(value = "page", required = false, defaultValue = "0") Integer page) {
+    public List<ReadPostDTO> getAllByUsername(@PathVariable String username, @RequestParam(value = "page", required = false, defaultValue = "1") Integer page) {
         return postService.findPostsByUsername(username, page);
     }
 

@@ -42,4 +42,11 @@ public class Post {
         this.person = person;
         this.description = description;
     }
+
+    public void addLike(Person person) {
+        this.postLikes.add(new PostLike(
+                person,
+                this
+        ));
+    }
 }

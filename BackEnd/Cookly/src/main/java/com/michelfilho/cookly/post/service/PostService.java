@@ -1,11 +1,10 @@
 package com.michelfilho.cookly.post.service;
 
-import com.michelfilho.cookly.authentication.model.User;
 import com.michelfilho.cookly.common.exception.PostNotFoundException;
 import com.michelfilho.cookly.common.exception.UnauthorizedException;
 import com.michelfilho.cookly.person.model.Person;
 import com.michelfilho.cookly.person.repository.PersonRepository;
-import com.michelfilho.cookly.post.dto.CommentDTO;
+import com.michelfilho.cookly.post.dto.ReadCommentDTO;
 import com.michelfilho.cookly.post.dto.NewPostDTO;
 import com.michelfilho.cookly.post.dto.ReadPostDTO;
 import com.michelfilho.cookly.post.dto.ReadRecipeDTO;
@@ -14,11 +13,7 @@ import com.michelfilho.cookly.post.model.Post;
 import com.michelfilho.cookly.post.model.Recipe;
 import com.michelfilho.cookly.post.model.StepToPrepare;
 import com.michelfilho.cookly.post.repository.PostRepository;
-import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -75,7 +70,7 @@ public class PostService {
         if(page <= 0) throw new IllegalArgumentException();
 
         return postRepository
-                .findAllByPersonUserUsernameOrderByCreatedAtDesc(username, PageRequest.of(page, 10))
+                .findAllByPersonUserUsername(username, 10, (page-1)*10)
                 .stream()
                 .map(this::postToReadDTO)
                 .toList();
@@ -93,10 +88,10 @@ public class PostService {
         );
 
         List<Comment> comments = post.getComments();
-        List<CommentDTO> commentDTO = comments
+        List<ReadCommentDTO> readCommentDTO = comments
                 .stream()
                 .map((Comment comment) -> {
-                    return new CommentDTO(
+                    return new ReadCommentDTO(
                             comment.getPerson().getFullName(),
                             comment.getContent(),
                             comment.getCreatedAt()
@@ -109,7 +104,7 @@ public class PostService {
         return new ReadPostDTO(
                 post.getId(),
                 recipeDTO,
-                commentDTO,
+                readCommentDTO,
                 likesCount,
                 post.getPerson().getUser().getUsername(),
                 post.getDescription(),

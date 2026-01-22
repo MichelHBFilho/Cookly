@@ -4,6 +4,7 @@ import com.michelfilho.cookly.common.exception.InvalidPostInteractionStateExcept
 import com.michelfilho.cookly.common.exception.PostNotFoundException;
 import com.michelfilho.cookly.person.model.Person;
 import com.michelfilho.cookly.person.repository.PersonRepository;
+import com.michelfilho.cookly.post.dto.ReadCommentDTO;
 import com.michelfilho.cookly.post.model.Post;
 import com.michelfilho.cookly.post.model.PostLike;
 import com.michelfilho.cookly.post.repository.PostLikeRepository;
@@ -32,9 +33,7 @@ public class InteractPostService {
 
         Person person = personRepository.findByUserUsername(user.getUsername());
 
-        PostLike like = new PostLike(person, post);
-
-        post.getPostLikes().add(like);
+        post.addLike(person);
 
         postRepository.save(post);
     }

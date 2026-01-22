@@ -18,12 +18,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.util.ArrayList;
 import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
@@ -141,7 +140,7 @@ class PostServiceTest {
 
         List<ReadPostDTO> postDTOS = posts.stream().map(postService::postToReadDTO).toList();
 
-        when(postRepository.findAllByPersonUserUsernameOrderByCreatedAtDesc(user.getUsername(), PageRequest.of(1, 10))).thenReturn(new PageImpl<Post>(posts, PageRequest.of(1,10), 10));
+        when(postRepository.findAllByPersonUserUsername(user.getUsername(), 10, 0)).thenReturn(posts);
 
         List<ReadPostDTO> returnedPosts = postService.findPostsByUsername(user.getUsername(), 1);
 
@@ -155,7 +154,7 @@ class PostServiceTest {
     public void shouldReturnEvenWithoutPosts() {
         User user = Instancio.of(User.class).create();
 
-        when(postRepository.findAllByPersonUserUsernameOrderByCreatedAtDesc(user.getUsername(), PageRequest.of(1, 10))).thenReturn(Page.empty());
+        when(postRepository.findAllByPersonUserUsername(user.getUsername(), 10, 0)).thenReturn(new ArrayList<>());
 
         List<ReadPostDTO> returnedPosts = postService.findPostsByUsername(user.getUsername(), 1);
 

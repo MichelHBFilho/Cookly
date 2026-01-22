@@ -1,9 +1,8 @@
 package com.michelfilho.cookly.post.dto;
 
 import java.time.Instant;
-import java.time.LocalDateTime;
 
-public record CommentDTO(
+public record ReadCommentDTO(
         String author,
         String text,
         Instant createdAt
