@@ -1,5 +1,7 @@
 package com.michelfilho.cookly.authentication.dto;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import java.time.LocalDate;
 
 public record RegisterDTO(
@@ -7,6 +9,6 @@ public record RegisterDTO(
         String password,
         String name,
         String surName,
-        String profilePicturePath,
+        MultipartFile profilePicture,
         LocalDate birthDay) {
 }

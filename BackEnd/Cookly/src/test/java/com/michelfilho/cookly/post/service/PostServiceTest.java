@@ -1,7 +1,7 @@
 package com.michelfilho.cookly.post.service;
 
 import com.michelfilho.cookly.authentication.model.User;
-import com.michelfilho.cookly.common.exception.PostNotFoundException;
+import com.michelfilho.cookly.common.exception.NotFound;
 import com.michelfilho.cookly.common.exception.UnauthorizedException;
 import com.michelfilho.cookly.person.model.Person;
 import com.michelfilho.cookly.person.repository.PersonRepository;
@@ -17,8 +17,6 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.test.context.ActiveProfiles;
 
@@ -111,7 +109,7 @@ class PostServiceTest {
 
         when(postRepository.existsById(postId)).thenReturn(false);
 
-        assertThrows(PostNotFoundException.class, () -> {
+        assertThrows(NotFound.class, () -> {
             postService.removePost(postId, user);
         });
     }

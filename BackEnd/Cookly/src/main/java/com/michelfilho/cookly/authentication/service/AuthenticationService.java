@@ -5,9 +5,11 @@ import com.michelfilho.cookly.authentication.dto.RegisterDTO;
 import com.michelfilho.cookly.authentication.model.User;
 import com.michelfilho.cookly.authentication.repository.UserRepository;
 import com.michelfilho.cookly.common.exception.UsernameAlreadyRegisteredException;
+import com.michelfilho.cookly.common.service.ImageService;
 import com.michelfilho.cookly.person.model.Person;
 import com.michelfilho.cookly.person.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -24,6 +26,10 @@ public class AuthenticationService {
     private PersonRepository personRepository;
     @Autowired
     private TokenService tokenService;
+    @Autowired
+    private ImageService imageService;
+    @Value("${api.storage.pictures.profile.path}")
+    private String profilesPicturePath;
 
     public String login(LoginDTO data) {
         var usernameAndPassword = new UsernamePasswordAuthenticationToken(
@@ -44,10 +50,15 @@ public class AuthenticationService {
 
         String encryptedPassword = new BCryptPasswordEncoder().encode(data.password());
         User newUser = new User(data.username(), encryptedPassword);
+
+        String profilePicturePath = profilesPicturePath;
+        if(data.profilePicture() != null) {
+            profilePicturePath += "/" + imageService.saveImage(profilesPicturePath, data.profilePicture());
+        }
         Person newPerson = new Person(
                 data.name(),
                 data.surName(),
-                data.profilePicturePath(),
+                profilePicturePath,
                 data.birthDay(),
                 newUser
         );

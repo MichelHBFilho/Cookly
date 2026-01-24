@@ -34,7 +34,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity register(@RequestBody @Valid RegisterDTO data) {
+    public ResponseEntity register(@ModelAttribute @Valid RegisterDTO data) {
         service.register(data);
 
         return ResponseEntity.ok().build();

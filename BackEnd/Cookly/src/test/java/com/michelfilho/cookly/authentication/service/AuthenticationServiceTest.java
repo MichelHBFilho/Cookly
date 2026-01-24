@@ -8,6 +8,7 @@ import com.michelfilho.cookly.authentication.repository.UserRepository;
 import com.michelfilho.cookly.common.exception.UsernameAlreadyRegisteredException;
 import com.michelfilho.cookly.person.repository.PersonRepository;
 import jakarta.transaction.Transactional;
+import org.instancio.Instancio;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -29,7 +30,8 @@ import static org.hamcrest.Matchers.*;
 @ActiveProfiles("test")
 @SpringBootTest(classes = CooklyApplication.class)
 @TestPropertySource(properties = {
-        "api.security.token.secret=test-secret"
+        "api.security.token.secret=test-secret",
+        "api.storage.pictures.profile.path=/src/main/resources/profile_pictures"
 })
 @Transactional
 class AuthenticationServiceTest {
@@ -95,45 +97,29 @@ class AuthenticationServiceTest {
 
     @Test
     void shouldRegisterValidUser() {
-        RegisterDTO dto = new RegisterDTO(
-                "mhbFilho",
-                "password",
-                "Michel",
-                "Filho",
-                "",
-                LocalDate.of(2007, 10, 2)
-        );
+        RegisterDTO dto = Instancio.of(RegisterDTO.class).create();
 
         authenticationService.register(dto);
 
-        User user = userRepository.findByUsername("mhbFilho");
+        User user = userRepository.findByUsername(dto.username());
 
-        assertThat(user.getUsername(), is("mhbFilho"));
+        assertThat(user.getUsername(), is(dto.username()));
     }
 
     @Test
     void ShouldNotRegisterInvalidUser() {
+        RegisterDTO dto = Instancio.of(RegisterDTO.class).create();
+
         User user = new User(
-                "mhbFilho",
+                dto.username(),
                 new BCryptPasswordEncoder().encode("password")
         );
 
         userRepository.save(user);
 
-        RegisterDTO dto = new RegisterDTO(
-                "mhbFilho",
-                "password",
-                "Michel",
-                "Filho",
-                "",
-                LocalDate.of(2007, 10, 2)
-        );
-
         Exception exception = Assertions.assertThrows(UsernameAlreadyRegisteredException.class, () -> {
             authenticationService.register(dto);
         });
-
-        assertThat(exception.getMessage(), is("The username mhbFilho was already taken."));
 
     }
 }

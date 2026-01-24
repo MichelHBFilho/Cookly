@@ -2,7 +2,7 @@ package com.michelfilho.cookly.common.controller;
 
 import com.michelfilho.cookly.common.exception.InvalidTokenException;
 import com.michelfilho.cookly.common.exception.InvalidPostInteractionStateException;
-import com.michelfilho.cookly.common.exception.PostNotFoundException;
+import com.michelfilho.cookly.common.exception.NotFound;
 import com.michelfilho.cookly.common.exception.UsernameAlreadyRegisteredException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,8 +18,8 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exception.getMessage());
     }
 
-    @ExceptionHandler(PostNotFoundException.class)
-    private ResponseEntity postNotFound(PostNotFoundException exception) {
+    @ExceptionHandler(NotFound.class)
+    private ResponseEntity postNotFound(NotFound exception) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(exception.getMessage());
     }
 
