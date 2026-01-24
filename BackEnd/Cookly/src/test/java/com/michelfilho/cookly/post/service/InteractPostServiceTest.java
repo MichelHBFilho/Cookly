@@ -209,7 +209,8 @@ class InteractPostServiceTest {
 
         Comment comment = Instancio.of(Comment.class).create();
 
-        when(commentRepository.existsById(comment.getId())).thenReturn(false);
+        when(commentRepository.existsById(comment.getId())).thenReturn(true);
+        when(commentRepository.existsByIdAndPersonUserUsername(comment.getId(), user.getUsername())).thenReturn(false);
 
         Assertions.assertThrows(InvalidPostInteractionStateException.class, () -> {
             service.removeComment(user, comment.getId());
