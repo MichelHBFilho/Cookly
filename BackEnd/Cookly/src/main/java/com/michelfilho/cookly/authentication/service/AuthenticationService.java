@@ -51,10 +51,17 @@ public class AuthenticationService {
         String encryptedPassword = new BCryptPasswordEncoder().encode(data.password());
         User newUser = new User(data.username(), encryptedPassword);
 
-        String profilePicturePath = profilesPicturePath;
+        String profilePicturePath = "";
         if(data.profilePicture() != null) {
-            profilePicturePath += "/" + imageService.saveImage(profilesPicturePath, data.profilePicture());
+            profilePicturePath =
+                    profilesPicturePath
+                            + "/"
+                            + imageService.saveImage(
+                                    profilesPicturePath,
+                                    data.profilePicture()
+                            );
         }
+
         Person newPerson = new Person(
                 data.name(),
                 data.surName(),
