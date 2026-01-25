@@ -10,6 +10,7 @@ public record ReadPostDTO(
         Integer likes,
         String author,
         String description,
-        Instant createdAt
+        Instant createdAt,
+        List<String> imagesPaths
 ) {
 }

@@ -28,6 +28,8 @@ public class ImageService {
 
         Files.copy(image.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
 
+        System.out.println(filePath);
+
         return fileName;
     }
 

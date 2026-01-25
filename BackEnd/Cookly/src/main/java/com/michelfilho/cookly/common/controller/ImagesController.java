@@ -18,11 +18,19 @@ public class ImagesController {
     private ImageService imageService;
     @Value("${api.storage.pictures.profile.path}")
     private String profilesPicturePath;
+    @Value("${api.storage.pictures.post.path}")
+    private String postPicturePath;
 
     @GetMapping(value = "/profile/{fileName}",
     produces = MediaType.IMAGE_JPEG_VALUE)
-    public byte[] image(@PathVariable String fileName) {
+    public byte[] profilePicure(@PathVariable String fileName) {
         return imageService.getImage(profilesPicturePath + "/" + fileName);
+    }
+
+    @GetMapping(value = "/post/{fileName}",
+            produces = MediaType.IMAGE_JPEG_VALUE)
+    public byte[] postPicture(@PathVariable String fileName) {
+        return imageService.getImage(postPicturePath + "/" + fileName);
     }
 
 }

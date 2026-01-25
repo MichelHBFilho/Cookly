@@ -30,6 +30,8 @@ public class Post {
 
     private String description;
 
+    private List<String> imagesPaths;
+
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "post")
     private List<PostLike> postLikes;
 
@@ -38,10 +40,11 @@ public class Post {
 
     private Instant createdAt = Instant.now();
 
-    public Post(Recipe recipe, Person person, String description) {
+    public Post(Recipe recipe, Person person, String description, List<String> imagesPaths) {
         this.recipe = recipe;
         this.person = person;
         this.description = description;
+        this.imagesPaths = imagesPaths;
     }
 
     public void addLike(Person person) {

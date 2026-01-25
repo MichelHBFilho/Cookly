@@ -2,6 +2,7 @@ package com.michelfilho.cookly.post.service;
 
 import com.michelfilho.cookly.common.exception.NotFound;
 import com.michelfilho.cookly.common.exception.UnauthorizedException;
+import com.michelfilho.cookly.common.service.ImageService;
 import com.michelfilho.cookly.person.model.Person;
 import com.michelfilho.cookly.person.repository.PersonRepository;
 import com.michelfilho.cookly.post.dto.ReadCommentDTO;
@@ -14,8 +15,10 @@ import com.michelfilho.cookly.post.model.Recipe;
 import com.michelfilho.cookly.post.model.StepToPrepare;
 import com.michelfilho.cookly.post.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +32,16 @@ public class PostService {
     @Autowired
     private PersonRepository personRepository;
 
-    public void publishPost(NewPostDTO data, UserDetails user) {
+    @Value("${api.storage.pictures.post.path}")
+    private String postPath;
+
+    @Autowired
+    private ImageService imageService;
+
+    public void publishPost(
+            NewPostDTO data,
+            List<MultipartFile> images,
+            UserDetails user) {
         Person person = personRepository.findByUserUsername(user.getUsername());
 
         Recipe newRecipe = new Recipe(
@@ -46,10 +58,23 @@ public class PostService {
             ));
         }
 
+        List<String> imagesPaths = new ArrayList<>();
+        if(images != null) {
+            images.forEach((MultipartFile file) -> {
+                imagesPaths.add(
+                        imageService.saveImage(
+                                postPath,
+                                file
+                        )
+                );
+            });
+        }
+
         Post newPost = new Post(
                 newRecipe,
                 person,
-                data.description()
+                data.description(),
+                imagesPaths
         );
 
         postRepository.save(newPost);
@@ -109,7 +134,8 @@ public class PostService {
                 likesCount,
                 post.getPerson().getUser().getUsername(),
                 post.getDescription(),
-                post.getCreatedAt()
+                post.getCreatedAt(),
+                post.getImagesPaths()
         );
     }
 }

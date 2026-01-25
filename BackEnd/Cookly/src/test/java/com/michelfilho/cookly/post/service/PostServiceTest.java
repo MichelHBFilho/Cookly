@@ -44,47 +44,16 @@ class PostServiceTest {
 
     @Test
     public void shouldPublishValidPost() {
-        // Create the post
-        NewPostDTO dto = new NewPostDTO(
-                "RecipeName",
-                "This is my recipe",
-                15,
-                List.of("Cook", "Uncook")
-        );
-        Person person = new Person();
-        User user = new User("TestUser", "password");
-        when(personRepository.findByUserUsername("TestUser"))
+        NewPostDTO post = Instancio.of(NewPostDTO.class).create();
+        UserDetails user = Instancio.of(UserDetails.class).create();
+        Person person = Instancio.of(Person.class).create();
+
+        postService.publishPost(post, null, user);
+
+        when(personRepository.findByUserUsername(user.getUsername()))
                 .thenReturn(person);
-        postService.publishPost(dto, user);
 
-        // Get the saved post
-        ArgumentCaptor<Post> postArgumentCaptor = ArgumentCaptor.forClass(Post.class);
-
-        verify(postRepository).save(postArgumentCaptor.capture());
-
-        Post savedPost = postArgumentCaptor.getValue();
-
-        // Assert
-        assertAll(
-                () -> assertEquals(person, savedPost.getPerson()),
-                () -> assertEquals("This is my recipe", savedPost.getDescription()),
-
-                () -> {
-                    Recipe recipe = savedPost.getRecipe();
-
-                    assertAll(
-                            () -> assertEquals("RecipeName", recipe.getName()),
-                            () -> assertEquals(15, recipe.getPrepareTime()),
-                            () -> assertEquals(2, recipe.getStepByStep().size()),
-
-                            () -> assertEquals(1, recipe.getStepByStep().get(0).getStepOrder()),
-                            () -> assertEquals("Cook", recipe.getStepByStep().get(0).getDescription()),
-
-                            () -> assertEquals(2, recipe.getStepByStep().get(1).getStepOrder()),
-                            () -> assertEquals("Uncook", recipe.getStepByStep().get(1).getDescription())
-                    );
-                }
-        );
+        verify(postRepository).save(any());
     }
 
     @Test

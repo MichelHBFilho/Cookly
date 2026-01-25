@@ -10,10 +10,12 @@ import jakarta.validation.Valid;
 import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -26,9 +28,15 @@ public class PostController {
     @Autowired
     private InteractPostService interactPostService;
 
-    @PostMapping("/new")
-    public ResponseEntity publish(@RequestBody @Valid NewPostDTO data, @AuthenticationPrincipal UserDetails user) {
-        postService.publishPost(data, user);
+    @PostMapping(
+            value = "/new",
+            consumes = MediaType.MULTIPART_FORM_DATA_VALUE
+    )
+    public ResponseEntity publish(
+            @RequestPart("data") @Valid NewPostDTO data,
+            @RequestPart(value = "images", required = false) List<MultipartFile> images,
+            @AuthenticationPrincipal UserDetails user) {
+        postService.publishPost(data, images, user);
         return ResponseEntity.ok().build();
     }
 
