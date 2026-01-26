@@ -1,19 +1,17 @@
 package com.michelfilho.cookly.post.service;
 
 import com.michelfilho.cookly.authentication.model.User;
-import com.michelfilho.cookly.common.exception.NotFound;
+import com.michelfilho.cookly.common.exception.NotFoundException;
 import com.michelfilho.cookly.common.exception.UnauthorizedException;
 import com.michelfilho.cookly.person.model.Person;
 import com.michelfilho.cookly.person.repository.PersonRepository;
 import com.michelfilho.cookly.post.dto.NewPostDTO;
 import com.michelfilho.cookly.post.dto.ReadPostDTO;
 import com.michelfilho.cookly.post.model.Post;
-import com.michelfilho.cookly.post.model.Recipe;
 import com.michelfilho.cookly.post.repository.PostRepository;
 import org.instancio.Instancio;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -78,7 +76,7 @@ class PostServiceTest {
 
         when(postRepository.existsById(postId)).thenReturn(false);
 
-        assertThrows(NotFound.class, () -> {
+        assertThrows(NotFoundException.class, () -> {
             postService.removePost(postId, user);
         });
     }

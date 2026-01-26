@@ -1,10 +1,10 @@
 package com.michelfilho.cookly.common.service;
 
+import com.michelfilho.cookly.common.exception.NotFoundException;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -40,5 +40,14 @@ public class ImageService {
         if(!Files.exists(imagePath)) return null;
 
         return Files.readAllBytes(imagePath);
+    }
+
+    @SneakyThrows
+    public void deleteImage(String path) {
+        Path pathObject = Path.of(path);
+        if(!Files.exists(pathObject))
+            throw new NotFoundException(Files.class);
+
+        Files.delete(pathObject);
     }
 }

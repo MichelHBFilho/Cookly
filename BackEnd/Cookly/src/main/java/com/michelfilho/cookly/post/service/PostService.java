@@ -1,6 +1,6 @@
 package com.michelfilho.cookly.post.service;
 
-import com.michelfilho.cookly.common.exception.NotFound;
+import com.michelfilho.cookly.common.exception.NotFoundException;
 import com.michelfilho.cookly.common.exception.UnauthorizedException;
 import com.michelfilho.cookly.common.service.ImageService;
 import com.michelfilho.cookly.person.model.Person;
@@ -82,7 +82,7 @@ public class PostService {
 
     public void removePost(String id, UserDetails user) {
         if(!postRepository.existsById(id))
-            throw new NotFound(Post.class);
+            throw new NotFoundException(Post.class);
 
         Person person = personRepository.findByUserUsername(user.getUsername());
         if(!postRepository.existsByIdAndPerson(id, person))

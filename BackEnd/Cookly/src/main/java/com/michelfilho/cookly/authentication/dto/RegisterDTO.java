@@ -8,7 +8,7 @@ public record RegisterDTO(
         String username,
         String password,
         String name,
-        String surName,
+        String lastName,
         MultipartFile profilePicture,
         LocalDate birthDay) {
 }

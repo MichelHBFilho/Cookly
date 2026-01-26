@@ -1,7 +1,7 @@
 package com.michelfilho.cookly.post.service;
 
 import com.michelfilho.cookly.common.exception.InvalidPostInteractionStateException;
-import com.michelfilho.cookly.common.exception.NotFound;
+import com.michelfilho.cookly.common.exception.NotFoundException;
 import com.michelfilho.cookly.person.model.Person;
 import com.michelfilho.cookly.person.repository.PersonRepository;
 import com.michelfilho.cookly.post.model.Post;
@@ -9,7 +9,6 @@ import com.michelfilho.cookly.post.repository.CommentRepository;
 import com.michelfilho.cookly.post.repository.PostLikeRepository;
 import com.michelfilho.cookly.post.repository.PostRepository;
 import jakarta.validation.constraints.NotNull;
-import org.aspectj.weaver.ast.Not;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -34,7 +33,7 @@ public class InteractPostService {
             throw new InvalidPostInteractionStateException("This post is already liked.");
 
         Post post = postRepository.findById(postId)
-                .orElseThrow(() -> new NotFound(Post.class));
+                .orElseThrow(() -> new NotFoundException(Post.class));
 
         Person person = personRepository.findByUserUsername(user.getUsername());
 
@@ -53,7 +52,7 @@ public class InteractPostService {
     public void comment(UserDetails user, String postId, @NotNull String content) {
         Person person = personRepository.findByUserUsername(user.getUsername());
         Post post = postRepository.findById(postId)
-                .orElseThrow(() -> new NotFound(Post.class));
+                .orElseThrow(() -> new NotFoundException(Post.class));
 
         post.addComment(person, content);
 

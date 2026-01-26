@@ -2,7 +2,7 @@ package com.michelfilho.cookly.post.service;
 
 import com.michelfilho.cookly.authentication.model.User;
 import com.michelfilho.cookly.common.exception.InvalidPostInteractionStateException;
-import com.michelfilho.cookly.common.exception.NotFound;
+import com.michelfilho.cookly.common.exception.NotFoundException;
 import com.michelfilho.cookly.person.model.Person;
 import com.michelfilho.cookly.person.repository.PersonRepository;
 import com.michelfilho.cookly.post.model.Comment;
@@ -94,7 +94,7 @@ class InteractPostServiceTest {
         when(postRepository.findById("false-id"))
                 .thenReturn(Optional.empty());
 
-        assertThrows(NotFound.class, () -> {
+        assertThrows(NotFoundException.class, () -> {
             service.like(user, "false-id");
         });
     }
@@ -173,7 +173,7 @@ class InteractPostServiceTest {
         when(personRepository.findByUserUsername(user.getUsername())).thenReturn(person);
 
 
-        Assertions.assertThrows(NotFound.class, () -> {
+        Assertions.assertThrows(NotFoundException.class, () -> {
             service.comment(user, postId, content);
         });
     }

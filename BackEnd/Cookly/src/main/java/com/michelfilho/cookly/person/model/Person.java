@@ -3,7 +3,6 @@ package com.michelfilho.cookly.person.model;
 import com.michelfilho.cookly.authentication.model.User;
 import jakarta.persistence.*;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
@@ -20,7 +19,7 @@ public class Person {
     private String id;
 
     private String name;
-    private String surName;
+    private String lastName;
 
     private String profilePicturePath;
 
@@ -31,9 +30,9 @@ public class Person {
     private User user;
 
 
-    public Person(String name, String surName, String profilePicturePath, LocalDate birthDay, User user) {
+    public Person(String name, String lastName, String profilePicturePath, LocalDate birthDay, User user) {
         this.name = name;
-        this.surName = surName;
+        this.lastName = lastName;
         this.profilePicturePath = profilePicturePath;
         this.birthDay = birthDay;
         this.user = user;
@@ -42,6 +41,6 @@ public class Person {
     public Person() {}
 
     public String getFullName() {
-        return this.name + " " + this.surName;
+        return this.name + " " + this.lastName;
     }
 }

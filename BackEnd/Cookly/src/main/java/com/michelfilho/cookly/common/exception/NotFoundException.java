@@ -1,7 +1,7 @@
 package com.michelfilho.cookly.common.exception;
 
-public class NotFound extends RuntimeException {
-    public NotFound(Class<?> c) {
+public class NotFoundException extends RuntimeException {
+    public NotFoundException(Class<?> c) {
         super("This " + c.getName() +  " doesn't exist!");
     }
 }

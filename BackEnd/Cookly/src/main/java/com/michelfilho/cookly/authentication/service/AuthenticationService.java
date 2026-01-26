@@ -64,7 +64,7 @@ public class AuthenticationService {
 
         Person newPerson = new Person(
                 data.name(),
-                data.surName(),
+                data.lastName(),
                 profilePicturePath,
                 data.birthDay(),
                 newUser
