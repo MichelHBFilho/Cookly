@@ -23,6 +23,16 @@ public interface PostRepository extends JpaRepository<Post, String> {
     """, nativeQuery = true)
     List<Post> findAllByPersonUserUsername(@Param("username") String username, @Param("limit") int limit, @Param("offset") int offset);
 
+    @Query(value = """
+        SELECT p.*
+            FROM post p
+            JOIN person pe ON p.person_id = pe.id
+            JOIN users u ON pe.user_id = u.id
+            ORDER BY p.created_at DESC
+            LIMIT :limit OFFSET :offset
+    """, nativeQuery = true)
+    List<Post> findAllPaginated(@Param("limit") int limit, @Param("offset") int offset);
+
     Boolean existsByIdAndPerson(String id, Person person);
 
 }

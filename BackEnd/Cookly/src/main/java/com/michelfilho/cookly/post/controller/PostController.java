@@ -68,6 +68,12 @@ public class PostController {
         return postService.findPostsByUsername(username, page);
     }
 
+    @Operation(summary = "Return all posts paginated, for homepage.")
+    @GetMapping
+    public List<ReadPostDTO> getAll(@RequestParam(value = "page", required = false, defaultValue = "1") Integer page) {
+        return postService.getAllPosts(page);
+    }
+
     @Operation(summary = "Given an post ID try to like the post with the logged user.")
     @ApiResponses(value =  {
             @ApiResponse(responseCode = "200", description = "Successfully liked"),

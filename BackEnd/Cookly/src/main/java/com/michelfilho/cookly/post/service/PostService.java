@@ -101,6 +101,15 @@ public class PostService {
                 .toList();
     }
 
+    public List<ReadPostDTO> getAllPosts(Integer page) {
+        if(page <= 0) throw new IllegalArgumentException();
+
+        return postRepository.findAllPaginated(10, (page-1)*10)
+                .stream()
+                .map(this::postToReadDTO)
+                .toList();
+    }
+
     protected ReadPostDTO postToReadDTO(Post post) {
         Recipe recipe = post.getRecipe();
         ReadRecipeDTO recipeDTO = new ReadRecipeDTO(
