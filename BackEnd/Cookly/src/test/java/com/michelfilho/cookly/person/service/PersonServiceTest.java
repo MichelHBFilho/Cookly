@@ -70,8 +70,7 @@ class PersonServiceTest {
 
         personService.updatePersonInformation(
                 updatePersonDTO,
-                user,
-                user.getUsername()
+                user
         );
 
         verify(personRepository).save(person);
@@ -108,8 +107,7 @@ class PersonServiceTest {
 
         personService.updatePersonInformation(
                 updatePersonDTO,
-                user,
-                user.getUsername()
+                user
         );
 
         verify(personRepository).save(person);

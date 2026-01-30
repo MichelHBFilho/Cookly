@@ -49,13 +49,9 @@ public class PersonService {
 
     public void updatePersonInformation(
             UpdatePersonDTO data,
-            User user,
-            String username
+            User user
     ) {
-        if(user.getUsername() != username)
-            throw new UnauthorizedException("You can't update this profile.");
-
-        Person person = personRepository.findByUserUsername(username);
+        Person person = personRepository.findByUserUsername(user.getUsername());
 
         applyUpdates(data, person);
 
