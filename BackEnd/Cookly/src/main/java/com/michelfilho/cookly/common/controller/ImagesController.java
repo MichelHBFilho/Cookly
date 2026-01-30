@@ -1,6 +1,7 @@
 package com.michelfilho.cookly.common.controller;
 
 import com.michelfilho.cookly.common.service.ImageService;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
@@ -21,12 +22,14 @@ public class ImagesController {
     @Value("${api.storage.pictures.post.path}")
     private String postPicturePath;
 
+    @Operation(summary = "Return the profile picture by the fileName")
     @GetMapping(value = "/profile/{fileName}",
     produces = MediaType.IMAGE_JPEG_VALUE)
     public byte[] profilePicure(@PathVariable String fileName) {
         return imageService.getImage(profilesPicturePath + "/" + fileName);
     }
 
+    @Operation(summary = "Return the post picture by the fileName")
     @GetMapping(value = "/post/{fileName}",
             produces = MediaType.IMAGE_JPEG_VALUE)
     public byte[] postPicture(@PathVariable String fileName) {
