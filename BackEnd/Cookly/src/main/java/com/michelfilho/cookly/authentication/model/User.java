@@ -13,6 +13,7 @@ import java.util.List;
 @Entity(name = "users")
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
+@Setter
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

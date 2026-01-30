@@ -39,9 +39,7 @@ public class AuthenticationService {
 
         var auth = this.authenticationManager.authenticate(usernameAndPassword);
 
-        var token = tokenService.generateToken(auth.getName());
-
-        return token;
+        return tokenService.generateToken(auth.getName());
     }
 
     public void register(RegisterDTO data) {

@@ -1,6 +1,7 @@
 package com.michelfilho.cookly.person.controller;
 
 import com.michelfilho.cookly.authentication.model.User;
+import com.michelfilho.cookly.person.dto.NewPasswordDTO;
 import com.michelfilho.cookly.person.dto.UpdatePersonDTO;
 import com.michelfilho.cookly.person.service.PersonService;
 import org.apache.coyote.Response;
@@ -38,13 +39,16 @@ public class PersonController {
         return ResponseEntity.ok().build();
     }
 
-    /*@PatchMapping("/{username}/password")
+    @PatchMapping("/update/password")
     public ResponseEntity updatePassword(
             @AuthenticationPrincipal UserDetails user,
-            @PathVariable String username
-    ) {
-
+            @RequestBody NewPasswordDTO dto
+            ) {
+        personService.updatePassword(
+                user.getUsername(),
+                dto
+        );
         return ResponseEntity.ok().build();
-    }*/
+    }
 
 }
