@@ -78,4 +78,12 @@ public class AuthenticationController {
         return ResponseEntity.ok().body(authenticationService.generateRefresh(userDetails));
     }
 
+    @DeleteMapping("/logout")
+    public ResponseEntity logout(
+            @AuthenticationPrincipal UserDetails userDetails
+    ) {
+        authenticationService.logout(userDetails);
+        return ResponseEntity.ok().build();
+    }
+
 }

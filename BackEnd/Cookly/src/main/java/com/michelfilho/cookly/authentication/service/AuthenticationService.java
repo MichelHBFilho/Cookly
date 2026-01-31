@@ -12,6 +12,7 @@ import com.michelfilho.cookly.common.exception.UsernameAlreadyRegisteredExceptio
 import com.michelfilho.cookly.common.service.ImageService;
 import com.michelfilho.cookly.person.model.Person;
 import com.michelfilho.cookly.person.repository.PersonRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -19,6 +20,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.sql.Ref;
+import java.util.List;
 
 @Service
 public class AuthenticationService {
@@ -94,6 +98,12 @@ public class AuthenticationService {
     public String generateRefresh(UserDetails userDetails) {
         User user = userRepository.findByUsername(userDetails.getUsername());
         return refreshTokenService.createRefreshToken(user.getId()).getToken();
+    }
+
+    @Transactional
+    public void logout(UserDetails userDetails) {
+        User user = userRepository.findByUsername(userDetails.getUsername());
+        refreshTokenRepository.deleteAllByUser(user);
     }
 
 }

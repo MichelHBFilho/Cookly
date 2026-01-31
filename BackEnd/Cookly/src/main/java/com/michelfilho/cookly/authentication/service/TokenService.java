@@ -60,6 +60,6 @@ public class TokenService {
 
     private Instant generateExpirationDate() {
         return Instant.now()
-                .plus(2, ChronoUnit.HOURS);
+                .plus(15, ChronoUnit.MINUTES);
     }
 }

@@ -32,6 +32,7 @@ public class SecurityConfiguration {
                             .requestMatchers("/authentication/*",
                                     "/swagger-ui/**",
                                     "/v3/api-docs/**").permitAll()
+                                .requestMatchers("/authentication/generate-refresh").authenticated()
                             .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)

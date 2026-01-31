@@ -81,6 +81,8 @@ public class PersonService {
         String hashPassword = new BCryptPasswordEncoder().encode(dto.newPassword());
         user.setPassword(hashPassword);
         userRepository.save(user);
+
+        authenticationService.logout(user);
     }
 
     private void applyUpdates(
