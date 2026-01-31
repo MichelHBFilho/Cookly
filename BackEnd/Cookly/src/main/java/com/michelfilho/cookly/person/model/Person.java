@@ -12,7 +12,6 @@ import java.time.LocalDate;
 @Setter
 @Getter
 public class Person {
-
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(columnDefinition = "char(36)")
@@ -29,7 +28,6 @@ public class Person {
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     private User user;
 
-
     public Person(String name, String lastName, String profilePicturePath, LocalDate birthDay, User user) {
         this.name = name;
         this.lastName = lastName;
@@ -42,5 +40,10 @@ public class Person {
 
     public String getFullName() {
         return this.name + " " + this.lastName;
+    }
+
+    public String getProfilePictureName() {
+        String[] profilePicturePath = this.getProfilePicturePath().split("/");
+        return profilePicturePath[profilePicturePath.length - 1];
     }
 }

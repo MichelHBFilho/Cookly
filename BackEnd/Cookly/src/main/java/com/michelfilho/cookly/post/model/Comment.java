@@ -26,7 +26,7 @@ public class Comment {
 
     private String content;
 
-    private Instant createdAt = Instant.now();
+    private final Instant createdAt = Instant.now();
 
     public Comment(Post post, Person person, String content) {
         this.post = post;

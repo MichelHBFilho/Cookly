@@ -31,7 +31,6 @@ public class TokenService {
         this.secret = secret;
     }
 
-
     public String generateToken(String username) {
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);

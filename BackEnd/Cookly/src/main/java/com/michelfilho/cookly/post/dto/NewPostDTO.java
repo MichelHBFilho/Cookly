@@ -11,6 +11,7 @@ import java.util.List;
 
 public record NewPostDTO(
         @NotBlank
+        @NotNull
         @Schema(example = "Love Apple")
         String recipeName,
         @Size(max=150)

@@ -21,7 +21,9 @@ public class PersonController {
     public PersonService personService;
 
     @GetMapping("/{username}")
-    public ResponseEntity seeProfile(@PathVariable String username) {
+    public ResponseEntity seeProfile(
+            @PathVariable String username
+    ) {
         return ResponseEntity.ok().body(
                 personService.getPersonInformation(username)
         );
@@ -31,7 +33,7 @@ public class PersonController {
     public ResponseEntity updateProfile(
             @AuthenticationPrincipal UserDetails user,
             @RequestBody UpdatePersonDTO updatePersonDTO
-            ) {
+    ) {
         personService.updatePersonInformation(
                 updatePersonDTO,
                 (User) user
@@ -43,7 +45,7 @@ public class PersonController {
     public ResponseEntity updatePassword(
             @AuthenticationPrincipal UserDetails user,
             @RequestBody NewPasswordDTO dto
-            ) {
+    ) {
         personService.updatePassword(
                 user.getUsername(),
                 dto

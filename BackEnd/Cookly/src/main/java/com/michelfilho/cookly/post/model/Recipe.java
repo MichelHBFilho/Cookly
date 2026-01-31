@@ -39,4 +39,14 @@ public class Recipe {
         step.setRecipe(this);
         this.stepByStep.add(step);
     }
+
+    public void addListOfStringSteps(List<String> steps) {
+        for (int i = 1; i <= steps.size(); i++) {
+            String stepToPrepareIterator = steps.get(i-1);
+            this.addStep(new StepToPrepare(
+                    i,
+                    stepToPrepareIterator
+            ));
+        }
+    }
 }

@@ -8,5 +8,5 @@ public record ReadPersonDTO(
         LocalDate birthDay,
         String fullName,
         String username
-        ) {
+) {
 }

@@ -18,6 +18,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -32,8 +33,10 @@ public class PostController {
     @Autowired
     private InteractPostService interactPostService;
 
-
-    @Operation(summary = "Publish a post", description = "Given all post information and images it publishes.")
+    @Operation(
+            summary = "Publish a post",
+            description = "Given all post information and images it publishes."
+    )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Post successfully published"),
             @ApiResponse(responseCode = "400", description = "Can't publish the post")
@@ -43,49 +46,73 @@ public class PostController {
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE
     )
     public ResponseEntity publish(
-            @RequestPart("data") @Valid NewPostDTO data,
+            @RequestPart("data") @Validated NewPostDTO data,
             @RequestPart(value = "images", required = false) List<MultipartFile> images,
-            @AuthenticationPrincipal UserDetails user) {
+            @AuthenticationPrincipal UserDetails user
+    ) {
         postService.publishPost(data, images, user);
         return ResponseEntity.ok().build();
     }
 
-    @Operation(summary = "Given an ID, it try to delete a post.")
+    @Operation(
+            summary = "Given an ID, it try to delete a post."
+    )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Post successfully deleted."),
             @ApiResponse(responseCode = "404", description = "Post not found"),
             @ApiResponse(responseCode = "403", description = "This user can't delete this post.")
     })
     @DeleteMapping("/{id}")
-    public ResponseEntity delete(@PathVariable @Parameter(example = "UUID") String id, @AuthenticationPrincipal UserDetails user) {
+    public ResponseEntity delete(
+            @PathVariable @Parameter(example = "UUID") String id,
+            @AuthenticationPrincipal UserDetails user
+    ) {
         postService.removePost(id, user);
         return ResponseEntity.ok().build();
     }
 
-    @Operation(summary = "Given an username, return all posts of this person paginated.")
+    @Operation(
+            summary = "Given an username, return all posts of this person paginated."
+    )
     @GetMapping("/{username}")
-    public List<ReadPostDTO> getAllByUsername(@PathVariable String username, @RequestParam(value = "page", required = false, defaultValue = "1") Integer page) {
+    public List<ReadPostDTO> getAllByUsername(
+            @PathVariable String username,
+            @RequestParam(value = "page", required = false,
+                    defaultValue = "1") Integer page
+    ) {
         return postService.findPostsByUsername(username, page);
     }
 
-    @Operation(summary = "Return all posts paginated, for homepage.")
+    @Operation(
+            summary = "Return all posts paginated, for homepage."
+    )
     @GetMapping
-    public List<ReadPostDTO> getAll(@RequestParam(value = "page", required = false, defaultValue = "1") Integer page) {
+    public List<ReadPostDTO> getAll(
+            @RequestParam(value = "page", required = false, defaultValue = "1")
+            Integer page
+    ) {
         return postService.getAllPosts(page);
     }
 
-    @Operation(summary = "Given an post ID try to like the post with the logged user.")
+    @Operation(
+            summary = "Given an post ID try to like the post with the logged user."
+    )
     @ApiResponses(value =  {
             @ApiResponse(responseCode = "200", description = "Successfully liked"),
             @ApiResponse(responseCode = "400", description = "Post already liked by the user.")
     })
     @PostMapping("/{id}/like")
-    public ResponseEntity likePost(@PathVariable @Parameter(example = "UUID") String id, @AuthenticationPrincipal UserDetails user) {
+    public ResponseEntity likePost(
+            @PathVariable @Parameter(example = "UUID") String id,
+            @AuthenticationPrincipal UserDetails user
+    ) {
         interactPostService.like(user, id);
         return ResponseEntity.ok().build();
     }
 
-    @Operation(summary = "Given an post ID try to dislike the post with the logged user.")
+    @Operation(
+            summary = "Given an post ID try to dislike the post with the logged user."
+    )
     @ApiResponses(value =  {
             @ApiResponse(responseCode = "200", description = "Successfully disliked"),
             @ApiResponse(responseCode = "400", description = "Post isn't liked by the user.")
@@ -96,14 +123,22 @@ public class PostController {
         return ResponseEntity.ok().build();
     }
 
-    @Operation(summary = "Given an post ID comment on it with the logged user.")
+    @Operation(
+            summary = "Given an post ID comment on it with the logged user."
+    )
     @PostMapping("/{id}/comment")
-    public ResponseEntity comment(@PathVariable @Parameter(example = "UUID") String id, @AuthenticationPrincipal UserDetails user, @RequestBody @Parameter(example = "Very good recipe!") String content) {
+    public ResponseEntity comment(
+            @PathVariable @Parameter(example = "UUID") String id,
+            @AuthenticationPrincipal UserDetails user,
+            @RequestBody @Parameter(example = "Very good recipe!") String content
+    ) {
         interactPostService.comment(user, id, content);
         return ResponseEntity.ok().build();
     }
 
-    @Operation(summary = "Given an comment id try to delete it.")
+    @Operation(
+            summary = "Given an comment id try to delete it."
+    )
     @DeleteMapping("/comment/{commentId}")
     public ResponseEntity removeComment(
             @AuthenticationPrincipal UserDetails user,

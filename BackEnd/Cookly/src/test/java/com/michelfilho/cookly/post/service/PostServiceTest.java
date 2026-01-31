@@ -43,13 +43,10 @@ class PostServiceTest {
     @Test
     public void shouldPublishValidPost() {
         NewPostDTO post = Instancio.of(NewPostDTO.class).create();
-        UserDetails user = Instancio.of(UserDetails.class).create();
+        UserDetails user = Instancio.of(User.class).create();
         Person person = Instancio.of(Person.class).create();
 
         postService.publishPost(post, null, user);
-
-        when(personRepository.findByUserUsername(user.getUsername()))
-                .thenReturn(person);
 
         verify(postRepository).save(any());
     }

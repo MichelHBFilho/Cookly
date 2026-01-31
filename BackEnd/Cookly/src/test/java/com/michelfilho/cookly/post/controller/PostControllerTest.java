@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
@@ -52,13 +53,55 @@ class PostControllerTest {
 
     @Test
     @WithMockUser(username = "TestUser")
-    public void shouldPostValidPost() throws Exception {
+    public void shouldPostValidPost_WithoutImages() throws Exception {
         NewPostDTO dto = Instancio.of(NewPostDTO.class).create();
 
+        MockMultipartFile dataPart = new MockMultipartFile(
+                "data",
+                "data.json",
+                MediaType.APPLICATION_JSON_VALUE,
+                gson.toJson(dto).getBytes()
+        );
+
         mockMvc.perform(
-                MockMvcRequestBuilders.post("/post/new")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(gson.toJson(dto))
+                MockMvcRequestBuilders.multipart("/post/new")
+                        .file(dataPart)
+                        .contentType(MediaType.MULTIPART_FORM_DATA)
+        ).andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
+    @Test
+    @WithMockUser(username = "TestUser")
+    public void shouldPostValidPost_WithImages() throws Exception {
+        NewPostDTO dto = Instancio.of(NewPostDTO.class).create();
+
+        MockMultipartFile dataPart = new MockMultipartFile(
+                "data",
+                "data.json",
+                MediaType.APPLICATION_JSON_VALUE,
+                gson.toJson(dto).getBytes()
+        );
+
+        MockMultipartFile image1 = new MockMultipartFile(
+                "images",
+                "image1.jpg",
+                MediaType.IMAGE_JPEG_VALUE,
+                "fake-image-1".getBytes()
+        );
+
+        MockMultipartFile image2 = new MockMultipartFile(
+                "images",
+                "image2.png",
+                MediaType.IMAGE_PNG_VALUE,
+                "fake-image-2".getBytes()
+        );
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.multipart("/post/new")
+                        .file(dataPart)
+                        .file(image1)
+                        .file(image2)
+                        .contentType(MediaType.MULTIPART_FORM_DATA)
         ).andExpect(MockMvcResultMatchers.status().isOk());
     }
 
@@ -66,10 +109,17 @@ class PostControllerTest {
     public void shouldNotPostUnlogged() throws Exception {
         NewPostDTO dto = Instancio.of(NewPostDTO.class).create();
 
+        MockMultipartFile dataPart = new MockMultipartFile(
+                "data",
+                "data.json",
+                MediaType.APPLICATION_JSON_VALUE,
+                gson.toJson(dto).getBytes()
+        );
+
         mockMvc.perform(
-                MockMvcRequestBuilders.post("/post/new")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(gson.toJson(dto))
+                MockMvcRequestBuilders.multipart("/post/new")
+                        .file(dataPart)
+                        .contentType(MediaType.MULTIPART_FORM_DATA)
         ).andExpect(MockMvcResultMatchers.status().isForbidden());
     }
 
@@ -80,10 +130,17 @@ class PostControllerTest {
                 .set(field("stepsToPrepare"), new ArrayList<>())
                 .create();
 
+        MockMultipartFile dataPart = new MockMultipartFile(
+                "data",
+                "data.json",
+                MediaType.APPLICATION_JSON_VALUE,
+                gson.toJson(dto).getBytes()
+        );
+
         mockMvc.perform(
-                MockMvcRequestBuilders.post("/post/new")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(gson.toJson(dto))
+                MockMvcRequestBuilders.multipart("/post/new")
+                        .file(dataPart)
+                        .contentType(MediaType.MULTIPART_FORM_DATA)
         ).andExpect(MockMvcResultMatchers.status().isBadRequest());
     }
 
@@ -91,6 +148,7 @@ class PostControllerTest {
     @WithMockUser(username = "TestUser")
     public void shouldNotPostInvalidDTO_moreThan15Step() throws Exception {
         ArrayList<String> steps = new ArrayList<>();
+
         for(int i = 0; i < 16; i++) {
             steps.add("step " + i);
         }
@@ -99,13 +157,18 @@ class PostControllerTest {
                 .set(field("stepsToPrepare"), steps)
                 .create();
 
+        MockMultipartFile dataPart = new MockMultipartFile(
+                "data",
+                "data.json",
+                MediaType.APPLICATION_JSON_VALUE,
+                gson.toJson(dto).getBytes()
+        );
+
         mockMvc.perform(
-                MockMvcRequestBuilders.post("/post/new")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(gson.toJson(dto))
+                MockMvcRequestBuilders.multipart("/post/new")
+                        .file(dataPart)
+                        .contentType(MediaType.MULTIPART_FORM_DATA)
         ).andExpect(MockMvcResultMatchers.status().isBadRequest());
     }
-
-
 
 }

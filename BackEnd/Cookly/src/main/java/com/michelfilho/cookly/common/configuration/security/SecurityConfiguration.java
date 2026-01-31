@@ -24,19 +24,24 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) {
         return httpSecurity
                 .csrf(csrf -> csrf.disable())
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/authentication/*",
-                                "/swagger-ui/**",
-                                "/v3/api-docs/**").permitAll()
-                        .anyRequest().authenticated()
+                .sessionManagement(
+                        session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                )
+                .authorizeHttpRequests(authorize ->
+                        authorize
+                            .requestMatchers("/authentication/*",
+                                    "/swagger-ui/**",
+                                    "/v3/api-docs/**").permitAll()
+                            .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+    public AuthenticationManager authenticationManager(
+            AuthenticationConfiguration authenticationConfiguration
+    ) {
         return authenticationConfiguration.getAuthenticationManager();
     }
 

@@ -28,19 +28,25 @@ public class AuthenticationController {
     @Autowired
     private AuthenticationService service;
 
-
     @Operation(
             summary = "Authenticate the user with username and password",
             description = "Returns a token for future requests"
     )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Successfully authentication, return a token"),
-            @ApiResponse(responseCode = "403", description = "Can't authenticate")
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Successfully authentication, return a token"
+            ),
+            @ApiResponse(
+                    responseCode = "403",
+                    description = "Can't authenticate"
+            )
     })
     @PostMapping("/login")
-    private ResponseEntity login(@RequestBody @Valid LoginDTO data) {
+    private ResponseEntity login(
+            @RequestBody @Valid LoginDTO data
+    ) {
         var token = service.login(data);
-
         return ResponseEntity.ok(new LoginResponseDTO(token));
     }
 
@@ -53,7 +59,9 @@ public class AuthenticationController {
             @ApiResponse(responseCode = "400", description = "Can't register - Bad Request")
     })
     @PostMapping("/register")
-    public ResponseEntity register(@ModelAttribute @Valid RegisterDTO data) {
+    public ResponseEntity register(
+            @ModelAttribute @Valid RegisterDTO data
+    ) {
         service.register(data);
 
         return ResponseEntity.ok().build();

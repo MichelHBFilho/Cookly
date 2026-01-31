@@ -38,7 +38,7 @@ public class Post {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "post")
     private List<Comment> comments;
 
-    private Instant createdAt = Instant.now();
+    private final Instant createdAt = Instant.now();
 
     public Post(Recipe recipe, Person person, String description, List<String> imagesPaths) {
         this.recipe = recipe;

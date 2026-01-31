@@ -14,22 +14,30 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(UsernameAlreadyRegisteredException.class)
-    private ResponseEntity usernameAlreadyRegistered(UsernameAlreadyRegisteredException exception) {
+    private ResponseEntity usernameAlreadyRegistered(
+            UsernameAlreadyRegisteredException exception
+    ) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exception.getMessage());
     }
 
     @ExceptionHandler(NotFoundException.class)
-    private ResponseEntity postNotFound(NotFoundException exception) {
+    private ResponseEntity postNotFound(
+            NotFoundException exception
+    ) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(exception.getMessage());
     }
 
     @ExceptionHandler(InvalidTokenException.class)
-    private ResponseEntity invalidToken(InvalidTokenException exception) {
+    private ResponseEntity invalidToken(
+            InvalidTokenException exception
+    ) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exception.getMessage());
     }
 
     @ExceptionHandler(InvalidPostInteractionStateException.class)
-    private ResponseEntity postAlreadyLiked(InvalidPostInteractionStateException exception) {
+    private ResponseEntity postAlreadyLiked(
+            InvalidPostInteractionStateException exception
+    ) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exception.getMessage());
     }
 

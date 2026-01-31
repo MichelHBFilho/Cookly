@@ -17,7 +17,7 @@ public class ImageService {
     // The return is the path to the saved image
     @SneakyThrows
     public String saveImage(String dir, MultipartFile image) {
-        String fileName = UUID.randomUUID().toString() + "_" + image.getOriginalFilename();
+        String fileName = UUID.randomUUID() + "_" + image.getOriginalFilename();
 
         Path uploadPath = Paths.get(dir);
         Path filePath = uploadPath.resolve(fileName);
@@ -27,8 +27,6 @@ public class ImageService {
         }
 
         Files.copy(image.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
-
-        System.out.println(filePath);
 
         return fileName;
     }
@@ -45,6 +43,7 @@ public class ImageService {
     @SneakyThrows
     public void deleteImage(String path) {
         Path pathObject = Path.of(path);
+
         if(!Files.exists(pathObject))
             throw new NotFoundException(Files.class);
 

@@ -18,17 +18,17 @@ public class InteractPostService {
 
     @Autowired
     private PostRepository postRepository;
-
     @Autowired
     private PersonRepository personRepository;
-
     @Autowired
     private PostLikeRepository postLikeRepository;
-
     @Autowired
     private CommentRepository commentRepository;
 
-    public void like(UserDetails user, String postId) {
+    public void like(
+            UserDetails user,
+            String postId
+    ) {
         if(postLikeRepository.existsByPostIdAndPersonUserUsername(postId, user.getUsername()))
             throw new InvalidPostInteractionStateException("This post is already liked.");
 
@@ -42,14 +42,21 @@ public class InteractPostService {
         postRepository.save(post);
     }
 
-    public void dislike(UserDetails user, String postId) {
+    public void dislike(
+            UserDetails user,
+            String postId
+    ) {
         if(!postLikeRepository.existsByPostIdAndPersonUserUsername(postId, user.getUsername()))
             throw new InvalidPostInteractionStateException("This post isn't liked.");
 
         postLikeRepository.deleteByPostIdAndPersonUserUsername(postId, user.getUsername());
     }
 
-    public void comment(UserDetails user, String postId, @NotNull String content) {
+    public void comment(
+            UserDetails user,
+            String postId,
+            @NotNull String content
+    ) {
         Person person = personRepository.findByUserUsername(user.getUsername());
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new NotFoundException(Post.class));
@@ -59,7 +66,10 @@ public class InteractPostService {
         postRepository.save(post);
     }
 
-    public void removeComment(UserDetails user, String commentId) {
+    public void removeComment(
+            UserDetails user,
+            String commentId
+    ) {
         if(!commentRepository.existsById(commentId))
             throw new InvalidPostInteractionStateException("This comment does not exist");
 

@@ -40,14 +40,14 @@ public class PersonService {
     @Value("${api.storage.pictures.profile.path}")
     private String profilePicturesPath;
 
-
     public ReadPersonDTO getPersonInformation(String username) {
         Person person = personRepository.findByUserUsername(username);
 
-        if(person == null) throw new NotFoundException(Person.class);
+        if(person == null)
+            throw new NotFoundException(Person.class);
 
-        String[] profilePicturePath = person.getProfilePicturePath().split("/");
-        String profilePictureName = profilePicturePath[profilePicturePath.length - 1];
+        String profilePictureName = person.getProfilePictureName();
+
         return new ReadPersonDTO(
                 profilePictureName,
                 person.getBirthDay(),
@@ -83,7 +83,9 @@ public class PersonService {
         userRepository.save(user);
     }
 
-    private void applyUpdates(UpdatePersonDTO data, Person person) {
+    private void applyUpdates(
+            UpdatePersonDTO data, Person person
+    ) {
         if(data.profilePicture() != null) {
             updateProfilePicture(person, data.profilePicture());
         }

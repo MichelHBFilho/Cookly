@@ -50,11 +50,10 @@ public class AuthenticationService {
         User newUser = new User(data.username(), encryptedPassword);
 
         String profilePicturePath = "";
+
         if(data.profilePicture() != null) {
             profilePicturePath =
-                    profilesPicturePath
-                            + "/"
-                            + imageService.saveImage(
+                    imageService.saveImage(
                                     profilesPicturePath,
                                     data.profilePicture()
                             );

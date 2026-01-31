@@ -28,20 +28,18 @@ public class PostService {
 
     @Autowired
     private PostRepository postRepository;
-
     @Autowired
     private PersonRepository personRepository;
-
     @Value("${api.storage.pictures.post.path}")
     private String postPath;
-
     @Autowired
     private ImageService imageService;
 
     public void publishPost(
             NewPostDTO data,
             List<MultipartFile> images,
-            UserDetails user) {
+            UserDetails user
+    ) {
         Person person = personRepository.findByUserUsername(user.getUsername());
 
         Recipe newRecipe = new Recipe(
@@ -50,24 +48,18 @@ public class PostService {
                 data.recipeName()
         );
 
-        for (int i = 1; i <= data.stepsToPrepare().size(); i++) {
-            String stepToPrepareIterator = data.stepsToPrepare().get(i-1);
-            newRecipe.addStep(new StepToPrepare(
-                    i,
-                    stepToPrepareIterator
-            ));
-        }
+        newRecipe.addListOfStringSteps(data.stepsToPrepare());
 
         List<String> imagesPaths = new ArrayList<>();
         if(images != null) {
-            images.forEach((MultipartFile file) -> {
-                imagesPaths.add(
+            images.forEach((MultipartFile file) ->
+                    imagesPaths.add(
                         imageService.saveImage(
                                 postPath,
                                 file
                         )
-                );
-            });
+                    )
+            );
         }
 
         Post newPost = new Post(
@@ -80,22 +72,33 @@ public class PostService {
         postRepository.save(newPost);
     }
 
-    public void removePost(String id, UserDetails user) {
+    public void removePost(
+            String id,
+            UserDetails user
+    ) {
         if(!postRepository.existsById(id))
             throw new NotFoundException(Post.class);
 
         Person person = personRepository.findByUserUsername(user.getUsername());
+
         if(!postRepository.existsByIdAndPerson(id, person))
             throw new UnauthorizedException("You can't delete this post");
 
         postRepository.deleteById(id);
     }
 
-    public List<ReadPostDTO> findPostsByUsername(String username, Integer page) {
+    public List<ReadPostDTO> findPostsByUsername(
+            String username,
+            Integer page
+    ) {
         if(page <= 0) throw new IllegalArgumentException();
 
         return postRepository
-                .findAllByPersonUserUsername(username, 10, (page-1)*10)
+                .findAllByPersonUserUsername(
+                        username,
+                        10,
+                        (page-1)*10
+                )
                 .stream()
                 .map(this::postToReadDTO)
                 .toList();
@@ -104,7 +107,10 @@ public class PostService {
     public List<ReadPostDTO> getAllPosts(Integer page) {
         if(page <= 0) throw new IllegalArgumentException();
 
-        return postRepository.findAllPaginated(10, (page-1)*10)
+        return postRepository.findAllPaginated(
+                        10,
+                        (page-1)*10
+                )
                 .stream()
                 .map(this::postToReadDTO)
                 .toList();
