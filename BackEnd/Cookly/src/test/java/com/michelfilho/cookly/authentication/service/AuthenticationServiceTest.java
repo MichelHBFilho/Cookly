@@ -31,7 +31,8 @@ import static org.hamcrest.Matchers.*;
 @SpringBootTest(classes = CooklyApplication.class)
 @TestPropertySource(properties = {
         "api.security.token.secret=test-secret",
-        "api.storage.pictures.profile.path=/src/main/resources/profile_pictures"
+        "api.storage.pictures.profile.path=/src/main/resources/profile_pictures",
+        "jwt.refreshExpirationMs=5000"
 })
 @Transactional
 class AuthenticationServiceTest {

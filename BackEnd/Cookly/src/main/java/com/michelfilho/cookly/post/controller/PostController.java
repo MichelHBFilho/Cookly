@@ -8,6 +8,9 @@ import com.michelfilho.cookly.post.service.InteractPostService;
 import com.michelfilho.cookly.post.service.PostService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Encoding;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
@@ -41,13 +44,24 @@ public class PostController {
             @ApiResponse(responseCode = "200", description = "Post successfully published"),
             @ApiResponse(responseCode = "400", description = "Can't publish the post")
     })
+    @io.swagger.v3.oas.annotations.parameters.RequestBody(
+            content = @Content(
+                    mediaType = MediaType.MULTIPART_FORM_DATA_VALUE,
+                    encoding = {
+                            @Encoding(name = "data", contentType = MediaType.APPLICATION_JSON_VALUE),
+                            @Encoding(name = "images", contentType = "image/png, image/jpeg")
+                    }
+            )
+    )
     @PostMapping(
             value = "/new",
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE
     )
     public ResponseEntity publish(
             @RequestPart("data") @Validated NewPostDTO data,
-            @RequestPart(value = "images", required = false) List<MultipartFile> images,
+            @RequestPart(value = "images", required = false)
+            @Schema(type = "array", format = "binary")
+            List<MultipartFile> images,
             @AuthenticationPrincipal UserDetails user
     ) {
         postService.publishPost(data, images, user);

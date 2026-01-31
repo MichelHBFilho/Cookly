@@ -35,7 +35,9 @@ import static org.mockito.Mockito.verify;
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
 @TestPropertySource(properties = {
-        "api.security.token.secret=test-secret"
+        "api.security.token.secret=test-secret",
+        "api.storage.pictures.profile.path=/src/main/resources/profile_pictures",
+        "jwt.refreshExpirationMs=5000"
 })
 class PostControllerTest {
 
