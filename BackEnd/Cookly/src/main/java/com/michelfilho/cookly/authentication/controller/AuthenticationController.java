@@ -6,6 +6,7 @@ import com.michelfilho.cookly.authentication.dto.LoginResponseDTO;
 import com.michelfilho.cookly.authentication.dto.RegisterDTO;
 import com.michelfilho.cookly.authentication.service.RefreshTokenService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
@@ -64,13 +65,30 @@ public class AuthenticationController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/refresh")
+    @Operation(
+            summary = "Return a new JWT token for future requisitions.",
+            description = "Given an valid refresh token it returns a new JWT token."
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Success."),
+            @ApiResponse(responseCode = "404", description = "Token not found."),
+            @ApiResponse(responseCode = "400", description = "Token expired.")
+    })
+    @GetMapping("/refresh/{token}")
     public ResponseEntity refresh(
-        @RequestBody String token
+        @PathVariable @Parameter(example = "BEARER TOKEN") String token
     ) {
         return ResponseEntity.ok().body(authenticationService.refresh(token));
     }
 
+    @Operation(
+            summary = "Return a new refresh token.",
+            description = "When authenticated, it returns a valid refresh token, that will last for a long time."
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Success."),
+            @ApiResponse(responseCode = "403", description = "User isn't logged.")
+    })
     @GetMapping("/generate-refresh")
     public ResponseEntity generateRefresh(
             @AuthenticationPrincipal UserDetails userDetails
@@ -78,6 +96,12 @@ public class AuthenticationController {
         return ResponseEntity.ok().body(authenticationService.generateRefresh(userDetails));
     }
 
+    @Operation(
+            summary = "Delete all refresh tokens."
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Success.")
+    })
     @DeleteMapping("/logout")
     public ResponseEntity logout(
             @AuthenticationPrincipal UserDetails userDetails

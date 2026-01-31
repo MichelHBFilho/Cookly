@@ -14,7 +14,7 @@ public record RegisterDTO(
         String name,
         @Schema(example = "Doe")
         String lastName,
-        @Schema(example = "IMAGE")
+        @Schema(description = "Multipart File with user image not required", nullable = true, hidden = true)
         MultipartFile profilePicture,
         @Schema(example = "2000-01-01")
         LocalDate birthDay) {

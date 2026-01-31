@@ -29,7 +29,7 @@ public class SecurityConfiguration {
                 )
                 .authorizeHttpRequests(authorize ->
                         authorize
-                            .requestMatchers("/authentication/*",
+                            .requestMatchers("/authentication/**",
                                     "/swagger-ui/**",
                                     "/v3/api-docs/**").permitAll()
                                 .requestMatchers("/authentication/generate-refresh").authenticated()
