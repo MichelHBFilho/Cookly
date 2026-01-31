@@ -8,7 +8,13 @@ services:
     networks:
       - springapimysql-net
     environment:
-      - spring.datasource.url=jdbc:mysql://mysqldb:3306/cookly?allowPublicKeyRetrieval=true&useSSL=false
+      - spring.datasource.url=${DB_URL}
+      - spring.datasource.username=${DB_USER}
+      - spring.datasource.password=${DB_PASSWORD}
+      - spring.profiles.active=default
+      - api.security.token.secret=${JWT_SECRET}
+      - api.storage.pictures.profile.path=static/pictures/profile
+      - api.storage.pictures.post.path=static/pictures/post
     depends_on:
       mysqldb:
         condition: service_healthy
@@ -25,9 +31,8 @@ services:
       - springapimysql-net
     environment:
       MYSQL_DATABASE: cookly
-      MYSQL_USER: cookly
-      MYSQL_PASSWORD: cookly
-      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
     healthcheck:
       test: mysqladmin ping -h 127.0.0.1 -u $$MYSQL_USER --password=$$MYSQL_PASSWORD
       start_period: 5s
