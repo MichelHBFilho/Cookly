@@ -11,7 +11,7 @@ services:
       - spring.datasource.url=${DB_URL}
       - spring.datasource.username=${DB_USER}
       - spring.datasource.password=${DB_PASSWORD}
-      - spring.profiles.active=default
+      - spring.profiles.active=prod
       - api.security.token.secret=${JWT_SECRET}
       - api.storage.pictures.profile.path=static/pictures/profile
       - api.storage.pictures.post.path=static/pictures/post
@@ -33,6 +33,7 @@ services:
       MYSQL_DATABASE: cookly
       MYSQL_USER: ${DB_USER}
       MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
     healthcheck:
       test: mysqladmin ping -h 127.0.0.1 -u $$MYSQL_USER --password=$$MYSQL_PASSWORD
       start_period: 5s
