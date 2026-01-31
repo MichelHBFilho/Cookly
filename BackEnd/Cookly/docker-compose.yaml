@@ -15,6 +15,7 @@ services:
       - api.security.token.secret=${JWT_SECRET}
       - api.storage.pictures.profile.path=static/pictures/profile
       - api.storage.pictures.post.path=static/pictures/post
+      - jwt.refreshExpirationMs=604800000
     depends_on:
       mysqldb:
         condition: service_healthy

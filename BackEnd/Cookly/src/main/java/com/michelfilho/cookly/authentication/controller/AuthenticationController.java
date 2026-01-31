@@ -1,24 +1,19 @@
 package com.michelfilho.cookly.authentication.controller;
 
-import ch.qos.logback.core.net.SyslogOutputStream;
 import com.michelfilho.cookly.authentication.service.AuthenticationService;
-import com.michelfilho.cookly.person.model.Person;
 import com.michelfilho.cookly.authentication.dto.LoginDTO;
 import com.michelfilho.cookly.authentication.dto.LoginResponseDTO;
 import com.michelfilho.cookly.authentication.dto.RegisterDTO;
-import com.michelfilho.cookly.authentication.model.User;
-import com.michelfilho.cookly.person.repository.PersonRepository;
-import com.michelfilho.cookly.authentication.repository.UserRepository;
-import com.michelfilho.cookly.authentication.service.TokenService;
+import com.michelfilho.cookly.authentication.service.RefreshTokenService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -26,7 +21,9 @@ import org.springframework.web.bind.annotation.*;
 public class AuthenticationController {
 
     @Autowired
-    private AuthenticationService service;
+    private AuthenticationService authenticationService;
+    @Autowired
+    private RefreshTokenService refreshTokenService;
 
     @Operation(
             summary = "Authenticate the user with username and password",
@@ -46,7 +43,7 @@ public class AuthenticationController {
     private ResponseEntity login(
             @RequestBody @Valid LoginDTO data
     ) {
-        var token = service.login(data);
+        var token = authenticationService.login(data);
         return ResponseEntity.ok(new LoginResponseDTO(token));
     }
 
@@ -62,9 +59,23 @@ public class AuthenticationController {
     public ResponseEntity register(
             @ModelAttribute @Valid RegisterDTO data
     ) {
-        service.register(data);
+        authenticationService.register(data);
 
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/refresh")
+    public ResponseEntity refresh(
+        @RequestBody String token
+    ) {
+        return ResponseEntity.ok().body(authenticationService.refresh(token));
+    }
+
+    @GetMapping("/generate-refresh")
+    public ResponseEntity generateRefresh(
+            @AuthenticationPrincipal UserDetails userDetails
+            ) {
+        return ResponseEntity.ok().body(authenticationService.generateRefresh(userDetails));
     }
 
 }

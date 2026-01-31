@@ -2,8 +2,12 @@ package com.michelfilho.cookly.authentication.service;
 
 import com.michelfilho.cookly.authentication.dto.LoginDTO;
 import com.michelfilho.cookly.authentication.dto.RegisterDTO;
+import com.michelfilho.cookly.authentication.model.RefreshToken;
 import com.michelfilho.cookly.authentication.model.User;
+import com.michelfilho.cookly.authentication.repository.RefreshTokenRepository;
 import com.michelfilho.cookly.authentication.repository.UserRepository;
+import com.michelfilho.cookly.common.exception.InvalidTokenException;
+import com.michelfilho.cookly.common.exception.NotFoundException;
 import com.michelfilho.cookly.common.exception.UsernameAlreadyRegisteredException;
 import com.michelfilho.cookly.common.service.ImageService;
 import com.michelfilho.cookly.person.model.Person;
@@ -12,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +26,8 @@ public class AuthenticationService {
     @Autowired
     private AuthenticationManager authenticationManager;
     @Autowired
+    private RefreshTokenRepository refreshTokenRepository;
+    @Autowired
     private UserRepository userRepository;
     @Autowired
     private PersonRepository personRepository;
@@ -28,6 +35,8 @@ public class AuthenticationService {
     private TokenService tokenService;
     @Autowired
     private ImageService imageService;
+    @Autowired
+    private RefreshTokenService refreshTokenService;
     @Value("${api.storage.pictures.profile.path}")
     private String profilesPicturePath;
 
@@ -68,6 +77,23 @@ public class AuthenticationService {
         );
 
         personRepository.save(newPerson);
+    }
+
+    public String refresh(String requestToken) {
+        RefreshToken refreshToken = refreshTokenRepository.findByToken(requestToken)
+                .orElseThrow(() -> new NotFoundException(RefreshToken.class));
+
+        if(refreshTokenService.isTokenValid(refreshToken)) {
+            refreshTokenRepository.delete(refreshToken);
+            throw new InvalidTokenException();
+        }
+
+        return tokenService.generateToken(refreshToken.getUser().getUsername());
+    }
+
+    public String generateRefresh(UserDetails userDetails) {
+        User user = userRepository.findByUsername(userDetails.getUsername());
+        return refreshTokenService.createRefreshToken(user.getId()).getToken();
     }
 
 }
