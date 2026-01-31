@@ -1,4 +1,6 @@
 package com.michelfilho.cookly.authentication.dto;
 
-public record LoginResponseDTO(String token) {
+import io.swagger.v3.oas.annotations.media.Schema;
+
+public record LoginResponseDTO(@Schema(example = "Bearer Token") String token) {
 }
