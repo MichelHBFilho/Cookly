@@ -1,0 +1,111 @@
+package com.michelfilho.cookly.person.service;
+
+import com.michelfilho.cookly.authentication.dto.LoginDTO;
+import com.michelfilho.cookly.authentication.model.User;
+import com.michelfilho.cookly.authentication.repository.UserRepository;
+import com.michelfilho.cookly.authentication.service.AuthenticationService;
+import com.michelfilho.cookly.authentication.service.RefreshTokenService;
+import com.michelfilho.cookly.common.exception.NotFoundException;
+import com.michelfilho.cookly.common.service.ImageService;
+import com.michelfilho.cookly.person.dto.NewPasswordDTO;
+import com.michelfilho.cookly.person.dto.ReadPersonDTO;
+import com.michelfilho.cookly.person.dto.UpdatePersonDTO;
+import com.michelfilho.cookly.person.model.Person;
+import com.michelfilho.cookly.person.repository.PersonRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+@Service
+public class PersonService {
+
+    @Autowired
+    private RefreshTokenService refreshTokenService;
+    @Autowired
+    private AuthenticationService authenticationService;
+    @Autowired
+    private ImageService imageService;
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private PersonRepository personRepository;
+    @Value("${api.storage.pictures.profile.path}")
+    private String profilePicturesPath;
+
+    public ReadPersonDTO getPersonInformation(String username) {
+        Person person = personRepository.findByUserUsername(username);
+
+        if(person == null)
+            throw new NotFoundException(Person.class);
+
+        String profilePictureName = person.getProfilePictureName();
+
+        return new ReadPersonDTO(
+                profilePictureName,
+                person.getBirthDay(),
+                person.getFullName(),
+                person.getUser().getUsername()
+        );
+    }
+
+    public void updatePersonInformation(
+            UpdatePersonDTO data,
+            User user
+    ) {
+        Person person = personRepository.findByUserUsername(user.getUsername());
+
+        applyUpdates(data, person);
+
+        personRepository.save(person);
+    }
+
+    public void updatePassword(
+            String username,
+            NewPasswordDTO dto
+    ) {
+        User user = userRepository.findByUsername(username);
+
+        authenticationService.login(new LoginDTO(
+                username,
+                dto.oldPassword()
+        ));
+
+        String hashPassword = new BCryptPasswordEncoder().encode(dto.newPassword());
+        user.setPassword(hashPassword);
+        userRepository.save(user);
+
+        refreshTokenService.logout(user);
+    }
+
+    private void applyUpdates(
+            UpdatePersonDTO data, Person person
+    ) {
+        if(data.profilePicture() != null) {
+            updateProfilePicture(person, data.profilePicture());
+        }
+        if(data.lastName() != null) {
+            person.setLastName(data.lastName());
+        }
+        if(data.firstName() != null) {
+            person.setName(data.firstName());
+        }
+        if(data.birthDay() != null) {
+            person.setBirthDay(data.birthDay());
+        }
+    }
+
+    private void updateProfilePicture(Person person, MultipartFile image) {
+        imageService.deleteImage(profilePicturesPath + "/" + person.getProfilePicturePath());
+        imageService.saveImage(profilePicturesPath, image);
+    }
+
+}
+
+enum PersonField {
+    FIRST_NAME,
+    LAST_NAME,
+    PROFILE_PICTURE,
+    BIRTHDAY
+}
