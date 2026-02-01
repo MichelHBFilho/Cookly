@@ -14,8 +14,11 @@ struct CooklyApp: App {
     
     var body: some Scene {
         WindowGroup {
-            ContentView()
-                .environment(networkMonitor)
+            if(networkMonitor.isConnected) {
+                ContentView()
+            } else {
+                DisconnectedView()
+            }
         }
     }
 }

@@ -9,9 +9,6 @@ import SwiftUI
 import SwiftData
 
 struct ContentView: View {
-    @Environment(\.modelContext) private var modelContext
-    @Environment(NetworkMonitor.self) private var networkMonitor
-
     var body: some View {
     }
 }
