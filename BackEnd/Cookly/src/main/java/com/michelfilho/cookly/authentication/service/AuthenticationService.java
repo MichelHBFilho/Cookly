@@ -2,27 +2,19 @@ package com.michelfilho.cookly.authentication.service;
 
 import com.michelfilho.cookly.authentication.dto.LoginDTO;
 import com.michelfilho.cookly.authentication.dto.RegisterDTO;
-import com.michelfilho.cookly.authentication.model.RefreshToken;
 import com.michelfilho.cookly.authentication.model.User;
 import com.michelfilho.cookly.authentication.repository.RefreshTokenRepository;
 import com.michelfilho.cookly.authentication.repository.UserRepository;
-import com.michelfilho.cookly.common.exception.InvalidTokenException;
-import com.michelfilho.cookly.common.exception.NotFoundException;
 import com.michelfilho.cookly.common.exception.UsernameAlreadyRegisteredException;
 import com.michelfilho.cookly.common.service.ImageService;
 import com.michelfilho.cookly.person.model.Person;
 import com.michelfilho.cookly.person.repository.PersonRepository;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.sql.Ref;
-import java.util.List;
 
 @Service
 public class AuthenticationService {

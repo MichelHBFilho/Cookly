@@ -6,7 +6,6 @@ import com.michelfilho.cookly.authentication.repository.UserRepository;
 import com.michelfilho.cookly.authentication.service.AuthenticationService;
 import com.michelfilho.cookly.authentication.service.RefreshTokenService;
 import com.michelfilho.cookly.common.exception.NotFoundException;
-import com.michelfilho.cookly.common.exception.UnauthorizedException;
 import com.michelfilho.cookly.common.service.ImageService;
 import com.michelfilho.cookly.person.dto.NewPasswordDTO;
 import com.michelfilho.cookly.person.dto.ReadPersonDTO;
@@ -18,14 +17,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.time.LocalDate;
-import java.util.EnumMap;
-import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
-import static com.michelfilho.cookly.person.service.PersonField.*;
 
 @Service
 public class PersonService {

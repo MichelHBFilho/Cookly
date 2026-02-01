@@ -24,7 +24,6 @@ import java.nio.file.Path;
 import java.time.LocalDate;
 
 import static org.instancio.Select.field;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 

@@ -9,8 +9,6 @@ import com.michelfilho.cookly.authentication.repository.UserRepository;
 import com.michelfilho.cookly.common.exception.InvalidTokenException;
 import com.michelfilho.cookly.common.exception.NotFoundException;
 import jakarta.transaction.Transactional;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;

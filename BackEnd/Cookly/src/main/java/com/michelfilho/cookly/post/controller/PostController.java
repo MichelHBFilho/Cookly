@@ -1,9 +1,7 @@
 package com.michelfilho.cookly.post.controller;
 
-import com.michelfilho.cookly.authentication.model.User;
 import com.michelfilho.cookly.post.dto.NewPostDTO;
 import com.michelfilho.cookly.post.dto.ReadPostDTO;
-import com.michelfilho.cookly.post.model.Post;
 import com.michelfilho.cookly.post.service.InteractPostService;
 import com.michelfilho.cookly.post.service.PostService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -13,10 +11,7 @@ import io.swagger.v3.oas.annotations.media.Encoding;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import jakarta.validation.Valid;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;

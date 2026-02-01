@@ -1,18 +1,9 @@
 package com.michelfilho.cookly.authentication.service;
 
-import com.michelfilho.cookly.CooklyApplication;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
-import org.mockito.MockedStatic;
-import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.util.ReflectionTestUtils;
-
-import java.time.*;
-import java.time.temporal.ChronoUnit;
 
 import static org.hamcrest.MatcherAssert.*;
 import static org.hamcrest.CoreMatchers.*;
