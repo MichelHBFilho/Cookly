@@ -4,6 +4,7 @@ import com.michelfilho.cookly.authentication.dto.LoginDTO;
 import com.michelfilho.cookly.authentication.model.User;
 import com.michelfilho.cookly.authentication.repository.UserRepository;
 import com.michelfilho.cookly.authentication.service.AuthenticationService;
+import com.michelfilho.cookly.authentication.service.RefreshTokenService;
 import com.michelfilho.cookly.common.exception.NotFoundException;
 import com.michelfilho.cookly.common.exception.UnauthorizedException;
 import com.michelfilho.cookly.common.service.ImageService;
@@ -29,6 +30,8 @@ import static com.michelfilho.cookly.person.service.PersonField.*;
 @Service
 public class PersonService {
 
+    @Autowired
+    private RefreshTokenService refreshTokenService;
     @Autowired
     private AuthenticationService authenticationService;
     @Autowired
@@ -82,7 +85,7 @@ public class PersonService {
         user.setPassword(hashPassword);
         userRepository.save(user);
 
-        authenticationService.logout(user);
+        refreshTokenService.logout(user);
     }
 
     private void applyUpdates(

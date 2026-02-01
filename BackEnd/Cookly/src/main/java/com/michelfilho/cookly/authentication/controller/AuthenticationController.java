@@ -78,7 +78,7 @@ public class AuthenticationController {
     public ResponseEntity refresh(
         @PathVariable @Parameter(example = "BEARER TOKEN") String token
     ) {
-        return ResponseEntity.ok().body(authenticationService.refresh(token));
+        return ResponseEntity.ok().body(refreshTokenService.refresh(token));
     }
 
     @Operation(
@@ -93,7 +93,7 @@ public class AuthenticationController {
     public ResponseEntity generateRefresh(
             @AuthenticationPrincipal UserDetails userDetails
             ) {
-        return ResponseEntity.ok().body(authenticationService.generateRefresh(userDetails));
+        return ResponseEntity.ok().body(refreshTokenService.createRefreshToken(userDetails));
     }
 
     @Operation(
@@ -106,7 +106,7 @@ public class AuthenticationController {
     public ResponseEntity logout(
             @AuthenticationPrincipal UserDetails userDetails
     ) {
-        authenticationService.logout(userDetails);
+        refreshTokenService.logout(userDetails);
         return ResponseEntity.ok().build();
     }
 

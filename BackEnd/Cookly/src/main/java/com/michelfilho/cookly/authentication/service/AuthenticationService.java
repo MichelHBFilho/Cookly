@@ -83,27 +83,6 @@ public class AuthenticationService {
         personRepository.save(newPerson);
     }
 
-    public String refresh(String requestToken) {
-        RefreshToken refreshToken = refreshTokenRepository.findByToken(requestToken)
-                .orElseThrow(() -> new NotFoundException(RefreshToken.class));
 
-        if(refreshTokenService.isTokenValid(refreshToken)) {
-            refreshTokenRepository.delete(refreshToken);
-            throw new InvalidTokenException();
-        }
-
-        return tokenService.generateToken(refreshToken.getUser().getUsername());
-    }
-
-    public String generateRefresh(UserDetails userDetails) {
-        User user = userRepository.findByUsername(userDetails.getUsername());
-        return refreshTokenService.createRefreshToken(user.getId()).getToken();
-    }
-
-    @Transactional
-    public void logout(UserDetails userDetails) {
-        User user = userRepository.findByUsername(userDetails.getUsername());
-        refreshTokenRepository.deleteAllByUser(user);
-    }
 
 }

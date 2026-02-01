@@ -6,9 +6,14 @@ import com.michelfilho.cookly.authentication.model.RefreshToken;
 import com.michelfilho.cookly.authentication.model.User;
 import com.michelfilho.cookly.authentication.repository.RefreshTokenRepository;
 import com.michelfilho.cookly.authentication.repository.UserRepository;
+import com.michelfilho.cookly.common.exception.InvalidTokenException;
 import com.michelfilho.cookly.common.exception.NotFoundException;
+import jakarta.transaction.Transactional;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -26,15 +31,31 @@ public class RefreshTokenService {
     private RefreshTokenRepository refreshTokenRepository;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private TokenService tokenService;
 
     private Instant generateExpirationDate() {
         return Instant.now()
                 .plus(refreshExpirationMs, ChronoUnit.MILLIS);
     }
 
-    public RefreshToken createRefreshToken(String userId) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new NotFoundException(User.class));
+    public String refresh(String requestToken) {
+        RefreshToken refreshToken = refreshTokenRepository.findByToken(requestToken)
+                .orElseThrow(() -> new NotFoundException(RefreshToken.class));
+
+        if(!isTokenValid(refreshToken)) {
+            refreshTokenRepository.delete(refreshToken);
+            throw new InvalidTokenException();
+        }
+
+        return tokenService.generateToken(refreshToken.getUser().getUsername());
+    }
+
+    public RefreshToken createRefreshToken(UserDetails userDetails) {
+        User user = userRepository.findByUsername(userDetails.getUsername());
+
+        if(user == null)
+            throw new NotFoundException(User.class);
 
         Algorithm algorithm = Algorithm.HMAC256(secret);
         String token = JWT.create()
@@ -47,7 +68,14 @@ public class RefreshTokenService {
                 token,
                 generateExpirationDate()
         );
-        return refreshTokenRepository.save(refreshToken);
+        refreshTokenRepository.save(refreshToken);
+        return refreshToken;
+    }
+
+    @Transactional
+    public void logout(UserDetails userDetails) {
+        User user = userRepository.findByUsername(userDetails.getUsername());
+        refreshTokenRepository.deleteAllByUser(user);
     }
 
     public boolean isTokenValid(RefreshToken refreshToken) {
