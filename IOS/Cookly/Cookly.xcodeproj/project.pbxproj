@@ -6,6 +6,22 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		0237F0DA2F30D8CB00613B89 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0237F0D62F30D8CB00613B89 /* Assets.xcassets */; };
+		0237F0DB2F30D8CB00613B89 /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0237F0C52F30D8CB00613B89 /* APIError.swift */; };
+		0237F0DC2F30D8CB00613B89 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0237F0C62F30D8CB00613B89 /* APIService.swift */; };
+		0237F0DD2F30D8CB00613B89 /* HTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0237F0C72F30D8CB00613B89 /* HTTPMethod.swift */; };
+		0237F0DE2F30D8CB00613B89 /* NetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0237F0C82F30D8CB00613B89 /* NetworkMonitor.swift */; };
+		0237F0DF2F30D8CB00613B89 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0237F0CA2F30D8CB00613B89 /* AuthService.swift */; };
+		0237F0E02F30D8CB00613B89 /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0237F0CB2F30D8CB00613B89 /* KeychainService.swift */; };
+		0237F0E12F30D8CB00613B89 /* LoginRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0237F0CE2F30D8CB00613B89 /* LoginRequest.swift */; };
+		0237F0E22F30D8CB00613B89 /* TokenResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0237F0CF2F30D8CB00613B89 /* TokenResponse.swift */; };
+		0237F0E32F30D8CB00613B89 /* DisconnectedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0237F0D12F30D8CB00613B89 /* DisconnectedView.swift */; };
+		0237F0E42F30D8CB00613B89 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0237F0D72F30D8CB00613B89 /* ContentView.swift */; };
+		0237F0E52F30D8CB00613B89 /* CooklyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0237F0D82F30D8CB00613B89 /* CooklyApp.swift */; };
+		0237F0ED2F30DFDC00613B89 /* RefreshTokenResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0237F0EC2F30DFDC00613B89 /* RefreshTokenResponse.swift */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		02BC11122F2FC3A800CE2E2F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -24,15 +40,33 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0237F0C52F30D8CB00613B89 /* APIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
+		0237F0C62F30D8CB00613B89 /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
+		0237F0C72F30D8CB00613B89 /* HTTPMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPMethod.swift; sourceTree = "<group>"; };
+		0237F0C82F30D8CB00613B89 /* NetworkMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitor.swift; sourceTree = "<group>"; };
+		0237F0CA2F30D8CB00613B89 /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
+		0237F0CB2F30D8CB00613B89 /* KeychainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
+		0237F0CE2F30D8CB00613B89 /* LoginRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRequest.swift; sourceTree = "<group>"; };
+		0237F0CF2F30D8CB00613B89 /* TokenResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenResponse.swift; sourceTree = "<group>"; };
+		0237F0D12F30D8CB00613B89 /* DisconnectedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisconnectedView.swift; sourceTree = "<group>"; };
+		0237F0D62F30D8CB00613B89 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		0237F0D72F30D8CB00613B89 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		0237F0D82F30D8CB00613B89 /* CooklyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CooklyApp.swift; sourceTree = "<group>"; };
+		0237F0EC2F30DFDC00613B89 /* RefreshTokenResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshTokenResponse.swift; sourceTree = "<group>"; };
 		02BC11022F2FC3A600CE2E2F /* Cookly.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cookly.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		02BC11112F2FC3A800CE2E2F /* CooklyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CooklyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		02BC111B2F2FC3A800CE2E2F /* CooklyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CooklyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		02BC11042F2FC3A600CE2E2F /* src */ = {
+		0237F0EE2F30E1F800613B89 /* HomePage */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = src;
+			path = HomePage;
+			sourceTree = "<group>";
+		};
+		0237F0EF2F30E20700613B89 /* Register */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Register;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -62,10 +96,96 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0237F0C92F30D8CB00613B89 /* network */ = {
+			isa = PBXGroup;
+			children = (
+				0237F0C52F30D8CB00613B89 /* APIError.swift */,
+				0237F0C62F30D8CB00613B89 /* APIService.swift */,
+				0237F0C72F30D8CB00613B89 /* HTTPMethod.swift */,
+				0237F0C82F30D8CB00613B89 /* NetworkMonitor.swift */,
+			);
+			path = network;
+			sourceTree = "<group>";
+		};
+		0237F0CC2F30D8CB00613B89 /* security */ = {
+			isa = PBXGroup;
+			children = (
+				0237F0CA2F30D8CB00613B89 /* AuthService.swift */,
+				0237F0CB2F30D8CB00613B89 /* KeychainService.swift */,
+			);
+			path = security;
+			sourceTree = "<group>";
+		};
+		0237F0CD2F30D8CB00613B89 /* commom */ = {
+			isa = PBXGroup;
+			children = (
+				0237F0C92F30D8CB00613B89 /* network */,
+				0237F0CC2F30D8CB00613B89 /* security */,
+			);
+			path = commom;
+			sourceTree = "<group>";
+		};
+		0237F0D02F30D8CB00613B89 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				0237F0CE2F30D8CB00613B89 /* LoginRequest.swift */,
+				0237F0CF2F30D8CB00613B89 /* TokenResponse.swift */,
+				0237F0EC2F30DFDC00613B89 /* RefreshTokenResponse.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		0237F0D22F30D8CB00613B89 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				0237F0D12F30D8CB00613B89 /* DisconnectedView.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		0237F0D32F30D8CB00613B89 /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				0237F0D22F30D8CB00613B89 /* Network */,
+			);
+			path = Util;
+			sourceTree = "<group>";
+		};
+		0237F0D42F30D8CB00613B89 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				0237F0EF2F30E20700613B89 /* Register */,
+				0237F0EE2F30E1F800613B89 /* HomePage */,
+				0237F0D32F30D8CB00613B89 /* Util */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		0237F0D52F30D8CB00613B89 /* View Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "View Models";
+			sourceTree = "<group>";
+		};
+		0237F0D92F30D8CB00613B89 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				0237F0CD2F30D8CB00613B89 /* commom */,
+				0237F0D02F30D8CB00613B89 /* Model */,
+				0237F0D42F30D8CB00613B89 /* View */,
+				0237F0D52F30D8CB00613B89 /* View Models */,
+				0237F0D62F30D8CB00613B89 /* Assets.xcassets */,
+				0237F0D72F30D8CB00613B89 /* ContentView.swift */,
+				0237F0D82F30D8CB00613B89 /* CooklyApp.swift */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
 		02BC10F92F2FC3A600CE2E2F = {
 			isa = PBXGroup;
 			children = (
-				02BC11042F2FC3A600CE2E2F /* src */,
+				0237F0D92F30D8CB00613B89 /* src */,
 				02BC11032F2FC3A600CE2E2F /* Products */,
 			);
 			sourceTree = "<group>";
@@ -96,7 +216,8 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				02BC11042F2FC3A600CE2E2F /* src */,
+				0237F0EE2F30E1F800613B89 /* HomePage */,
+				0237F0EF2F30E20700613B89 /* Register */,
 			);
 			name = Cookly;
 			packageProductDependencies = (
@@ -160,6 +281,7 @@
 					};
 					02BC11102F2FC3A800CE2E2F = {
 						CreatedOnToolsVersion = 26.1.1;
+						LastSwiftMigration = 2610;
 						TestTargetID = 02BC11012F2FC3A600CE2E2F;
 					};
 					02BC111A2F2FC3A800CE2E2F = {
@@ -194,6 +316,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0237F0DA2F30D8CB00613B89 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -218,6 +341,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0237F0ED2F30DFDC00613B89 /* RefreshTokenResponse.swift in Sources */,
+				0237F0DB2F30D8CB00613B89 /* APIError.swift in Sources */,
+				0237F0DC2F30D8CB00613B89 /* APIService.swift in Sources */,
+				0237F0DD2F30D8CB00613B89 /* HTTPMethod.swift in Sources */,
+				0237F0DE2F30D8CB00613B89 /* NetworkMonitor.swift in Sources */,
+				0237F0DF2F30D8CB00613B89 /* AuthService.swift in Sources */,
+				0237F0E02F30D8CB00613B89 /* KeychainService.swift in Sources */,
+				0237F0E12F30D8CB00613B89 /* LoginRequest.swift in Sources */,
+				0237F0E22F30D8CB00613B89 /* TokenResponse.swift in Sources */,
+				0237F0E32F30D8CB00613B89 /* DisconnectedView.swift in Sources */,
+				0237F0E42F30D8CB00613B89 /* ContentView.swift in Sources */,
+				0237F0E52F30D8CB00613B89 /* CooklyApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -440,6 +575,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 76J88JC798;
@@ -451,6 +587,7 @@
 				STRING_CATALOG_GENERATE_SYMBOLS = NO;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -462,6 +599,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 76J88JC798;
