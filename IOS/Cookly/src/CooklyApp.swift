@@ -11,14 +11,19 @@ import SwiftData
 @main
 struct CooklyApp: App {
     @State private var networkMonitor = NetworkMonitor()
-    
+    @State private var errorManager = ErrorManager.shared
     var body: some Scene {
         WindowGroup {
-            if(networkMonitor.isConnected) {
-                ContentView()
-            } else {
-                DisconnectedView()
+            Group {
+                if(networkMonitor.isConnected) {
+                    ContentView()
+                } else {
+                    DisconnectedView()
+                }
+            }.sheet(isPresented: $errorManager.showError) {
+                ErrorView(error: errorManager.currentError!)
             }
         }
+        
     }
 }

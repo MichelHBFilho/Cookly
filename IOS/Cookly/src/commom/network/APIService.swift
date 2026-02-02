@@ -16,7 +16,8 @@ class APIService {
         endpoint : String,
         method : HTTPMethod = .GET,
         requiresAuth : Bool = true,
-        body : Encodable? = nil
+        body : Encodable? = nil,
+        authToken: String? = nil // Just for the first refresh Token request
     ) async throws -> T {
         guard let url = URL(string: baseURL + endpoint) else {
             throw APIError.URLInvalid
@@ -27,8 +28,11 @@ class APIService {
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.setValue("MobileApp", forHTTPHeaderField: "User-Agent")
         
-        if requiresAuth {
+        if requiresAuth && authToken == nil {
             try await AuthService.shared.setAuthHeader(&request)
+        }
+        if let authToken {
+            request.setValue("Bearer " + authToken, forHTTPHeaderField: "Authorization")
         }
         
         if let body {

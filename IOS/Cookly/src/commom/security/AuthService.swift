@@ -27,6 +27,15 @@ class AuthService {
             body: user)
         
         KeychainService.shared.save(token.token, to: "accessToken")
+        
+        let refreshToken: TokenResponse = try await APIService.shared.request(
+            endpoint: "authentication/generate-refresh",
+            method: .GET,
+            requiresAuth: true,
+            authToken: token.token
+        )
+        
+        KeychainService.shared.save(refreshToken.token, to: "refreshToken")
     }
     
     public func generateRefreshToken() async throws {
