@@ -49,5 +49,17 @@ class AuthService {
         KeychainService.shared.save(token.token, to: "accessToken")
     }
     
+    public func setAuthHeader(_ request : inout URLRequest) async throws {
+        guard isUserLogged else {
+            throw APIError.Unauthenticated
+        }
+        
+        try await refreshToken()
+        
+        let token = try KeychainService.shared.load(from: "accessToken")
+        
+        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+    }
+    
     
 }

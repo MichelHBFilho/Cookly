@@ -20,6 +20,7 @@
 		0237F0E42F30D8CB00613B89 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0237F0D72F30D8CB00613B89 /* ContentView.swift */; };
 		0237F0E52F30D8CB00613B89 /* CooklyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0237F0D82F30D8CB00613B89 /* CooklyApp.swift */; };
 		0237F0ED2F30DFDC00613B89 /* RefreshTokenResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0237F0EC2F30DFDC00613B89 /* RefreshTokenResponse.swift */; };
+		0237F0F72F30FF8100613B89 /* MultipartRequestProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0237F0F62F30FF8100613B89 /* MultipartRequestProtocol.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,7 @@
 		0237F0D72F30D8CB00613B89 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		0237F0D82F30D8CB00613B89 /* CooklyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CooklyApp.swift; sourceTree = "<group>"; };
 		0237F0EC2F30DFDC00613B89 /* RefreshTokenResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshTokenResponse.swift; sourceTree = "<group>"; };
+		0237F0F62F30FF8100613B89 /* MultipartRequestProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipartRequestProtocol.swift; sourceTree = "<group>"; };
 		02BC11022F2FC3A600CE2E2F /* Cookly.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cookly.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		02BC11112F2FC3A800CE2E2F /* CooklyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CooklyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		02BC111B2F2FC3A800CE2E2F /* CooklyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CooklyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -67,6 +69,11 @@
 		0237F0EF2F30E20700613B89 /* Register */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = Register;
+			sourceTree = "<group>";
+		};
+		0237F0F02F30E68C00613B89 /* Utils */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Utils;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -119,6 +126,7 @@
 		0237F0CD2F30D8CB00613B89 /* commom */ = {
 			isa = PBXGroup;
 			children = (
+				0237F0F02F30E68C00613B89 /* Utils */,
 				0237F0C92F30D8CB00613B89 /* network */,
 				0237F0CC2F30D8CB00613B89 /* security */,
 			);
@@ -131,6 +139,7 @@
 				0237F0CE2F30D8CB00613B89 /* LoginRequest.swift */,
 				0237F0CF2F30D8CB00613B89 /* TokenResponse.swift */,
 				0237F0EC2F30DFDC00613B89 /* RefreshTokenResponse.swift */,
+				0237F0F62F30FF8100613B89 /* MultipartRequestProtocol.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -218,6 +227,7 @@
 			fileSystemSynchronizedGroups = (
 				0237F0EE2F30E1F800613B89 /* HomePage */,
 				0237F0EF2F30E20700613B89 /* Register */,
+				0237F0F02F30E68C00613B89 /* Utils */,
 			);
 			name = Cookly;
 			packageProductDependencies = (
@@ -349,6 +359,7 @@
 				0237F0DF2F30D8CB00613B89 /* AuthService.swift in Sources */,
 				0237F0E02F30D8CB00613B89 /* KeychainService.swift in Sources */,
 				0237F0E12F30D8CB00613B89 /* LoginRequest.swift in Sources */,
+				0237F0F72F30FF8100613B89 /* MultipartRequestProtocol.swift in Sources */,
 				0237F0E22F30D8CB00613B89 /* TokenResponse.swift in Sources */,
 				0237F0E32F30D8CB00613B89 /* DisconnectedView.swift in Sources */,
 				0237F0E42F30D8CB00613B89 /* ContentView.swift in Sources */,

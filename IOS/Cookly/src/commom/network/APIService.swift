@@ -28,7 +28,7 @@ class APIService {
         request.setValue("MobileApp", forHTTPHeaderField: "User-Agent")
         
         if requiresAuth {
-            // TODO
+            try await AuthService.shared.setAuthHeader(&request)
         }
         
         if let body {
@@ -37,12 +37,43 @@ class APIService {
     
         let (data, response) = try await URLSession.shared.data(for: request)
         
-        try handleAPIErrors(httpResponse: (response as? HTTPURLResponse)!)
+        try handleAPIResponseCode(httpResponse: (response as? HTTPURLResponse)!)
         
         return try JSONDecoder().decode(T.self, from: data)
     }
     
-    private func handleAPIErrors(httpResponse : HTTPURLResponse) throws {
+    public func multipartRequest<T: Decodable>(
+        endpoint : String,
+        method : HTTPMethod = .POST,
+        requiresAuth : Bool = true,
+        body : MultipartRequestProtocol? = nil
+    ) async throws -> T {
+        guard let url = URL(string: baseURL + endpoint) else {
+            throw APIError.URLInvalid
+        }
+        let boundary = UUID().uuidString
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = method.rawValue
+        request.setValue("multipart/form-data; boundary=--\(boundary)", forHTTPHeaderField: "Content-Type")
+        request.setValue("MobileApp", forHTTPHeaderField: "User-Agent")
+        
+        if requiresAuth {
+            try await AuthService.shared.setAuthHeader(&request)
+        }
+        
+        if let body {
+            request.httpBody = generateMultipartFormDataBody(boundary: boundary, object: body)
+        }
+    
+        let (data, response) = try await URLSession.shared.data(for: request)
+        
+        try handleAPIResponseCode(httpResponse: (response as? HTTPURLResponse)!)
+        
+        return try JSONDecoder().decode(T.self, from: data)
+    }
+    
+    private func handleAPIResponseCode(httpResponse : HTTPURLResponse) throws {
         switch(httpResponse.statusCode) {
         case 200...299:
             break
