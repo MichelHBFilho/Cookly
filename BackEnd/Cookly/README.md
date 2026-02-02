@@ -3,8 +3,9 @@ Cookly is a social media app for people who want to share, or discover new recip
 
 ## SETUP
 1. Clone the repository
-2. Run ```docker compose up```
-3. API will be available at http://localhost:8080
+2. Create a .env file with these variables: DB_USER, DB_PASSWORD, DB_ROOT_PASSWORD, JWT_SECRET.
+3. Run ```docker compose up```
+4. API will be available at http://localhost:8080
 
 ## API Documentation
 This API is fully documented with **Swagger/OpenAPI**. Once the app is running go to the relative path: **swagger-ui/index.html#/**
