@@ -11,20 +11,13 @@ class KeychainService {
     public static var shared = KeychainService()
     
     func save(_ data: String, to key: String) {
-        let accessControl = SecAccessControlCreateWithFlags(
-            kCFAllocatorDefault,
-            kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly,
-            .userPresence,
-            nil
-        )
         
         let query = [
             kSecClass : kSecClassGenericPassword,
             kSecAttrService: key,
             kSecAttrAccount: "account",
             kSecValueData: data.data(using: .utf8)!,
-            kSecAttrAccessControl: accessControl as Any,
-            kSecAttrAccessible as String: kSecAttrAccessibleWhenUnlocked
+            kSecAttrAccessible: kSecAttrAccessibleWhenUnlocked
         ] as CFDictionary
         
         SecItemDelete(query)
@@ -36,8 +29,7 @@ class KeychainService {
             kSecClass: kSecClassGenericPassword,
             kSecAttrService: key,
             kSecAttrAccount: "account",
-            kSecReturnData: true,
-            kSecAttrAccessible as String: kSecAttrAccessibleWhenUnlocked
+            kSecReturnData: true
         ] as CFDictionary
         
         var dataTypeRef: AnyObject?
