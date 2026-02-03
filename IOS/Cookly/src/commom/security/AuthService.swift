@@ -20,40 +20,41 @@ class AuthService {
     }
     
     public func login(user : LoginRequest) async throws {
-        let token: TokenResponse = try await APIService.shared.request(
+        let (token, firstStatusCode) = try await APIService.shared.request(
             endpoint: "authentication/login",
             method: .POST,
             requiresAuth: false,
-            body: user)
+            body: user) as (TokenResponse, Int)
         
         KeychainService.shared.save(token.token, to: "accessToken")
         
-        let refreshToken: TokenResponse = try await APIService.shared.request(
+        let (refreshToken, secondStatusCode) = try await APIService.shared.request(
             endpoint: "authentication/generate-refresh",
             method: .GET,
             requiresAuth: true,
             authToken: token.token
-        )
+        ) as (RefreshTokenResponse, Int)
         
         KeychainService.shared.save(refreshToken.token, to: "refreshToken")
     }
     
     public func generateRefreshToken() async throws {
-        let token: TokenResponse = try await APIService.shared.request(
+        let (refreshToken, secondStatusCode) = try await APIService.shared.request(
             endpoint: "authentication/generate-refresh",
             method: .GET,
-            requiresAuth: true)
+            requiresAuth: true,
+        ) as (RefreshTokenResponse, Int)
         
-        KeychainService.shared.save(token.token, to: "refreshToken")
+        KeychainService.shared.save(refreshToken.token, to: "refreshToken")
     }
     
     public func refreshToken() async throws {
         let refreshToken = try KeychainService.shared.load(from: "refreshToken")
         
-        let token: TokenResponse = try await APIService.shared.request(
+        let (token, statusCode) = try await APIService.shared.request(
             endpoint: "authentication/refresh/\(refreshToken)",
             method: .GET,
-            requiresAuth: false)
+            requiresAuth: false) as (TokenResponse, Int)
         
         KeychainService.shared.save(token.token, to: "accessToken")
     }

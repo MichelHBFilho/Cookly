@@ -18,7 +18,7 @@ class APIService {
         requiresAuth : Bool = true,
         body : Encodable? = nil,
         authToken: String? = nil // Just for the first refresh Token request
-    ) async throws -> T {
+    ) async throws -> (T, Int) {
         guard let url = URL(string: baseURL + endpoint) else {
             throw APIError.URLInvalid
         }
@@ -43,7 +43,7 @@ class APIService {
         
         try handleAPIResponseCode(httpResponse: (response as? HTTPURLResponse)!)
         
-        return try JSONDecoder().decode(T.self, from: data)
+        return try (JSONDecoder().decode(T.self, from: data), (response as? HTTPURLResponse)!.statusCode)
     }
     
     public func multipartRequest<T: Decodable>(
@@ -52,7 +52,7 @@ class APIService {
         requiresAuth : Bool = true,
         body : Data,
         boundary: String
-    ) async throws -> T {
+    ) async throws -> (T, Int) {
         guard let url = URL(string: baseURL + endpoint) else {
             throw APIError.URLInvalid
         }
@@ -70,12 +70,9 @@ class APIService {
     
         let (data, response) = try await URLSession.shared.data(for: request)
         
-        print((response as? HTTPURLResponse)?.statusCode)
-        print(String(data:data, encoding: .utf8))
-        
         try handleAPIResponseCode(httpResponse: (response as? HTTPURLResponse)!)
         
-        return try JSONDecoder().decode(T.self, from: data)
+        return try (JSONDecoder().decode(T.self, from: data), (response as? HTTPURLResponse)!.statusCode)
     }
     
     private func handleAPIResponseCode(httpResponse : HTTPURLResponse) throws {

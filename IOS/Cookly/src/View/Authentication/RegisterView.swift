@@ -14,6 +14,13 @@ struct RegisterView: View {
     @State var viewModel = RegisterViewModel()
     @State var photosPickerItem: PhotosPickerItem?
     @State var photosPickerImage: Image? = Image("DefaultProfilePicture")
+    var color: Color {
+        switch(viewModel.requestStatus) {
+        case .badRequest: .errorRed
+        case .success: .cooklyGreen
+        case .nothing: .cooklyBlue
+        }
+    }
     
     var body: some View {
         VStack {
@@ -46,7 +53,7 @@ struct RegisterView: View {
             MyTextField(value: $viewModel.form.lastName, fieldName: "Last name")
             DatePicker("Birthday", selection: $viewModel.form.birthDay, displayedComponents: .date)
             
-            MyButton(title: "Register", color: .cooklyBlue) {
+            MyButton(title: "Register", color: color) {
                 Task {
                     do {
                         try await viewModel.doRequest()
@@ -55,6 +62,7 @@ struct RegisterView: View {
                     }
                 }
             }
+            .animation(.spring, value: color)
             
         }
     }

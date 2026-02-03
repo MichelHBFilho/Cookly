@@ -8,6 +8,5 @@
 import Foundation
 
 struct RefreshTokenResponse : Decodable {
-    let expiryDate : Date
     let token : String
 }
