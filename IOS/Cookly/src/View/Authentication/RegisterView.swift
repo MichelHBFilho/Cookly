@@ -8,8 +8,23 @@
 import SwiftUI
 
 struct RegisterView: View {
+    
+    @State var viewModel = RegisterViewModel()
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack {
+            
+            MyTextField(value: $viewModel.form.username, fieldName: "Username")
+            MyTextField(value: $viewModel.form.password, fieldName: "Password")
+            MyTextField(value: $viewModel.form.name, fieldName: "Name")
+            MyTextField(value: $viewModel.form.lastName, fieldName: "Last name")
+            DatePicker("Birthday", selection: $viewModel.form.birthDay, displayedComponents: .date)
+            
+            MyButton(title: "Register", color: .cooklyBlue) {
+                
+            }
+            
+        }
     }
 }
 

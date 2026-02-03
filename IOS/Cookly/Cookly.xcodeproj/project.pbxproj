@@ -14,13 +14,9 @@
 		0237F0DE2F30D8CB00613B89 /* NetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0237F0C82F30D8CB00613B89 /* NetworkMonitor.swift */; };
 		0237F0DF2F30D8CB00613B89 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0237F0CA2F30D8CB00613B89 /* AuthService.swift */; };
 		0237F0E02F30D8CB00613B89 /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0237F0CB2F30D8CB00613B89 /* KeychainService.swift */; };
-		0237F0E12F30D8CB00613B89 /* LoginRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0237F0CE2F30D8CB00613B89 /* LoginRequest.swift */; };
-		0237F0E22F30D8CB00613B89 /* TokenResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0237F0CF2F30D8CB00613B89 /* TokenResponse.swift */; };
 		0237F0E32F30D8CB00613B89 /* DisconnectedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0237F0D12F30D8CB00613B89 /* DisconnectedView.swift */; };
 		0237F0E42F30D8CB00613B89 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0237F0D72F30D8CB00613B89 /* ContentView.swift */; };
 		0237F0E52F30D8CB00613B89 /* CooklyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0237F0D82F30D8CB00613B89 /* CooklyApp.swift */; };
-		0237F0ED2F30DFDC00613B89 /* RefreshTokenResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0237F0EC2F30DFDC00613B89 /* RefreshTokenResponse.swift */; };
-		0237F0F72F30FF8100613B89 /* MultipartRequestProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0237F0F62F30FF8100613B89 /* MultipartRequestProtocol.swift */; };
 		0237F1072F310CBF00613B89 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0237F1062F310CBF00613B89 /* ErrorView.swift */; };
 /* End PBXBuildFile section */
 
@@ -48,14 +44,10 @@
 		0237F0C82F30D8CB00613B89 /* NetworkMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitor.swift; sourceTree = "<group>"; };
 		0237F0CA2F30D8CB00613B89 /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		0237F0CB2F30D8CB00613B89 /* KeychainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
-		0237F0CE2F30D8CB00613B89 /* LoginRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRequest.swift; sourceTree = "<group>"; };
-		0237F0CF2F30D8CB00613B89 /* TokenResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenResponse.swift; sourceTree = "<group>"; };
 		0237F0D12F30D8CB00613B89 /* DisconnectedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisconnectedView.swift; sourceTree = "<group>"; };
 		0237F0D62F30D8CB00613B89 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0237F0D72F30D8CB00613B89 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		0237F0D82F30D8CB00613B89 /* CooklyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CooklyApp.swift; sourceTree = "<group>"; };
-		0237F0EC2F30DFDC00613B89 /* RefreshTokenResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshTokenResponse.swift; sourceTree = "<group>"; };
-		0237F0F62F30FF8100613B89 /* MultipartRequestProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipartRequestProtocol.swift; sourceTree = "<group>"; };
 		0237F1062F310CBF00613B89 /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
 		02BC11022F2FC3A600CE2E2F /* Cookly.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cookly.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		02BC11112F2FC3A800CE2E2F /* CooklyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CooklyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -91,6 +83,16 @@
 		0237F1082F310EEF00613B89 /* Forms */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = Forms;
+			sourceTree = "<group>";
+		};
+		02884EB32F32269C00977A00 /* Request */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Request;
+			sourceTree = "<group>";
+		};
+		02884EB42F3226A300977A00 /* Response */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Response;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -154,10 +156,8 @@
 		0237F0D02F30D8CB00613B89 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				0237F0CE2F30D8CB00613B89 /* LoginRequest.swift */,
-				0237F0CF2F30D8CB00613B89 /* TokenResponse.swift */,
-				0237F0EC2F30DFDC00613B89 /* RefreshTokenResponse.swift */,
-				0237F0F62F30FF8100613B89 /* MultipartRequestProtocol.swift */,
+				02884EB42F3226A300977A00 /* Response */,
+				02884EB32F32269C00977A00 /* Request */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -252,6 +252,8 @@
 				0237F1002F310A4A00613B89 /* Authentication */,
 				0237F1032F310BE700613B89 /* ErrorHandling */,
 				0237F1082F310EEF00613B89 /* Forms */,
+				02884EB32F32269C00977A00 /* Request */,
+				02884EB42F3226A300977A00 /* Response */,
 			);
 			name = Cookly;
 			packageProductDependencies = (
@@ -375,7 +377,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0237F0ED2F30DFDC00613B89 /* RefreshTokenResponse.swift in Sources */,
 				0237F0DB2F30D8CB00613B89 /* APIError.swift in Sources */,
 				0237F0DC2F30D8CB00613B89 /* APIService.swift in Sources */,
 				0237F0DD2F30D8CB00613B89 /* HTTPMethod.swift in Sources */,
@@ -383,9 +384,6 @@
 				0237F0DE2F30D8CB00613B89 /* NetworkMonitor.swift in Sources */,
 				0237F0DF2F30D8CB00613B89 /* AuthService.swift in Sources */,
 				0237F0E02F30D8CB00613B89 /* KeychainService.swift in Sources */,
-				0237F0E12F30D8CB00613B89 /* LoginRequest.swift in Sources */,
-				0237F0F72F30FF8100613B89 /* MultipartRequestProtocol.swift in Sources */,
-				0237F0E22F30D8CB00613B89 /* TokenResponse.swift in Sources */,
 				0237F0E32F30D8CB00613B89 /* DisconnectedView.swift in Sources */,
 				0237F0E42F30D8CB00613B89 /* ContentView.swift in Sources */,
 				0237F0E52F30D8CB00613B89 /* CooklyApp.swift in Sources */,

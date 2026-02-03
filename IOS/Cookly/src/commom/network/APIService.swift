@@ -50,7 +50,7 @@ class APIService {
         endpoint : String,
         method : HTTPMethod = .POST,
         requiresAuth : Bool = true,
-        body : MultipartRequestProtocol? = nil
+        body : Data
     ) async throws -> T {
         guard let url = URL(string: baseURL + endpoint) else {
             throw APIError.URLInvalid
@@ -59,16 +59,14 @@ class APIService {
         
         var request = URLRequest(url: url)
         request.httpMethod = method.rawValue
-        request.setValue("multipart/form-data; boundary=--\(boundary)", forHTTPHeaderField: "Content-Type")
+        request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
         request.setValue("MobileApp", forHTTPHeaderField: "User-Agent")
         
         if requiresAuth {
             try await AuthService.shared.setAuthHeader(&request)
         }
         
-        if let body {
-            request.httpBody = generateMultipartFormDataBody(boundary: boundary, object: body)
-        }
+        request.httpBody = body
     
         let (data, response) = try await URLSession.shared.data(for: request)
         

@@ -8,7 +8,12 @@
 import Foundation
 import UIKit
 
-protocol MultipartRequestProtocol: Encodable {
+protocol MultipartRequestProtocol {
     var images: [UIImage] { get }
     var data: Encodable { get }
+}
+
+struct MultipartRequest : MultipartRequestProtocol {
+    var images: [UIImage]
+    var data: Encodable
 }
