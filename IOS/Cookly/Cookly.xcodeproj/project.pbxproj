@@ -21,14 +21,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		02BC11122F2FC3A800CE2E2F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 02BC10FA2F2FC3A600CE2E2F /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 02BC11012F2FC3A600CE2E2F;
-			remoteInfo = Cookly;
-		};
-		02BC111C2F2FC3A800CE2E2F /* PBXContainerItemProxy */ = {
+		02884EC62F32329900977A00 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 02BC10FA2F2FC3A600CE2E2F /* Project object */;
 			proxyType = 1;
@@ -49,10 +42,19 @@
 		0237F0D72F30D8CB00613B89 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		0237F0D82F30D8CB00613B89 /* CooklyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CooklyApp.swift; sourceTree = "<group>"; };
 		0237F1062F310CBF00613B89 /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
+		02884EC22F32329900977A00 /* CooklyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CooklyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		02BC11022F2FC3A600CE2E2F /* Cookly.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cookly.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		02BC11112F2FC3A800CE2E2F /* CooklyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CooklyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		02BC111B2F2FC3A800CE2E2F /* CooklyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CooklyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		02884ED12F3236AC00977A00 /* Exceptions for "Response" folder in "CooklyTests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				EmptyResponse.swift,
+			);
+			target = 02884EC12F32329900977A00 /* CooklyTests */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		0237F0EE2F30E1F800613B89 /* HomePage */ = {
@@ -92,27 +94,28 @@
 		};
 		02884EB42F3226A300977A00 /* Response */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				02884ED12F3236AC00977A00 /* Exceptions for "Response" folder in "CooklyTests" target */,
+			);
 			path = Response;
+			sourceTree = "<group>";
+		};
+		02884EC32F32329900977A00 /* CooklyTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = CooklyTests;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		02884EBF2F32329900977A00 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		02BC10FF2F2FC3A600CE2E2F /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		02BC110E2F2FC3A800CE2E2F /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		02BC11182F2FC3A800CE2E2F /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -216,6 +219,7 @@
 			isa = PBXGroup;
 			children = (
 				0237F0D92F30D8CB00613B89 /* src */,
+				02884EC32F32329900977A00 /* CooklyTests */,
 				02BC11032F2FC3A600CE2E2F /* Products */,
 			);
 			sourceTree = "<group>";
@@ -224,8 +228,7 @@
 			isa = PBXGroup;
 			children = (
 				02BC11022F2FC3A600CE2E2F /* Cookly.app */,
-				02BC11112F2FC3A800CE2E2F /* CooklyTests.xctest */,
-				02BC111B2F2FC3A800CE2E2F /* CooklyUITests.xctest */,
+				02884EC22F32329900977A00 /* CooklyTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -233,6 +236,29 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		02884EC12F32329900977A00 /* CooklyTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 02884EC82F32329900977A00 /* Build configuration list for PBXNativeTarget "CooklyTests" */;
+			buildPhases = (
+				02884EBE2F32329900977A00 /* Sources */,
+				02884EBF2F32329900977A00 /* Frameworks */,
+				02884EC02F32329900977A00 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				02884EC72F32329900977A00 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				02884EC32F32329900977A00 /* CooklyTests */,
+			);
+			name = CooklyTests;
+			packageProductDependencies = (
+			);
+			productName = CooklyTests;
+			productReference = 02884EC22F32329900977A00 /* CooklyTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		02BC11012F2FC3A600CE2E2F /* Cookly */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 02BC11252F2FC3A800CE2E2F /* Build configuration list for PBXNativeTarget "Cookly" */;
@@ -262,46 +288,6 @@
 			productReference = 02BC11022F2FC3A600CE2E2F /* Cookly.app */;
 			productType = "com.apple.product-type.application";
 		};
-		02BC11102F2FC3A800CE2E2F /* CooklyTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 02BC11282F2FC3A800CE2E2F /* Build configuration list for PBXNativeTarget "CooklyTests" */;
-			buildPhases = (
-				02BC110D2F2FC3A800CE2E2F /* Sources */,
-				02BC110E2F2FC3A800CE2E2F /* Frameworks */,
-				02BC110F2F2FC3A800CE2E2F /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				02BC11132F2FC3A800CE2E2F /* PBXTargetDependency */,
-			);
-			name = CooklyTests;
-			packageProductDependencies = (
-			);
-			productName = CooklyTests;
-			productReference = 02BC11112F2FC3A800CE2E2F /* CooklyTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		02BC111A2F2FC3A800CE2E2F /* CooklyUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 02BC112B2F2FC3A800CE2E2F /* Build configuration list for PBXNativeTarget "CooklyUITests" */;
-			buildPhases = (
-				02BC11172F2FC3A800CE2E2F /* Sources */,
-				02BC11182F2FC3A800CE2E2F /* Frameworks */,
-				02BC11192F2FC3A800CE2E2F /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				02BC111D2F2FC3A800CE2E2F /* PBXTargetDependency */,
-			);
-			name = CooklyUITests;
-			packageProductDependencies = (
-			);
-			productName = CooklyUITests;
-			productReference = 02BC111B2F2FC3A800CE2E2F /* CooklyUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -309,20 +295,18 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
+				KnownAssetTags = (
+					New,
+				);
 				LastSwiftUpdateCheck = 2610;
 				LastUpgradeCheck = 2610;
 				TargetAttributes = {
+					02884EC12F32329900977A00 = {
+						CreatedOnToolsVersion = 26.1.1;
+						TestTargetID = 02BC11012F2FC3A600CE2E2F;
+					};
 					02BC11012F2FC3A600CE2E2F = {
 						CreatedOnToolsVersion = 26.1.1;
-					};
-					02BC11102F2FC3A800CE2E2F = {
-						CreatedOnToolsVersion = 26.1.1;
-						LastSwiftMigration = 2610;
-						TestTargetID = 02BC11012F2FC3A600CE2E2F;
-					};
-					02BC111A2F2FC3A800CE2E2F = {
-						CreatedOnToolsVersion = 26.1.1;
-						TestTargetID = 02BC11012F2FC3A600CE2E2F;
 					};
 				};
 			};
@@ -341,13 +325,19 @@
 			projectRoot = "";
 			targets = (
 				02BC11012F2FC3A600CE2E2F /* Cookly */,
-				02BC11102F2FC3A800CE2E2F /* CooklyTests */,
-				02BC111A2F2FC3A800CE2E2F /* CooklyUITests */,
+				02884EC12F32329900977A00 /* CooklyTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		02884EC02F32329900977A00 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		02BC11002F2FC3A600CE2E2F /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -356,23 +346,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		02BC110F2F2FC3A800CE2E2F /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		02BC11192F2FC3A800CE2E2F /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		02884EBE2F32329900977A00 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		02BC10FE2F2FC3A600CE2E2F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -390,36 +373,59 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		02BC110D2F2FC3A800CE2E2F /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		02BC11172F2FC3A800CE2E2F /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		02BC11132F2FC3A800CE2E2F /* PBXTargetDependency */ = {
+		02884EC72F32329900977A00 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 02BC11012F2FC3A600CE2E2F /* Cookly */;
-			targetProxy = 02BC11122F2FC3A800CE2E2F /* PBXContainerItemProxy */;
-		};
-		02BC111D2F2FC3A800CE2E2F /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 02BC11012F2FC3A600CE2E2F /* Cookly */;
-			targetProxy = 02BC111C2F2FC3A800CE2E2F /* PBXContainerItemProxy */;
+			targetProxy = 02884EC62F32329900977A00 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		02884EC92F32329900977A00 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 76J88JC798;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = MichelFilho.CooklyTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Cookly.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Cookly";
+			};
+			name = Debug;
+		};
+		02884ECA2F32329900977A00 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 76J88JC798;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = MichelFilho.CooklyTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Cookly.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Cookly";
+			};
+			name = Release;
+		};
 		02BC11232F2FC3A800CE2E2F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -605,96 +611,18 @@
 			};
 			name = Release;
 		};
-		02BC11292F2FC3A800CE2E2F /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 76J88JC798;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 26.1;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = MichelFilho.CooklyTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				STRING_CATALOG_GENERATE_SYMBOLS = NO;
-				SWIFT_APPROACHABLE_CONCURRENCY = YES;
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Cookly.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Cookly";
-			};
-			name = Debug;
-		};
-		02BC112A2F2FC3A800CE2E2F /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 76J88JC798;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 26.1;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = MichelFilho.CooklyTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				STRING_CATALOG_GENERATE_SYMBOLS = NO;
-				SWIFT_APPROACHABLE_CONCURRENCY = YES;
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Cookly.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Cookly";
-			};
-			name = Release;
-		};
-		02BC112C2F2FC3A800CE2E2F /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 76J88JC798;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = MichelFilho.CooklyUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				STRING_CATALOG_GENERATE_SYMBOLS = NO;
-				SWIFT_APPROACHABLE_CONCURRENCY = YES;
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = Cookly;
-			};
-			name = Debug;
-		};
-		02BC112D2F2FC3A800CE2E2F /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 76J88JC798;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = MichelFilho.CooklyUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				STRING_CATALOG_GENERATE_SYMBOLS = NO;
-				SWIFT_APPROACHABLE_CONCURRENCY = YES;
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = Cookly;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		02884EC82F32329900977A00 /* Build configuration list for PBXNativeTarget "CooklyTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				02884EC92F32329900977A00 /* Debug */,
+				02884ECA2F32329900977A00 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		02BC10FD2F2FC3A600CE2E2F /* Build configuration list for PBXProject "Cookly" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -709,24 +637,6 @@
 			buildConfigurations = (
 				02BC11262F2FC3A800CE2E2F /* Debug */,
 				02BC11272F2FC3A800CE2E2F /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		02BC11282F2FC3A800CE2E2F /* Build configuration list for PBXNativeTarget "CooklyTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				02BC11292F2FC3A800CE2E2F /* Debug */,
-				02BC112A2F2FC3A800CE2E2F /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		02BC112B2F2FC3A800CE2E2F /* Build configuration list for PBXNativeTarget "CooklyUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				02BC112C2F2FC3A800CE2E2F /* Debug */,
-				02BC112D2F2FC3A800CE2E2F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

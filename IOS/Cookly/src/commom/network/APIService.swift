@@ -50,12 +50,12 @@ class APIService {
         endpoint : String,
         method : HTTPMethod = .POST,
         requiresAuth : Bool = true,
-        body : Data
+        body : Data,
+        boundary: String
     ) async throws -> T {
         guard let url = URL(string: baseURL + endpoint) else {
             throw APIError.URLInvalid
         }
-        let boundary = UUID().uuidString
         
         var request = URLRequest(url: url)
         request.httpMethod = method.rawValue
@@ -69,6 +69,9 @@ class APIService {
         request.httpBody = body
     
         let (data, response) = try await URLSession.shared.data(for: request)
+        
+        print((response as? HTTPURLResponse)?.statusCode)
+        print(String(data:data, encoding: .utf8))
         
         try handleAPIResponseCode(httpResponse: (response as? HTTPURLResponse)!)
         
