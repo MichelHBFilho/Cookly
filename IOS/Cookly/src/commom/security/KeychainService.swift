@@ -23,7 +23,8 @@ class KeychainService {
             kSecAttrService: key,
             kSecAttrAccount: "account",
             kSecValueData: data.data(using: .utf8)!,
-            kSecAttrAccessControl: accessControl as Any
+            kSecAttrAccessControl: accessControl as Any,
+            kSecAttrAccessible as String: kSecAttrAccessibleWhenUnlocked
         ] as CFDictionary
         
         SecItemDelete(query)
@@ -35,7 +36,8 @@ class KeychainService {
             kSecClass: kSecClassGenericPassword,
             kSecAttrService: key,
             kSecAttrAccount: "account",
-            kSecReturnData: true
+            kSecReturnData: true,
+            kSecAttrAccessible as String: kSecAttrAccessibleWhenUnlocked
         ] as CFDictionary
         
         var dataTypeRef: AnyObject?
