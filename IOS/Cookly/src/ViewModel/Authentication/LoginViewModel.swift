@@ -20,14 +20,8 @@ class LoginViewModel {
     init() {}
     
     var loginRequest = LoginRequest()
-    private var loginStatus: LoginStatus = .nothing
-    var color: Color {
-        switch(loginStatus) {
-        case .nothing: .cooklyBlue
-        case .successfull: .cooklyGreen
-        case .wrongCredential: .errorRed
-        }
-    }
+    var loginStatus: LoginStatus = .nothing
+    
     func doRequest() async {
         do {
             try await AuthService.shared.login(user: loginRequest)

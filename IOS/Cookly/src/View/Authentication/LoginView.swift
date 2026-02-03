@@ -10,6 +10,14 @@ import SwiftUI
 struct LoginView: View {
     @State var viewModel : LoginViewModel = LoginViewModel()
     
+    var color: Color {
+        switch(viewModel.loginStatus) {
+        case .nothing: .cooklyBlue
+        case .successfull: .cooklyGreen
+        case .wrongCredential: .errorRed
+        }
+    }
+    
     var body: some View {
         
         VStack() {
@@ -22,12 +30,12 @@ struct LoginView: View {
             MyTextField(value: $viewModel.loginRequest.username, fieldName: "Username")
             MyTextField(value: $viewModel.loginRequest.password, fieldName: "Password")
             
-            MyButton(title: "Login", color: viewModel.color) {
+            MyButton(title: "Login", color: color) {
                 Task {
                     await viewModel.doRequest()
                 }
             }
-            .animation(.spring, value: viewModel.color)
+            .animation(.spring, value: color)
             
         }
         
