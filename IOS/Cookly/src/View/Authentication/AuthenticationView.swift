@@ -8,8 +8,19 @@
 import SwiftUI
 
 struct AuthenticationView: View {
+    @State private var showLoginScreen = true
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        if(showLoginScreen) {
+            LoginView()
+        } else {
+            RegisterView()
+        }
+        
+        MyButton(
+            title: (showLoginScreen) ? "Go register" : "Go login",
+            color: .cooklyGray) {
+                showLoginScreen.toggle()
+            }
     }
 }
 

@@ -10,10 +10,23 @@ import SwiftData
 
 struct ContentView: View {
     var body: some View {
-        RegisterView()
+        if(AuthService.shared.isUserLogged) {
+            
+        } else {
+            AuthenticationView()
+        }
     }
 }
 
 #Preview {
-    ContentView()
+    
+    Task {
+        do {
+            try await AuthService.shared.refreshToken()
+        } catch {
+            print(error)
+        }
+    }
+    
+    return ContentView()
 }

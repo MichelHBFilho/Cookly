@@ -45,4 +45,23 @@ class KeychainService {
         return info
     }
     
+    func delete(from key: String) throws {
+        let query = [
+            kSecClass: kSecClassGenericPassword,
+            kSecAttrService: key,
+            kSecAttrAccount: "account",
+            kSecReturnData: true
+        ] as CFDictionary
+        
+        var dataTypeRef: AnyObject?
+        
+        let status = SecItemDelete(query)
+        
+        guard status == errSecSuccess,
+                let data = dataTypeRef as? Data,
+                let info = String(data:data, encoding: .utf8) else {
+            throw APIError.NotFound
+        }
+    }
+    
 }

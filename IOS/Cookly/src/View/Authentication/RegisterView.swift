@@ -30,7 +30,7 @@ struct RegisterView: View {
                     photosPickerImage
                         .resizable()
                         .scaledToFit()
-                        .frame(width: 250)
+                        .frame(width: 200)
                         .clipShape(Circle())
                 }
             }
@@ -52,6 +52,7 @@ struct RegisterView: View {
             MyTextField(value: $viewModel.form.name, fieldName: "Name")
             MyTextField(value: $viewModel.form.lastName, fieldName: "Last name")
             DatePicker("Birthday", selection: $viewModel.form.birthDay, displayedComponents: .date)
+                .padding()
             
             MyButton(title: "Register", color: color) {
                 Task {

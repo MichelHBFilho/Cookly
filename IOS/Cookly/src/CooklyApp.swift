@@ -23,6 +23,11 @@ struct CooklyApp: App {
             }.sheet(isPresented: $errorManager.showError) {
                 ErrorView(error: errorManager.currentError!)
             }
+            .task {
+                Task {
+                    try await AuthService.shared.refreshToken()
+                }
+            }
         }
         
     }
