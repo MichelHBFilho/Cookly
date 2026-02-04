@@ -1,9 +1,9 @@
 package com.michelfilho.cookly.authentication.controller;
 
-import com.michelfilho.cookly.authentication.service.AuthenticationService;
+import com.michelfilho.cookly.authentication.dto.AccessTokenDTO;
 import com.michelfilho.cookly.authentication.dto.LoginDTO;
-import com.michelfilho.cookly.authentication.dto.LoginResponseDTO;
 import com.michelfilho.cookly.authentication.dto.RegisterDTO;
+import com.michelfilho.cookly.authentication.service.AuthenticationService;
 import com.michelfilho.cookly.authentication.service.RefreshTokenService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -44,7 +44,7 @@ public class AuthenticationController {
             @RequestBody @Valid LoginDTO data
     ) {
         var token = authenticationService.login(data);
-        return ResponseEntity.ok(new LoginResponseDTO(token));
+        return ResponseEntity.ok(new AccessTokenDTO(token));
     }
 
     @Operation(
@@ -77,7 +77,7 @@ public class AuthenticationController {
     public ResponseEntity refresh(
         @PathVariable @Parameter(example = "BEARER TOKEN") String token
     ) {
-        return ResponseEntity.ok().body(refreshTokenService.refresh(token));
+        return ResponseEntity.ok().body(new AccessTokenDTO(refreshTokenService.refresh(token)));
     }
 
     @Operation(
