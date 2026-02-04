@@ -9,8 +9,10 @@ import SwiftUI
 import SwiftData
 
 struct ContentView: View {
+    @State private var authService = AuthService.shared
+    
     var body: some View {
-        if(AuthService.shared.isUserLogged) {
+        if(authService.isUserLogged) {
             
         } else {
             AuthenticationView()
@@ -22,7 +24,8 @@ struct ContentView: View {
     
     Task {
         do {
-            try await AuthService.shared.refreshToken()
+            try? KeychainService.shared.delete(from: "accessToken")
+            try? KeychainService.shared.delete(from: "refreshToken")
         } catch {
             print(error)
         }

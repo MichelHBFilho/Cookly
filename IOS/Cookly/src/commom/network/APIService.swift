@@ -83,6 +83,8 @@ class APIService {
             throw APIError.Unauthenticated
         case 404:
             throw APIError.NotFound
+        case 400...499:
+            throw APIError.NotFound
         case 500...599:
             throw APIError.ServerError
         default:

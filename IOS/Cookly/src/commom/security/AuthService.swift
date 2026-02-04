@@ -6,18 +6,32 @@
 //
 
 import Foundation
+import Combine
 
+@MainActor
+@Observable
 class AuthService {
     static public var shared = AuthService()
     
-    public var isUserLogged: Bool {
-        do {
-            let refreshToken = try KeychainService.shared.load(from: "refreshToken")
-            return refreshToken != ""
-        } catch {
-            return false
-        }
+    public var isUserLogged: Bool = false
+    
+    private init() {
+        self.isUserLogged = hasRefreshToken()
     }
+
+    private func hasRefreshToken() -> Bool {
+        (try? KeychainService.shared.load(from: "refreshToken")) != nil
+    }
+
+    func loginSucceeded() {
+        isUserLogged = true
+    }
+
+    func logout() {
+        try? KeychainService.shared.delete(from: "refreshToken")
+        isUserLogged = false
+    }
+
     
     public func login(user : LoginRequest) async throws {
         let (token, firstStatusCode) = try await APIService.shared.request(
@@ -36,6 +50,8 @@ class AuthService {
         ) as (RefreshTokenResponse, Int)
         
         KeychainService.shared.save(refreshToken.token, to: "refreshToken")
+        
+        loginSucceeded()
     }
     
     public func generateRefreshToken() async throws {
@@ -49,7 +65,7 @@ class AuthService {
     }
     
     public func refreshToken() async throws {
-        let refreshToken = try KeychainService.shared.load(from: "refreshToken")
+        let refreshToken = try? KeychainService.shared.load(from: "refreshToken")
         
         do {
             let (token, statusCode) = try await APIService.shared.request(
@@ -59,7 +75,7 @@ class AuthService {
             
             KeychainService.shared.save(token.token, to: "accessToken")
         } catch APIError.NotFound {
-            try KeychainService.shared.delete(from: "refreshToken")
+            logout()
         } catch {
             throw error
         }
