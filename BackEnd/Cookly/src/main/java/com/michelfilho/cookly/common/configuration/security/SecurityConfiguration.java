@@ -7,6 +7,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -23,17 +24,25 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) {
         return httpSecurity
-                .csrf(csrf -> csrf.disable())
+                .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(
                         session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
                 .authorizeHttpRequests(authorize ->
                         authorize
-                            .requestMatchers("/authentication/**",
+                            .requestMatchers(
+                                    "/authentication/**",
+                                    "/images/**",
                                     "/swagger-ui/**",
-                                    "/v3/api-docs/**").permitAll()
-                                .requestMatchers("/authentication/generate-refresh").authenticated()
-                            .anyRequest().authenticated()
+                                    "/v3/api-docs/**"
+                                )
+                                .permitAll()
+                            .requestMatchers(
+                                    "/authentication/generate-refresh"
+                                )
+                                .authenticated()
+                            .anyRequest()
+                                .authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
