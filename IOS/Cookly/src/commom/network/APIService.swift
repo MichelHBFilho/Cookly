@@ -10,7 +10,7 @@ import Foundation
 class APIService {
     public static var shared = APIService()
     
-    private let baseURL = "http://localhost:8080/" // Change this if in production
+    public let baseURL = "http://localhost:8080/" // Change this if in production
     
     public func request<T: Decodable>(
         endpoint : String,
@@ -40,6 +40,8 @@ class APIService {
         }
     
         let (data, response) = try await URLSession.shared.data(for: request)
+        
+        print(String(data:data, encoding: .utf8) ?? "")
         
         try handleAPIResponseCode(httpResponse: (response as? HTTPURLResponse)!)
         

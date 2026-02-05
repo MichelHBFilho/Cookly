@@ -66,14 +66,14 @@ class AuthService {
     
     public func refreshToken() async throws {
         let refreshToken = try? KeychainService.shared.load(from: "refreshToken")
-        
         do {
             let (token, statusCode) = try await APIService.shared.request(
-                endpoint: "authentication/refresh/\(refreshToken)",
+                endpoint: "authentication/refresh/\(refreshToken!)",
                 method: .GET,
                 requiresAuth: false) as (TokenResponse, Int)
-            
             KeychainService.shared.save(token.token, to: "accessToken")
+            
+            loginSucceeded()
         } catch APIError.NotFound {
             logout()
         } catch {
@@ -83,7 +83,7 @@ class AuthService {
     }
     
     public func setAuthHeader(_ request : inout URLRequest) async throws {
-        guard isUserLogged else {
+        guard hasRefreshToken() else {
             throw APIError.Unauthenticated
         }
         

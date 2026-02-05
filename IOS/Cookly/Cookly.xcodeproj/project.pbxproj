@@ -18,6 +18,7 @@
 		0237F0E42F30D8CB00613B89 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0237F0D72F30D8CB00613B89 /* ContentView.swift */; };
 		0237F0E52F30D8CB00613B89 /* CooklyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0237F0D82F30D8CB00613B89 /* CooklyApp.swift */; };
 		0237F1072F310CBF00613B89 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0237F1062F310CBF00613B89 /* ErrorView.swift */; };
+		0298C5F82F3512BB00442074 /* APICommomCalls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0298C5F72F3512BB00442074 /* APICommomCalls.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,6 +44,7 @@
 		0237F0D82F30D8CB00613B89 /* CooklyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CooklyApp.swift; sourceTree = "<group>"; };
 		0237F1062F310CBF00613B89 /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
 		02884EC22F32329900977A00 /* CooklyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CooklyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		0298C5F72F3512BB00442074 /* APICommomCalls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APICommomCalls.swift; sourceTree = "<group>"; };
 		02BC11022F2FC3A600CE2E2F /* Cookly.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cookly.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -105,6 +107,31 @@
 			path = CooklyTests;
 			sourceTree = "<group>";
 		};
+		0298C5682F34FA4400442074 /* Objects */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Objects;
+			sourceTree = "<group>";
+		};
+		0298C5F22F350F6500442074 /* Post */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Post;
+			sourceTree = "<group>";
+		};
+		0298C5F32F350F7700442074 /* Profile */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		0298C5F92F35147100442074 /* Post */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Post;
+			sourceTree = "<group>";
+		};
+		0298C5FF2F3522AC00442074 /* TestingUtils */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = TestingUtils;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -132,6 +159,7 @@
 				0237F0C62F30D8CB00613B89 /* APIService.swift */,
 				0237F0C72F30D8CB00613B89 /* HTTPMethod.swift */,
 				0237F0C82F30D8CB00613B89 /* NetworkMonitor.swift */,
+				0298C5F72F3512BB00442074 /* APICommomCalls.swift */,
 			);
 			path = network;
 			sourceTree = "<group>";
@@ -148,6 +176,7 @@
 		0237F0CD2F30D8CB00613B89 /* commom */ = {
 			isa = PBXGroup;
 			children = (
+				0298C5FF2F3522AC00442074 /* TestingUtils */,
 				0237F1032F310BE700613B89 /* ErrorHandling */,
 				0237F0F02F30E68C00613B89 /* Utils */,
 				0237F0C92F30D8CB00613B89 /* network */,
@@ -159,6 +188,7 @@
 		0237F0D02F30D8CB00613B89 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				0298C5682F34FA4400442074 /* Objects */,
 				02884EB42F3226A300977A00 /* Response */,
 				02884EB32F32269C00977A00 /* Request */,
 			);
@@ -176,6 +206,7 @@
 		0237F0D32F30D8CB00613B89 /* Util */ = {
 			isa = PBXGroup;
 			children = (
+				0298C5F32F350F7700442074 /* Profile */,
 				0237F1082F310EEF00613B89 /* Forms */,
 				0237F0D22F30D8CB00613B89 /* Network */,
 				0237F1062F310CBF00613B89 /* ErrorView.swift */,
@@ -186,6 +217,7 @@
 		0237F0D42F30D8CB00613B89 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				0298C5F22F350F6500442074 /* Post */,
 				0237F0EF2F30E20700613B89 /* Authentication */,
 				0237F0EE2F30E1F800613B89 /* HomePage */,
 				0237F0D32F30D8CB00613B89 /* Util */,
@@ -196,6 +228,7 @@
 		0237F0D52F30D8CB00613B89 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				0298C5F92F35147100442074 /* Post */,
 				0237F1002F310A4A00613B89 /* Authentication */,
 			);
 			path = ViewModel;
@@ -280,6 +313,11 @@
 				0237F1082F310EEF00613B89 /* Forms */,
 				02884EB32F32269C00977A00 /* Request */,
 				02884EB42F3226A300977A00 /* Response */,
+				0298C5682F34FA4400442074 /* Objects */,
+				0298C5F22F350F6500442074 /* Post */,
+				0298C5F32F350F7700442074 /* Profile */,
+				0298C5F92F35147100442074 /* Post */,
+				0298C5FF2F3522AC00442074 /* TestingUtils */,
 			);
 			name = Cookly;
 			packageProductDependencies = (
@@ -361,6 +399,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0237F0DB2F30D8CB00613B89 /* APIError.swift in Sources */,
+				0298C5F82F3512BB00442074 /* APICommomCalls.swift in Sources */,
 				0237F0DC2F30D8CB00613B89 /* APIService.swift in Sources */,
 				0237F0DD2F30D8CB00613B89 /* HTTPMethod.swift in Sources */,
 				0237F1072F310CBF00613B89 /* ErrorView.swift in Sources */,
