@@ -19,6 +19,7 @@
 		0237F0E52F30D8CB00613B89 /* CooklyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0237F0D82F30D8CB00613B89 /* CooklyApp.swift */; };
 		0237F1072F310CBF00613B89 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0237F1062F310CBF00613B89 /* ErrorView.swift */; };
 		0298C5F82F3512BB00442074 /* APICommomCalls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0298C5F72F3512BB00442074 /* APICommomCalls.swift */; };
+		0298C6712F353AF300442074 /* ExpandableText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0298C6702F353AF300442074 /* ExpandableText.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,6 +46,7 @@
 		0237F1062F310CBF00613B89 /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
 		02884EC22F32329900977A00 /* CooklyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CooklyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0298C5F72F3512BB00442074 /* APICommomCalls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APICommomCalls.swift; sourceTree = "<group>"; };
+		0298C6702F353AF300442074 /* ExpandableText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandableText.swift; sourceTree = "<group>"; };
 		02BC11022F2FC3A600CE2E2F /* Cookly.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cookly.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -210,6 +212,7 @@
 				0237F1082F310EEF00613B89 /* Forms */,
 				0237F0D22F30D8CB00613B89 /* Network */,
 				0237F1062F310CBF00613B89 /* ErrorView.swift */,
+				0298C6702F353AF300442074 /* ExpandableText.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -399,6 +402,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0237F0DB2F30D8CB00613B89 /* APIError.swift in Sources */,
+				0298C6712F353AF300442074 /* ExpandableText.swift in Sources */,
 				0298C5F82F3512BB00442074 /* APICommomCalls.swift in Sources */,
 				0237F0DC2F30D8CB00613B89 /* APIService.swift in Sources */,
 				0237F0DD2F30D8CB00613B89 /* HTTPMethod.swift in Sources */,

@@ -38,7 +38,9 @@ class AuthService {
             endpoint: "authentication/login",
             method: .POST,
             requiresAuth: false,
-            body: user) as (TokenResponse, Int)
+            body: user) as (TokenResponse?, Int)
+        
+        guard let token else { throw APIError.NotFound }
         
         KeychainService.shared.save(token.token, to: "accessToken")
         
@@ -47,7 +49,9 @@ class AuthService {
             method: .GET,
             requiresAuth: true,
             authToken: token.token
-        ) as (RefreshTokenResponse, Int)
+        ) as (RefreshTokenResponse?, Int)
+        
+        guard let refreshToken else { throw APIError.NotFound }
         
         KeychainService.shared.save(refreshToken.token, to: "refreshToken")
         
@@ -55,11 +59,13 @@ class AuthService {
     }
     
     public func generateRefreshToken() async throws {
-        let (refreshToken, secondStatusCode) = try await APIService.shared.request(
+        let (refreshToken, _) = try await APIService.shared.request(
             endpoint: "authentication/generate-refresh",
             method: .GET,
             requiresAuth: true,
-        ) as (RefreshTokenResponse, Int)
+        ) as (RefreshTokenResponse?, Int)
+        
+        guard let refreshToken else { throw APIError.NotFound }
         
         KeychainService.shared.save(refreshToken.token, to: "refreshToken")
     }
@@ -67,10 +73,13 @@ class AuthService {
     public func refreshToken() async throws {
         let refreshToken = try? KeychainService.shared.load(from: "refreshToken")
         do {
-            let (token, statusCode) = try await APIService.shared.request(
+            let (token, _) = try await APIService.shared.request(
                 endpoint: "authentication/refresh/\(refreshToken!)",
                 method: .GET,
-                requiresAuth: false) as (TokenResponse, Int)
+                requiresAuth: false) as (TokenResponse?, Int)
+            
+            guard let token else { throw APIError.NotFound }
+            
             KeychainService.shared.save(token.token, to: "accessToken")
             
             loginSucceeded()

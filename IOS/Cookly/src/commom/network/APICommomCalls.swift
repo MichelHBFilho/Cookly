@@ -16,10 +16,12 @@ class APICommomCalls {
                 endpoint: "profile/\(username)",
                 method: .GET,
                 requiresAuth: true
-            ) as (ProfileResponse, Int)
+            ) as (ProfileResponse?, Int)
             
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy-MM-dd"
+            
+            guard let profile else { throw APIError.NotFound }
             
             return Profile(
                 fullName: profile.fullName,
@@ -28,7 +30,7 @@ class APICommomCalls {
                 profilePictureURL: profile.profilePictureURL
             )
         } catch {
-            print(error)
+            ErrorManager.shared.handle(error)
         }
         return Profile(fullName: "", username: "", birthday: Date(), profilePictureURL: "")
     }

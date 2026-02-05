@@ -12,6 +12,7 @@ class PostViewModel {
     let post: Post
     var profile: Profile?
     var isPostLikedByUser = false
+    var formattedCreatedAt = ""
     
     init(post: Post) {
         self.post = post
@@ -20,6 +21,9 @@ class PostViewModel {
     
     func loadData() async {
         profile = await APICommomCalls.shared.getProfileByUsername(post.author)
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        formattedCreatedAt = dateFormatter.string(from: post.createdAt)
     }
     
     func toggleLike() async {
@@ -29,7 +33,7 @@ class PostViewModel {
                     endpoint: "post/\(post.id)/like",
                     method: .DELETE,
                     requiresAuth: true
-                ) as (EmptyResponse, Int)
+                ) as (EmptyResponse?, Int)
                 
                 isPostLikedByUser = false;
             } else {
@@ -37,7 +41,7 @@ class PostViewModel {
                     endpoint: "post/\(post.id)/like",
                     method: .POST,
                     requiresAuth: true
-                ) as (EmptyResponse, Int)
+                ) as (EmptyResponse?, Int)
                 
                 isPostLikedByUser = true
             }

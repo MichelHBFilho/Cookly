@@ -28,7 +28,7 @@ struct SummarizedProfileView : View {
                 .fontWeight(.semibold)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-        .padding()
+        .padding(.horizontal)
     }
 
 }
