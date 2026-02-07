@@ -104,6 +104,14 @@ public class PostService {
                 .toList();
     }
 
+    public ReadPostDTO findPostById(String id) {
+        return postToReadDTO(
+                postRepository
+                        .findById(id)
+                        .orElseThrow(() -> new NotFoundException(Post.class))
+                        );
+    }
+
     public List<ReadPostDTO> getAllPosts(Integer page) {
         if(page <= 0) throw new IllegalArgumentException();
 

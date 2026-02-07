@@ -71,7 +71,7 @@ public class PostController {
             @ApiResponse(responseCode = "404", description = "Post not found"),
             @ApiResponse(responseCode = "403", description = "This user can't delete this post.")
     })
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{id}/delete")
     public ResponseEntity delete(
             @PathVariable @Parameter(example = "UUID") String id,
             @AuthenticationPrincipal UserDetails user
@@ -81,9 +81,19 @@ public class PostController {
     }
 
     @Operation(
+            summary = "Given an id, return the post."
+    )
+    @GetMapping("/id/{id}")
+    public ReadPostDTO getPostById(
+            @PathVariable String id
+    ) {
+        return postService.findPostById(id);
+    }
+
+    @Operation(
             summary = "Given an username, return all posts of this person paginated."
     )
-    @GetMapping("/{username}")
+    @GetMapping("/username/{username}")
     public List<ReadPostDTO> getAllByUsername(
             @PathVariable String username,
             @RequestParam(value = "page", required = false,
