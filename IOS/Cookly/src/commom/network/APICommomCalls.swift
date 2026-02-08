@@ -23,12 +23,7 @@ class APICommomCalls {
             
             guard let profile else { throw APIError.NotFound }
             
-            return Profile(
-                fullName: profile.fullName,
-                username: profile.username,
-                birthday: dateFormatter.date(from: profile.birthDay) ?? Date(),
-                profilePictureURL: profile.profilePictureURL
-            )
+            return ProfileResponse.toProfileObject(profile: profile)
         } catch {
             ErrorManager.shared.handle(error)
         }

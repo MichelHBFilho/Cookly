@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		02326F472F3904E300AE3028 /* HomepageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02326F462F3904E300AE3028 /* HomepageViewModel.swift */; };
 		0237F0DA2F30D8CB00613B89 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0237F0D62F30D8CB00613B89 /* Assets.xcassets */; };
 		0237F0DB2F30D8CB00613B89 /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0237F0C52F30D8CB00613B89 /* APIError.swift */; };
 		0237F0DC2F30D8CB00613B89 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0237F0C62F30D8CB00613B89 /* APIService.swift */; };
@@ -33,6 +34,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		02326F462F3904E300AE3028 /* HomepageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomepageViewModel.swift; sourceTree = "<group>"; };
 		0237F0C52F30D8CB00613B89 /* APIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
 		0237F0C62F30D8CB00613B89 /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
 		0237F0C72F30D8CB00613B89 /* HTTPMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPMethod.swift; sourceTree = "<group>"; };
@@ -159,6 +161,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		02326F452F3904D600AE3028 /* Homepage */ = {
+			isa = PBXGroup;
+			children = (
+				02326F462F3904E300AE3028 /* HomepageViewModel.swift */,
+			);
+			path = Homepage;
+			sourceTree = "<group>";
+		};
 		0237F0C92F30D8CB00613B89 /* network */ = {
 			isa = PBXGroup;
 			children = (
@@ -237,6 +247,7 @@
 		0237F0D52F30D8CB00613B89 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				02326F452F3904D600AE3028 /* Homepage */,
 				0298C5F92F35147100442074 /* Post */,
 				0237F1002F310A4A00613B89 /* Authentication */,
 			);
@@ -414,6 +425,7 @@
 				0237F0DC2F30D8CB00613B89 /* APIService.swift in Sources */,
 				0237F0DD2F30D8CB00613B89 /* HTTPMethod.swift in Sources */,
 				0237F1072F310CBF00613B89 /* ErrorView.swift in Sources */,
+				02326F472F3904E300AE3028 /* HomepageViewModel.swift in Sources */,
 				0237F0DE2F30D8CB00613B89 /* NetworkMonitor.swift in Sources */,
 				0237F0DF2F30D8CB00613B89 /* AuthService.swift in Sources */,
 				0237F0E02F30D8CB00613B89 /* KeychainService.swift in Sources */,

@@ -16,7 +16,6 @@ struct PostView: View {
             
             if let profile = viewModel.profile {
                 SummarizedProfileView(profile: profile)
-                    .offset(y: 30)
             }
             
             TabView {
@@ -25,14 +24,14 @@ struct PostView: View {
                         image
                             .resizable()
                             .scaledToFit()
-                            .frame(maxHeight: 300)
+                            .clipped()
                     } placeholder: {
                     }
                 }
             }
             .tabViewStyle(.page)
             .indexViewStyle(.page(backgroundDisplayMode: .always))
-            .frame(maxHeight: 330)
+            .frame(maxWidth: .infinity, idealHeight: 330)
             
             HStack {
                 Button {
@@ -79,6 +78,7 @@ struct PostView: View {
                     showingDetails.toggle()
             }
         }
+        .frame(idealHeight: 460, maxHeight: 600)
         .popover(isPresented: $showingDetails, content: { recipeDetails })
         .popover(isPresented: $showingComments, content: { comments })
         .task {

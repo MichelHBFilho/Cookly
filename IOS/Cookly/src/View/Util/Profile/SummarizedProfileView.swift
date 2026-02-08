@@ -27,7 +27,7 @@ struct SummarizedProfileView : View {
                 .font(.title2)
                 .fontWeight(.semibold)
         }
-        .frame(maxWidth: .infinity, alignment: .leading)
+        .frame(maxWidth: .infinity, idealHeight: 50, alignment: .leading)
         .padding(.horizontal)
     }
 
@@ -38,7 +38,7 @@ struct SummarizedProfileView : View {
         fullName: "Mari Schultz",
         username: "marischultz",
         birthday: Date.distantPast,
-        profilePictureURL: "3321e014-f481-4324-b911-3670cf8f9c41_DSCN2826 Small.jpeg"
+        profilePictureURL: "536e2757-c57d-4d54-be7c-2d4b6ef6d562_DSCN2826 Small.jpeg"
     )
     
     SummarizedProfileView(profile:profile)
