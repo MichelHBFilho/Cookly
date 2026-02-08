@@ -5,8 +5,8 @@ import com.michelfilho.cookly.common.exception.UnauthorizedException;
 import com.michelfilho.cookly.common.service.ImageService;
 import com.michelfilho.cookly.person.model.Person;
 import com.michelfilho.cookly.person.repository.PersonRepository;
-import com.michelfilho.cookly.post.dto.ReadCommentDTO;
 import com.michelfilho.cookly.post.dto.NewPostDTO;
+import com.michelfilho.cookly.post.dto.ReadCommentDTO;
 import com.michelfilho.cookly.post.dto.ReadPostDTO;
 import com.michelfilho.cookly.post.dto.ReadRecipeDTO;
 import com.michelfilho.cookly.post.model.Comment;
@@ -141,7 +141,7 @@ public class PostService {
                 .map((Comment comment) -> {
                     return new ReadCommentDTO(
                             comment.getId(),
-                            comment.getPerson().getFullName(),
+                            comment.getPerson().getUser().getUsername(),
                             comment.getContent(),
                             comment.getCreatedAt()
                     );
