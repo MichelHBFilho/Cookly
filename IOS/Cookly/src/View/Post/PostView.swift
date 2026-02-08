@@ -17,8 +17,6 @@ struct PostView: View {
             if let profile = viewModel.profile {
                 SummarizedProfileView(profile: profile)
                     .offset(y: 30)
-            } else {
-                
             }
             
             TabView {
@@ -123,7 +121,7 @@ struct PostView: View {
     }
     
     var comments: some View {
-        VStack {
+        VStack() {
             Text("Comments")
                 .font(.largeTitle)
                 .fontWeight(.semibold)

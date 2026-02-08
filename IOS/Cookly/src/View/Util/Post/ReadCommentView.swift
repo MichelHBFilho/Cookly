@@ -11,7 +11,7 @@ struct ReadCommentView : View {
     let comment: Comment
     @State private var profile: Profile? = nil
     var body: some View {
-        VStack {
+        VStack(alignment:.leading) {
             if let profile {
                 SummarizedProfileView(profile: profile)
             }
