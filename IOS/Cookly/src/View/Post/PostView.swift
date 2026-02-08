@@ -8,8 +8,9 @@
 import SwiftUI
 
 struct PostView: View {
-    @State var viewModel: PostViewModel
+    @StateObject var viewModel: PostViewModel
     @State private var showingDetails: Bool = false
+    @State private var showingComments: Bool = false
     var body: some View {
         VStack() {
             
@@ -42,17 +43,17 @@ struct PostView: View {
                     Image(systemName: (viewModel.isPostLikedByUser ? "heart.fill" : "heart"))
                         .resizable()
                         .scaledToFit()
-                        .frame(width: 20)
+                        .frame(width: 30)
                         .foregroundStyle(.cooklyRed)
                 }
                 
                 Button {
-                    
+                    showingComments.toggle()
                 } label: {
                     Image(systemName: "message")
                         .resizable()
                         .scaledToFit()
-                        .frame(width: 20)
+                        .frame(width: 30)
                         .foregroundStyle(.cooklyGray)
                 }
             }.padding(.horizontal)
@@ -79,43 +80,70 @@ struct PostView: View {
                 color: .cooklyBlue) {
                     showingDetails.toggle()
             }
+        }
+        .popover(isPresented: $showingDetails, content: { recipeDetails })
+        .popover(isPresented: $showingComments, content: { comments })
+        .task {
+            await viewModel.loadData()
+            await viewModel.updateComments()
+        }
+    }
+    
+    var recipeDetails: some View {
+        VStack {
+            Text("Prepare time: \(viewModel.post.recipe.prepareTime)")
+                .font(.title2)
+                .fontWeight(.medium)
+                .foregroundStyle(.cooklyGreen)
+                .padding()
             
-            if showingDetails {
-                Text("Prepare time: \(viewModel.post.recipe.prepareTime)")
-                    .fontWeight(.medium)
-                    .foregroundStyle(.cooklyGreen)
-                Text("Steps:")
-                    .font(.title3)
-                    .fontWeight(.semibold)
-                ForEach(viewModel.post.recipe.stepByStep.indices, id: \.self) { index in
-                    HStack(alignment: .top, spacing: 8) {
-
-                            Text("\(index + 1)")
-                                .font(.caption)
-                                .fontWeight(.bold)
-                                .foregroundColor(.white)
-                                .frame(width: 22, height: 22)
-                                .background(Circle().fill(.cooklyBlue))
-
-                            Text(viewModel.post.recipe.stepByStep[index])
-                                .font(.body)
-                                .foregroundStyle(.cooklyGray)
-                                .fixedSize(horizontal: false, vertical: true)
-                    }
-                        .padding(.vertical, 4)
+            Text("Steps:")
+                .font(.title)
+                .fontWeight(.semibold)
+            ForEach(viewModel.post.recipe.stepByStep.indices, id: \.self) { index in
+                HStack(alignment: .top, spacing: 8) {
+                    
+                    Text("\(index + 1)")
+                        .font(.title3)
+                        .fontWeight(.bold)
+                        .foregroundColor(.white)
+                        .frame(width: 22, height: 22)
+                        .background(Circle().fill(.cooklyBlue))
+                    
+                    Text(viewModel.post.recipe.stepByStep[index])
+                        .font(.title3)
+                        .foregroundStyle(.cooklyGray)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+                .padding(.vertical, 4)
+            }
+            
+            Spacer()
+        }.padding()
+    }
+    
+    var comments: some View {
+        VStack {
+            Text("Comments")
+                .font(.largeTitle)
+                .fontWeight(.semibold)
+                .foregroundStyle(.cooklyGray)
+                .padding(.top)
+            
+            ScrollView {
+                ForEach(viewModel.post.comments, id: \.id) { comment in
+                    ReadCommentView(comment: comment)
                 }
             }
             
-        }
-        .task {
-            await viewModel.loadData()
+            NewCommentView(content: $viewModel.newCommentText, sendComment: viewModel.sendComment)
         }
     }
 }
 
 #Preview {
     let post = Post(
-        id: "3ddcdec4-9d66-4b47-a98f-262abc7d5001",
+        id: "40479f2b-37f7-495b-a4e1-9f5eab9ba6b9",
         recipe: Recipe(
             name: "Cheese bread",
             prepareTime: 25,
@@ -125,25 +153,13 @@ struct PostView: View {
             ]
         ),
         comments: [
-            Comment(
-                id: "05d86b4f-0d4c-43fd-9391-927a3a4d82ce",
-                author: "michelhbfilho",
-                content: "Very good!",
-                createdAt: Date()
-            ),
-            Comment(
-                id: "v05d86b4f-0d4c-43fd-9391-927a3a4d82ce",
-                author: "marishcultz",
-                content: "I don't liked it.",
-                createdAt: Date()
-            )
         ],
         likes: 12,
         author: "marischultz",
         description: "A bread with cheese inside.",
         createdAt: Date(),
-        imagePaths: ["1f2f2a5c-2feb-458d-951d-a9a0e514f672_istockphoto-1024883060-612x612.jpg",
-            "a4a78ef3-0bd5-4530-91c2-bd545762d249_8b963ddc5e21b66ba2022667c10e9bf6.jpg"]
+        imagePaths: ["437fded8-b4f7-466c-8d02-5cdc9e0f51eb_istockphoto-1024883060-612x612.jpg",
+                     "d6370711-82a5-4e60-b58a-2d73adbbf93f_8b963ddc5e21b66ba2022667c10e9bf6.jpg"]
     )
     
     Task { await setupAuth() }

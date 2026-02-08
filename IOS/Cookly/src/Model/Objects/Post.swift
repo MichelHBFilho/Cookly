@@ -7,10 +7,10 @@
 
 import Foundation
 
-struct Post {
+struct Post: Identifiable {
     let id: String
     let recipe: Recipe
-    let comments: [Comment]
+    var comments: [Comment]
     let likes: Int
     let author: String
     let description: String
@@ -24,7 +24,7 @@ struct Recipe {
     let stepByStep: [String]
 }
 
-struct Comment {
+struct Comment: Identifiable {
     let id: String
     let author: String
     let content: String
