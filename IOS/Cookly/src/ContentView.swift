@@ -10,12 +10,16 @@ import SwiftData
 
 struct ContentView: View {
     @State private var authService = AuthService.shared
+    @ObservedObject private var router = Router.shared
     
     var body: some View {
-        if(authService.isUserLogged) {
-            
-        } else {
+        switch(router.route) {
+        case .authentication:
             AuthenticationView()
+        case .homepage:
+            HomepageView()
+        case .newPost:
+            Color.clear
         }
     }
 }

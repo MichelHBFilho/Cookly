@@ -26,6 +26,7 @@ class LoginViewModel {
         do {
             try await AuthService.shared.login(user: loginRequest)
             loginStatus = .successfull
+            Router.shared.route = .homepage
         } catch {
             loginStatus = .wrongCredential
             
