@@ -58,7 +58,7 @@ class APIService {
         requiresAuth : Bool = true,
         body : Data,
         boundary: String
-    ) async throws -> (T, Int) {
+    ) async throws -> (T?, Int) {
         guard let url = URL(string: baseURL + endpoint) else {
             throw APIError.URLInvalid
         }
@@ -78,7 +78,11 @@ class APIService {
         
         try handleAPIResponseCode(httpResponse: (response as? HTTPURLResponse)!)
         
-        return try (JSONDecoder().decode(T.self, from: data), (response as? HTTPURLResponse)!.statusCode)
+        do {
+            return try (JSONDecoder().decode(T.self, from: data), (response as? HTTPURLResponse)!.statusCode)
+        } catch {
+            return (nil, 215)
+        }
     }
     
     private func handleAPIResponseCode(httpResponse : HTTPURLResponse) throws {

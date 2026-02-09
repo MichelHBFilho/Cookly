@@ -10,10 +10,15 @@ import UIKit
 
 protocol MultipartRequestProtocol {
     var images: [UIImage] { get }
-    var data: Encodable { get }
+    var data: MultipartData { get }
 }
 
 struct MultipartRequest : MultipartRequestProtocol {
     var images: [UIImage]
-    var data: Encodable
+    var data: MultipartData
+}
+
+enum MultipartData {
+    case model(Encodable)
+    case json(Data)
 }

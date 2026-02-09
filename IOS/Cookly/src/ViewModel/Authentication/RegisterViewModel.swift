@@ -14,12 +14,6 @@ class RegisterViewModel {
     var form = RegisterRequest()
     var profilePicture: UIImage?
     
-    enum RequestStatus {
-        case success
-        case badRequest
-        case nothing
-    }
-    
     var requestStatus: RequestStatus = .nothing
     
     func doRequest() async throws {
@@ -40,7 +34,7 @@ class RegisterViewModel {
                 images.append(profilePicture)
             }
             return images
-        }(), data: form)
+        }(), data: .model(form))
         
         let boundary = UUID().uuidString
         
@@ -56,7 +50,7 @@ class RegisterViewModel {
             requiresAuth: false,
             body: data,
             boundary: boundary
-        ) as (EmptyResponse, Int)
+        ) as (EmptyResponse?, Int)
         
         if((200...299).contains(statusCode)) {
             requestStatus = .success

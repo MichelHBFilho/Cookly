@@ -13,24 +13,34 @@ func generateMultipartFormDataBody<T: MultipartRequestProtocol>(
 ) -> Data {
     var body = Data()
     
-    if let data = try? JSONEncoder().encode(object.data),
-       let dictionary = try? JSONSerialization.jsonObject(with: data) as? [String: Any] {
-        for (key, value) in dictionary {
-            body.append("--\(boundary)\r\n")
-            body.append("Content-Disposition: form-data; name=\"\(key)\"\r\n")
-            body.append("\r\n")
-            
-            if key == "birthDay", let timestamp = value as? Double {
-                let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "yyyy-MM-dd"
-                let date = Date(timeIntervalSince1970: timestamp)
-                body.append("\(dateFormatter.string(from: date))\r\n")
-            } else {
-                body.append("\(value)\r\n")
+    switch(object.data) {
+    case .model(let model):
+        if let data = try? JSONEncoder().encode(model),
+           let dictionary = try? JSONSerialization.jsonObject(with: data) as? [String: Any] {
+            for (key, value) in dictionary {
+                body.append("--\(boundary)\r\n")
+                body.append("Content-Disposition: form-data; name=\"\(key)\"\r\n")
+                body.append("\r\n")
+                
+                if key == "birthDay", let timestamp = value as? Double {
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.dateFormat = "yyyy-MM-dd"
+                    let date = Date(timeIntervalSince1970: timestamp)
+                    body.append("\(dateFormatter.string(from: date))\r\n")
+                } else {
+                    body.append("\(value)\r\n")
+                }
             }
         }
+    case .json(let rawJson):
+        body.append("--\(boundary)\r\n")
+        body.append("Content-Disposition: form-data; name=\"data\"\r\n")
+        body.append("Content-Type: application/json\r\n")
+        body.append("\r\n")
+        body.append(rawJson)
+        body.append("\r\n")
     }
-    
+        
     for image in object.images {
         if let uuid = UUID().uuidString.components(separatedBy: "-").first {
             body.append("--\(boundary)\r\n")
