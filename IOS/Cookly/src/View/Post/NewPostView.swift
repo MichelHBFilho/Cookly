@@ -23,9 +23,25 @@ struct NewPostView : View {
     
     var body: some View {
         ScrollView {
-            Text("New recipe:")
-                .font(.title)
-                .foregroundStyle(.cooklyGray)
+            HStack {
+                Button {
+                    Router.shared.route = .homepage
+                } label: {
+                    Image(systemName: "arrow.left")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 20)
+                        .foregroundStyle(.cooklyLightBlue)
+                        .padding()
+                }.glassEffect(.regular.interactive().tint(.cooklyBlue))
+                Spacer()
+                Text("New recipe:")
+                    .font(.title)
+                    .foregroundStyle(.cooklyGray)
+                Spacer()
+                
+            }
+            .padding()
             LazyVStack {
                 MyTextField(
                     value: $viewModel.request.recipeName,
