@@ -54,7 +54,7 @@ class RegisterViewModel {
         
         if((200...299).contains(statusCode)) {
             requestStatus = .success
-            Router.shared.route = .homepage
+            try await AuthService.shared.login(user: LoginRequest(username: form.username, password: form.password))
         }
     }
     

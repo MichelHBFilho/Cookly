@@ -25,11 +25,13 @@ class AuthService {
 
     func loginSucceeded() {
         isUserLogged = true
+        Router.shared.route = .homepage
     }
 
     func logout() {
         try? KeychainService.shared.delete(from: "refreshToken")
         isUserLogged = false
+        Router.shared.route = .authentication
     }
 
     

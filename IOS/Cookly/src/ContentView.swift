@@ -13,14 +13,20 @@ struct ContentView: View {
     @ObservedObject private var router = Router.shared
     
     var body: some View {
-        switch(router.route) {
-        case .authentication:
-            AuthenticationView()
-        case .homepage:
-            HomepageView()
-        case .newPost:
-            NewPostView()
+        Group {
+            switch(router.route) {
+            case .authentication:
+                AuthenticationView()
+                    .transition(.slide)
+            case .homepage:
+                HomepageView()
+                    .transition(.slide)
+            case .newPost:
+                NewPostView()
+                    .transition(.slide)
+            }
         }
+        .animation(.easeInOut, value: router.route)
     }
 }
 

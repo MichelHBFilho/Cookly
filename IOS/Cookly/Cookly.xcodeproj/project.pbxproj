@@ -16,9 +16,9 @@
 		0237F0DF2F30D8CB00613B89 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0237F0CA2F30D8CB00613B89 /* AuthService.swift */; };
 		0237F0E02F30D8CB00613B89 /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0237F0CB2F30D8CB00613B89 /* KeychainService.swift */; };
 		0237F0E32F30D8CB00613B89 /* DisconnectedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0237F0D12F30D8CB00613B89 /* DisconnectedView.swift */; };
-		0237F0E42F30D8CB00613B89 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0237F0D72F30D8CB00613B89 /* ContentView.swift */; };
 		0237F0E52F30D8CB00613B89 /* CooklyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0237F0D82F30D8CB00613B89 /* CooklyApp.swift */; };
 		0237F1072F310CBF00613B89 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0237F1062F310CBF00613B89 /* ErrorView.swift */; };
+		02808A802F3B6DF8006388F5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02808A7F2F3B6DF8006388F5 /* ContentView.swift */; };
 		0298C5F82F3512BB00442074 /* APICommomCalls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0298C5F72F3512BB00442074 /* APICommomCalls.swift */; };
 		0298C6712F353AF300442074 /* ExpandableText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0298C6702F353AF300442074 /* ExpandableText.swift */; };
 /* End PBXBuildFile section */
@@ -43,9 +43,9 @@
 		0237F0CB2F30D8CB00613B89 /* KeychainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
 		0237F0D12F30D8CB00613B89 /* DisconnectedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisconnectedView.swift; sourceTree = "<group>"; };
 		0237F0D62F30D8CB00613B89 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		0237F0D72F30D8CB00613B89 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		0237F0D82F30D8CB00613B89 /* CooklyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CooklyApp.swift; sourceTree = "<group>"; };
 		0237F1062F310CBF00613B89 /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
+		02808A7F2F3B6DF8006388F5 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		02884EC22F32329900977A00 /* CooklyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CooklyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0298C5F72F3512BB00442074 /* APICommomCalls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APICommomCalls.swift; sourceTree = "<group>"; };
 		0298C6702F353AF300442074 /* ExpandableText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandableText.swift; sourceTree = "<group>"; };
@@ -262,7 +262,7 @@
 				0237F0D42F30D8CB00613B89 /* View */,
 				0237F0D52F30D8CB00613B89 /* ViewModel */,
 				0237F0D62F30D8CB00613B89 /* Assets.xcassets */,
-				0237F0D72F30D8CB00613B89 /* ContentView.swift */,
+				02808A7F2F3B6DF8006388F5 /* ContentView.swift */,
 				0237F0D82F30D8CB00613B89 /* CooklyApp.swift */,
 			);
 			path = src;
@@ -428,9 +428,9 @@
 				02326F472F3904E300AE3028 /* HomepageViewModel.swift in Sources */,
 				0237F0DE2F30D8CB00613B89 /* NetworkMonitor.swift in Sources */,
 				0237F0DF2F30D8CB00613B89 /* AuthService.swift in Sources */,
+				02808A802F3B6DF8006388F5 /* ContentView.swift in Sources */,
 				0237F0E02F30D8CB00613B89 /* KeychainService.swift in Sources */,
 				0237F0E32F30D8CB00613B89 /* DisconnectedView.swift in Sources */,
-				0237F0E42F30D8CB00613B89 /* ContentView.swift in Sources */,
 				0237F0E52F30D8CB00613B89 /* CooklyApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
