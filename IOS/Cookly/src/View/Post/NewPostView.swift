@@ -13,7 +13,7 @@ struct NewPostView : View {
     
     private let columns = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]
     
-    private var buttonCollor: Color {
+    private var buttonColor: Color {
         switch(viewModel.requestStatus) {
         case .badRequest: .cooklyRed
         case .nothing: .cooklyBlue
@@ -116,7 +116,7 @@ struct NewPostView : View {
                 
                 MyButton(
                     title: "Send!",
-                    color: buttonCollor) {
+                    color: buttonColor) {
                         Task { await viewModel.doRequest() }
                     }
             }

@@ -12,7 +12,7 @@ struct HomepageView: View {
     var body: some View {
         ScrollView {
             LazyVStack(spacing: 16) {
-                MyProfileView()
+                MenuView()
                     .padding()
                 Divider()
                     .foregroundStyle(.cooklyBlue)

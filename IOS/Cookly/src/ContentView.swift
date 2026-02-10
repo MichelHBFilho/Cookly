@@ -19,7 +19,7 @@ struct ContentView: View {
         case .homepage:
             HomepageView()
         case .newPost:
-            Color.clear
+            NewPostView()
         }
     }
 }

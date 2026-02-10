@@ -18,8 +18,26 @@ class APICommomCalls {
                 requiresAuth: true
             ) as (ProfileResponse?, Int)
             
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "yyyy-MM-dd"
+            let dateFormatter = ISO8601DateFormatter()
+            
+            guard let profile else { throw APIError.NotFound }
+            
+            return ProfileResponse.toProfileObject(profile: profile)
+        } catch {
+            ErrorManager.shared.handle(error)
+        }
+        return Profile(fullName: "", username: "", birthday: Date(), profilePictureURL: "")
+    }
+    
+    func getCurrentProfile() async -> Profile {
+        do {
+            let (profile, _) = try await APIService.shared.request(
+                endpoint: "profile",
+                method: .GET,
+                requiresAuth: true
+            ) as (ProfileResponse?, Int)
+            
+            let dateFormatter = ISO8601DateFormatter()
             
             guard let profile else { throw APIError.NotFound }
             
