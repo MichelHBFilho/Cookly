@@ -25,6 +25,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Optional;
+import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -215,6 +216,18 @@ class InteractPostServiceTest {
         Assertions.assertThrows(InvalidPostInteractionStateException.class, () -> {
             service.removeComment(user, comment.getId());
         });
+    }
+
+    @Test
+    public void shouldCheckLike() {
+        UserDetails user = Instancio.of(User.class).create();
+        Post post = Instancio.of(Post.class).create();
+
+        boolean isLiked = new Random().nextBoolean();
+
+        when(postLikeRepository.existsByPostIdAndPersonUserUsername(post.getId(), user.getUsername())).thenReturn(isLiked);
+
+        Assertions.assertEquals(isLiked, service.isLiked(user, post.getId()));
     }
 
 }

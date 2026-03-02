@@ -29,7 +29,7 @@ public class InteractPostService {
             UserDetails user,
             String postId
     ) {
-        if(postLikeRepository.existsByPostIdAndPersonUserUsername(postId, user.getUsername()))
+        if(isLiked(user, postId))
             throw new InvalidPostInteractionStateException("This post is already liked.");
 
         Post post = postRepository.findById(postId)
@@ -46,7 +46,7 @@ public class InteractPostService {
             UserDetails user,
             String postId
     ) {
-        if(!postLikeRepository.existsByPostIdAndPersonUserUsername(postId, user.getUsername()))
+        if(!isLiked(user, postId))
             throw new InvalidPostInteractionStateException("This post isn't liked.");
 
         postLikeRepository.deleteByPostIdAndPersonUserUsername(postId, user.getUsername());
@@ -78,6 +78,10 @@ public class InteractPostService {
 
         commentRepository.deleteById(commentId);
 
+    }
+
+    public boolean isLiked(UserDetails user, String postId) {
+        return postLikeRepository.existsByPostIdAndPersonUserUsername(postId, user.getUsername());
     }
 
 }
