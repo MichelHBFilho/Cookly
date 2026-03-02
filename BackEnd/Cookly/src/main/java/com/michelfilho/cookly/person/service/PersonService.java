@@ -40,14 +40,7 @@ public class PersonService {
         if(person == null)
             throw new NotFoundException(Person.class);
 
-        String profilePictureName = person.getProfilePictureName();
-
-        return new ReadPersonDTO(
-                profilePictureName,
-                person.getBirthDay(),
-                person.getFullName(),
-                person.getUser().getUsername()
-        );
+        return person.toReadPersonDTO();
     }
 
     public void updatePersonInformation(

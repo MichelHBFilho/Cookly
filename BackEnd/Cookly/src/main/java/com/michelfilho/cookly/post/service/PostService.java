@@ -141,7 +141,7 @@ public class PostService {
                 .map((Comment comment) -> {
                     return new ReadCommentDTO(
                             comment.getId(),
-                            comment.getPerson().getUser().getUsername(),
+                            comment.getPerson().toReadPersonDTO(),
                             comment.getContent(),
                             comment.getCreatedAt()
                     );
@@ -155,7 +155,7 @@ public class PostService {
                 recipeDTO,
                 readCommentDTO,
                 likesCount,
-                post.getPerson().getUser().getUsername(),
+                post.getPerson().toReadPersonDTO(),
                 post.getDescription(),
                 post.getCreatedAt(),
                 post.getImagesPaths()

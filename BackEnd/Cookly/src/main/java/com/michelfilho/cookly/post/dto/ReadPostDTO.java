@@ -1,5 +1,6 @@
 package com.michelfilho.cookly.post.dto;
 
+import com.michelfilho.cookly.person.dto.ReadPersonDTO;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.time.Instant;
@@ -15,7 +16,7 @@ public record ReadPostDTO(
         @Schema(example = "40")
         Integer likes,
         @Schema(example = "Jane Doe")
-        String author,
+        ReadPersonDTO author,
         @Schema(example = "Easy egg salad sandwich")
         String description,
         @Schema(example = "2025-11-20")

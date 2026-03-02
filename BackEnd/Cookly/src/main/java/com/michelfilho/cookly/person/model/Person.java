@@ -1,6 +1,7 @@
 package com.michelfilho.cookly.person.model;
 
 import com.michelfilho.cookly.authentication.model.User;
+import com.michelfilho.cookly.person.dto.ReadPersonDTO;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -45,5 +46,14 @@ public class Person {
     public String getProfilePictureName() {
         String[] profilePicturePath = this.getProfilePicturePath().split("/");
         return profilePicturePath[profilePicturePath.length - 1];
+    }
+
+    public ReadPersonDTO toReadPersonDTO() {
+        return new ReadPersonDTO(
+                this.getProfilePictureName(),
+                this.getBirthDay(),
+                this.getFullName(),
+                this.getUser().getUsername()
+        );
     }
 }
