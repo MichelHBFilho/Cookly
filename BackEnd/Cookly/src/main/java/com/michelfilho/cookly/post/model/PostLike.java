@@ -4,6 +4,8 @@ import com.michelfilho.cookly.person.model.Person;
 import jakarta.persistence.*;
 import lombok.Getter;
 
+import java.time.Instant;
+
 @Table(name = "post_like")
 @Entity
 @Getter
@@ -22,9 +24,12 @@ public class PostLike {
     @JoinColumn(name = "post_id", nullable = false, referencedColumnName = "id")
     private Post post;
 
+    private Instant createdAt;
+
     public PostLike(Person person, Post post) {
         this.person = person;
         this.post = post;
+        this.createdAt = Instant.now();
     }
 
     public PostLike() {}
