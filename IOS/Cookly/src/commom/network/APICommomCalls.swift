@@ -22,7 +22,7 @@ class APICommomCalls {
             
             guard let profile else { throw APIError.NotFound }
             
-            return ProfileResponse.toProfileObject(profile: profile)
+            return profile.toProfile()
         } catch {
             ErrorManager.shared.handle(error)
         }
@@ -41,7 +41,7 @@ class APICommomCalls {
             
             guard let profile else { throw APIError.NotFound }
             
-            return ProfileResponse.toProfileObject(profile: profile)
+            return profile.toProfile()
         } catch {
             ErrorManager.shared.handle(error)
         }

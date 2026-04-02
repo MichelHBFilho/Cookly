@@ -23,29 +23,8 @@ class HomepageViewModel : ObservableObject {
             
             let dateFormatter = ISO8601DateFormatter()
             
-            self.posts = posts.map { postResponse in
-                return Post(
-                    id: postResponse.id,
-                    recipe: Recipe(
-                        name: postResponse.recipe.name,
-                        prepareTime: postResponse.recipe.prepareTime,
-                        stepByStep: postResponse.recipe.stepByStep
-                    ),
-                    comments: postResponse.comments.map { comment in
-                        return Comment(
-                            id: comment.id,
-                            author: comment.author,
-                            content: comment.text,
-                            createdAt: dateFormatter.date(from: comment.createdAt) ?? Date()
-                        )
-                    },
-                    likes: postResponse.likes,
-                    author: postResponse.author,
-                    description: postResponse.description,
-                    createdAt: dateFormatter.date(from: postResponse.createdAt) ?? Date(),
-                    imagePaths: postResponse.imagesPaths
-                )
-            }
+            self.posts = posts.map { postResponse in postResponse.toPost() }
+                
         } catch {
             ErrorManager.shared.handle(error)
         }
