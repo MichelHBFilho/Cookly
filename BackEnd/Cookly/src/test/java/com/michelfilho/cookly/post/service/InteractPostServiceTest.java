@@ -1,7 +1,7 @@
 package com.michelfilho.cookly.post.service;
 
 import com.michelfilho.cookly.authentication.model.User;
-import com.michelfilho.cookly.common.exception.InvalidPostInteractionStateException;
+import com.michelfilho.cookly.common.exception.InvalidInteractionStateException;
 import com.michelfilho.cookly.common.exception.NotFoundException;
 import com.michelfilho.cookly.person.model.Person;
 import com.michelfilho.cookly.person.repository.PersonRepository;
@@ -25,6 +25,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Optional;
+import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -82,7 +83,7 @@ class InteractPostServiceTest {
 
         when(postLikeRepository.existsByPostIdAndPersonUserUsername(post.getId(), user.getUsername())).thenReturn(true);
 
-        assertThrows(InvalidPostInteractionStateException.class, () -> {
+        assertThrows(InvalidInteractionStateException.class, () -> {
             service.like(user, post.getId());
         });
     }
@@ -132,7 +133,7 @@ class InteractPostServiceTest {
 
         when(postLikeRepository.existsByPostIdAndPersonUserUsername(post.getId(), user.getUsername())).thenReturn(false);
 
-        assertThrows(InvalidPostInteractionStateException.class, () -> service.dislike(user, post.getId()));
+        assertThrows(InvalidInteractionStateException.class, () -> service.dislike(user, post.getId()));
     }
 
     @Test
@@ -198,7 +199,7 @@ class InteractPostServiceTest {
 
         String commentId = "false-id";
 
-        Assertions.assertThrows(InvalidPostInteractionStateException.class, () -> {
+        Assertions.assertThrows(InvalidInteractionStateException.class, () -> {
             service.removeComment(user, commentId);
         });
     }
@@ -212,9 +213,21 @@ class InteractPostServiceTest {
         when(commentRepository.existsById(comment.getId())).thenReturn(true);
         when(commentRepository.existsByIdAndPersonUserUsername(comment.getId(), user.getUsername())).thenReturn(false);
 
-        Assertions.assertThrows(InvalidPostInteractionStateException.class, () -> {
+        Assertions.assertThrows(InvalidInteractionStateException.class, () -> {
             service.removeComment(user, comment.getId());
         });
+    }
+
+    @Test
+    public void shouldCheckLike() {
+        UserDetails user = Instancio.of(User.class).create();
+        Post post = Instancio.of(Post.class).create();
+
+        boolean isLiked = new Random().nextBoolean();
+
+        when(postLikeRepository.existsByPostIdAndPersonUserUsername(post.getId(), user.getUsername())).thenReturn(isLiked);
+
+        Assertions.assertEquals(isLiked, service.isLiked(user, post.getId()));
     }
 
 }

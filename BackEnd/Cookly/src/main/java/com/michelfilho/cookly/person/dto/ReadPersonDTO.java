@@ -5,6 +5,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDate;
 
 public record ReadPersonDTO(
+        @Schema(example = "UUID")
+        String id,
         @Schema(example = "DefaultPicture.png")
         String profilePictureURL,
         @Schema(example = "2007-10-02")
@@ -12,6 +14,7 @@ public record ReadPersonDTO(
         @Schema(example = "John Doe")
         String fullName,
         @Schema(example = "johnnyDoe")
-        String username
+        String username,
+        Integer followers
 ) {
 }

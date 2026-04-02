@@ -1,0 +1,2 @@
+ALTER TABLE post_like
+ADD COLUMN created_at TIMESTAMP;

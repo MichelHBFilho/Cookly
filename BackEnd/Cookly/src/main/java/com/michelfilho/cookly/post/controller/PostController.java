@@ -1,5 +1,6 @@
 package com.michelfilho.cookly.post.controller;
 
+import com.michelfilho.cookly.post.dto.CheckLikeDTO;
 import com.michelfilho.cookly.post.dto.NewPostDTO;
 import com.michelfilho.cookly.post.dto.ReadPostDTO;
 import com.michelfilho.cookly.post.service.InteractPostService;
@@ -140,6 +141,14 @@ public class PostController {
     public ResponseEntity dislikePost(@PathVariable String id, @AuthenticationPrincipal UserDetails user) {
         interactPostService.dislike(user, id);
         return ResponseEntity.ok().build();
+    }
+
+    @Operation(
+            summary = "Check if a post is liked by the logged user"
+    )
+    @GetMapping("/{id}/like/check")
+    public ResponseEntity checkLike(@PathVariable String id, @AuthenticationPrincipal UserDetails user) {
+        return ResponseEntity.ok(new CheckLikeDTO(interactPostService.isLiked(user, id)));
     }
 
     @Operation(
