@@ -18,7 +18,10 @@ public class InteractPersonService {
         Person person = personRepository.findByUserUsername(user.getUsername());
         Person willFollow = personRepository.findByUserUsername(willFollowUsername);
 
-        if(person.getFollowing().contains(willFollow)) {
+        if(person == null || willFollow == null)
+            throw new NotFoundException(Person.class);
+
+        if(isFollowing(user, willFollowUsername)) {
             throw new InvalidInteractionStateException("You already follow this user");
         }
 
@@ -31,7 +34,10 @@ public class InteractPersonService {
         Person person = personRepository.findByUserUsername(user.getUsername());
         Person willFollow = personRepository.findByUserUsername(willUnfollowUsername);
 
-        if(!person.getFollowing().contains(willFollow)) {
+        if(person == null || willFollow == null)
+            throw new NotFoundException(Person.class);
+
+        if(!isFollowing(user, willUnfollowUsername)) {
             throw new InvalidInteractionStateException("You don't follow this user");
         }
 
