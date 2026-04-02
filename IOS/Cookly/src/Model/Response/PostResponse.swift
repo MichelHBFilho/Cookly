@@ -15,6 +15,7 @@ struct PostResponse : Decodable {
     let author: ProfileResponse
     let description: String
     let createdAt: String
+    let isLiked: Bool
     let imagesPaths: [String]
     
     func toPost() -> Post {
@@ -27,6 +28,7 @@ struct PostResponse : Decodable {
             author: author.toProfile(),
             description: description,
             createdAt: dateFormatter.date(from: createdAt) ?? Date(),
+            isLiked: isLiked,
             imagePaths: imagesPaths
         )
     }

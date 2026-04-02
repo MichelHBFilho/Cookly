@@ -25,6 +25,8 @@ class PostViewModel: ObservableObject {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         formattedCreatedAt = dateFormatter.string(from: post.createdAt)
+        
+        isPostLikedByUser = post.isLiked
     }
     
     func toggleLike() async {

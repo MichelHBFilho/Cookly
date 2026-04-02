@@ -15,6 +15,7 @@ struct Post: Identifiable {
     let author: Profile
     let description: String
     let createdAt: Date
+    let isLiked: Bool
     let imagePaths: [String]
 }
 
