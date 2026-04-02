@@ -1,5 +1,6 @@
 package com.michelfilho.cookly.post.service;
 
+import com.michelfilho.cookly.authentication.model.User;
 import com.michelfilho.cookly.common.exception.NotFoundException;
 import com.michelfilho.cookly.common.exception.UnauthorizedException;
 import com.michelfilho.cookly.common.service.ImageService;
@@ -34,6 +35,8 @@ public class PostService {
     private String postPath;
     @Autowired
     private ImageService imageService;
+    @Autowired
+    private InteractPostService interactPostService;
 
     public void publishPost(
             NewPostDTO data,
@@ -89,7 +92,8 @@ public class PostService {
 
     public List<ReadPostDTO> findPostsByUsername(
             String username,
-            Integer page
+            Integer page,
+            User user
     ) {
         if(page <= 0) throw new IllegalArgumentException();
 
@@ -100,19 +104,24 @@ public class PostService {
                         (page-1)*10
                 )
                 .stream()
-                .map(this::postToReadDTO)
+                .map((Post post) -> {
+                    boolean isLiked = interactPostService.isLiked(user, post.getId());
+                    return postToReadDTO(post, isLiked);
+                })
                 .toList();
     }
 
-    public ReadPostDTO findPostById(String id) {
+    public ReadPostDTO findPostById(String id, User user) {
+        boolean isLiked = interactPostService.isLiked(user, id);
         return postToReadDTO(
                 postRepository
                         .findById(id)
-                        .orElseThrow(() -> new NotFoundException(Post.class))
+                        .orElseThrow(() -> new NotFoundException(Post.class)),
+                isLiked
                         );
     }
 
-    public List<ReadPostDTO> getAllPosts(Integer page) {
+    public List<ReadPostDTO> getAllPosts(Integer page, User user) {
         if(page <= 0) throw new IllegalArgumentException();
 
         return postRepository.findAllPaginated(
@@ -120,11 +129,14 @@ public class PostService {
                         (page-1)*10
                 )
                 .stream()
-                .map(this::postToReadDTO)
+                .map((Post post) -> {
+                    boolean isLiked = interactPostService.isLiked(user, post.getId());
+                    return postToReadDTO(post, isLiked);
+                })
                 .toList();
     }
 
-    protected ReadPostDTO postToReadDTO(Post post) {
+    protected ReadPostDTO postToReadDTO(Post post, boolean isLiked) {
         Recipe recipe = post.getRecipe();
         ReadRecipeDTO recipeDTO = new ReadRecipeDTO(
                 recipe.getName(),
@@ -158,7 +170,12 @@ public class PostService {
                 post.getPerson().toReadPersonDTO(),
                 post.getDescription(),
                 post.getCreatedAt(),
+                isLiked,
                 post.getImagesPaths()
         );
+    }
+
+    protected ReadPostDTO postToReadDTO(Post post) {
+        return postToReadDTO(post, false);
     }
 }

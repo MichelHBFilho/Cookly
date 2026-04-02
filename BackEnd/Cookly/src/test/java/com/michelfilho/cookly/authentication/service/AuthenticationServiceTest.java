@@ -15,18 +15,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.TestPropertySource;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.notNullValue;
 
 @ActiveProfiles("test")
 @SpringBootTest(classes = CooklyApplication.class)
-@TestPropertySource(properties = {
-        "api.security.token.secret=test-secret",
-        "api.storage.pictures.profile.path=/src/main/resources/profile_pictures",
-        "jwt.refreshExpirationMs=5000"
-})
 @Transactional
 class AuthenticationServiceTest {
 

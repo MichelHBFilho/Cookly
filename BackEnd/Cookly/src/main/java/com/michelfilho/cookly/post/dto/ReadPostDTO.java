@@ -21,6 +21,8 @@ public record ReadPostDTO(
         String description,
         @Schema(example = "2025-11-20")
         Instant createdAt,
+        @Schema(example = "true")
+        boolean isLiked,
         List<String> imagesPaths
 ) {
 }

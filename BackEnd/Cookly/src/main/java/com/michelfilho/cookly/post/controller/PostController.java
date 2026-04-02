@@ -1,5 +1,6 @@
 package com.michelfilho.cookly.post.controller;
 
+import com.michelfilho.cookly.authentication.model.User;
 import com.michelfilho.cookly.post.dto.CheckLikeDTO;
 import com.michelfilho.cookly.post.dto.NewPostDTO;
 import com.michelfilho.cookly.post.dto.ReadPostDTO;
@@ -86,9 +87,10 @@ public class PostController {
     )
     @GetMapping("/id/{id}")
     public ReadPostDTO getPostById(
-            @PathVariable String id
+            @PathVariable String id,
+            @AuthenticationPrincipal User user
     ) {
-        return postService.findPostById(id);
+        return postService.findPostById(id, user);
     }
 
     @Operation(
@@ -98,9 +100,10 @@ public class PostController {
     public List<ReadPostDTO> getAllByUsername(
             @PathVariable String username,
             @RequestParam(value = "page", required = false,
-                    defaultValue = "1") Integer page
+                    defaultValue = "1") Integer page,
+            @AuthenticationPrincipal User user
     ) {
-        return postService.findPostsByUsername(username, page);
+        return postService.findPostsByUsername(username, page, user);
     }
 
     @Operation(
@@ -109,9 +112,10 @@ public class PostController {
     @GetMapping
     public List<ReadPostDTO> getAll(
             @RequestParam(value = "page", required = false, defaultValue = "1")
-            Integer page
+            Integer page,
+            @AuthenticationPrincipal User user
     ) {
-        return postService.getAllPosts(page);
+        return postService.getAllPosts(page, user);
     }
 
     @Operation(

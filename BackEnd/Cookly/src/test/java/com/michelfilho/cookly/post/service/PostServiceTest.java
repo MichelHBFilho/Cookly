@@ -20,8 +20,9 @@ import org.springframework.test.context.ActiveProfiles;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -30,6 +31,9 @@ class PostServiceTest {
 
     @Mock
     private PostRepository postRepository;
+
+    @Mock
+    private InteractPostService interactPostService;
 
     @Mock
     private PersonRepository personRepository;
@@ -104,7 +108,9 @@ class PostServiceTest {
 
         when(postRepository.findAllByPersonUserUsername(user.getUsername(), 10, 0)).thenReturn(posts);
 
-        List<ReadPostDTO> returnedPosts = postService.findPostsByUsername(user.getUsername(), 1);
+        when(interactPostService.isLiked(any(), any())).thenReturn(false);
+
+        List<ReadPostDTO> returnedPosts = postService.findPostsByUsername(user.getUsername(), 1, user);
 
         assertThat(returnedPosts)
                 .usingRecursiveComparison()
@@ -118,7 +124,7 @@ class PostServiceTest {
 
         when(postRepository.findAllByPersonUserUsername(user.getUsername(), 10, 0)).thenReturn(new ArrayList<>());
 
-        List<ReadPostDTO> returnedPosts = postService.findPostsByUsername(user.getUsername(), 1);
+        List<ReadPostDTO> returnedPosts = postService.findPostsByUsername(user.getUsername(), 1, user);
 
         assertThat(returnedPosts)
                 .isNotNull();
