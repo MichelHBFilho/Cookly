@@ -1,6 +1,6 @@
 package com.michelfilho.cookly.post.service;
 
-import com.michelfilho.cookly.common.exception.InvalidPostInteractionStateException;
+import com.michelfilho.cookly.common.exception.InvalidInteractionStateException;
 import com.michelfilho.cookly.common.exception.NotFoundException;
 import com.michelfilho.cookly.person.model.Person;
 import com.michelfilho.cookly.person.repository.PersonRepository;
@@ -30,7 +30,7 @@ public class InteractPostService {
             String postId
     ) {
         if(isLiked(user, postId))
-            throw new InvalidPostInteractionStateException("This post is already liked.");
+            throw new InvalidInteractionStateException("This post is already liked.");
 
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new NotFoundException(Post.class));
@@ -47,7 +47,7 @@ public class InteractPostService {
             String postId
     ) {
         if(!isLiked(user, postId))
-            throw new InvalidPostInteractionStateException("This post isn't liked.");
+            throw new InvalidInteractionStateException("This post isn't liked.");
 
         postLikeRepository.deleteByPostIdAndPersonUserUsername(postId, user.getUsername());
     }
@@ -71,10 +71,10 @@ public class InteractPostService {
             String commentId
     ) {
         if(!commentRepository.existsById(commentId))
-            throw new InvalidPostInteractionStateException("This comment does not exist");
+            throw new InvalidInteractionStateException("This comment does not exist");
 
         if(!commentRepository.existsByIdAndPersonUserUsername(commentId, user.getUsername()))
-            throw new InvalidPostInteractionStateException("This comment is not yours");
+            throw new InvalidInteractionStateException("This comment is not yours");
 
         commentRepository.deleteById(commentId);
 

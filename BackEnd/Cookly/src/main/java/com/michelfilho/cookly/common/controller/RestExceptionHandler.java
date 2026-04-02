@@ -2,7 +2,7 @@ package com.michelfilho.cookly.common.controller;
 
 import com.michelfilho.cookly.common.dto.ReadErrorDTO;
 import com.michelfilho.cookly.common.exception.InvalidTokenException;
-import com.michelfilho.cookly.common.exception.InvalidPostInteractionStateException;
+import com.michelfilho.cookly.common.exception.InvalidInteractionStateException;
 import com.michelfilho.cookly.common.exception.NotFoundException;
 import com.michelfilho.cookly.common.exception.UsernameAlreadyRegisteredException;
 import org.springframework.http.HttpStatus;
@@ -50,9 +50,9 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         );
     }
 
-    @ExceptionHandler(InvalidPostInteractionStateException.class)
+    @ExceptionHandler(InvalidInteractionStateException.class)
     private ResponseEntity postAlreadyLiked(
-            InvalidPostInteractionStateException exception
+            InvalidInteractionStateException exception
     ) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
                 new ReadErrorDTO(
