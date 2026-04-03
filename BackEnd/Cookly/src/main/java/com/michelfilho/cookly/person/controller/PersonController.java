@@ -71,7 +71,7 @@ public class PersonController {
     @PatchMapping("/update")
     public ResponseEntity updateProfile(
             @AuthenticationPrincipal UserDetails user,
-            @RequestBody UpdatePersonDTO updatePersonDTO
+            @ModelAttribute UpdatePersonDTO updatePersonDTO
     ) {
         personService.updatePersonInformation(
                 updatePersonDTO,

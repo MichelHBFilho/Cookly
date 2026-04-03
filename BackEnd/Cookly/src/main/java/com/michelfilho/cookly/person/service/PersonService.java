@@ -90,8 +90,10 @@ public class PersonService {
     }
 
     private void updateProfilePicture(Person person, MultipartFile image) {
-        imageService.deleteImage(profilePicturesPath + "/" + person.getProfilePicturePath());
-        imageService.saveImage(profilePicturesPath, image);
+        if(!person.getProfilePictureName().isBlank())
+            imageService.deleteImage(profilePicturesPath + "/" + person.getProfilePicturePath());
+
+        person.setProfilePicturePath(imageService.saveImage(profilePicturesPath, image));
     }
 
 }
