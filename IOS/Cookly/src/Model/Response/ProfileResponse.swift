@@ -23,3 +23,7 @@ struct ProfileResponse : Decodable {
         )
     }
 }
+
+struct FollowResponse : Decodable {
+    let isFollowing: Bool
+}

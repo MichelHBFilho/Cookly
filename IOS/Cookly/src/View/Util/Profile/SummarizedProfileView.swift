@@ -10,6 +10,7 @@ import SwiftUI
 struct SummarizedProfileView : View {
     
     let profile: Profile
+    @State var isFollowed: Bool = false
     
     var body: some View {
         HStack {
@@ -26,20 +27,65 @@ struct SummarizedProfileView : View {
             Text(profile.username)
                 .font(.title2)
                 .fontWeight(.semibold)
+            
+            Spacer()
+            
+            if(profile.username != APICommomCalls.shared.currentProfile?.username) {
+                Button(isFollowed ? "Unfollow" : "Follow") {
+                    Task {
+                        if(!isFollowed) {
+                            try await follow()
+                        } else {
+                            try await unfollow()
+                        }
+                    }
+                }
+            }
+        
         }
         .frame(maxWidth: .infinity, idealHeight: 50, alignment: .leading)
         .padding(.horizontal)
+        .onAppear() {
+            Task {
+                try? await checkFollow()
+            }
+        }
+    }
+    
+    func checkFollow() async throws {
+        let (response, _) = try await APIService.shared.request(
+            endpoint: "profile/follow/\(profile.username)",
+            method: .GET,
+            requiresAuth: true
+        ) as (FollowResponse?, Int)
+        
+        guard let response else {
+            return
+        }
+        
+        
+        isFollowed = response.isFollowing
+        
+    }
+    
+    func follow() async throws {
+        let (_, _) = try await APIService.shared.request(
+            endpoint: "profile/follow/\(profile.username)",
+            method: .POST,
+            requiresAuth: true
+        ) as (EmptyResponse?, Int)
+        
+        isFollowed = true;
+    }
+    
+    func unfollow() async throws {
+        let (_, _) = try await APIService.shared.request(
+            endpoint: "profile/unfollow/\(profile.username)",
+            method: .DELETE,
+            requiresAuth: true
+        ) as (EmptyResponse?, Int)
+        
+        isFollowed = false
     }
 
-}
-
-#Preview {
-    let profile = Profile(
-        fullName: "Mari Schultz",
-        username: "marischultz",
-        birthday: Date.distantPast,
-        profilePictureURL: "536e2757-c57d-4d54-be7c-2d4b6ef6d562_DSCN2826 Small.jpeg"
-    )
-    
-    SummarizedProfileView(profile:profile)
 }

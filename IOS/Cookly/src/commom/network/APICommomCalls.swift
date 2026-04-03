@@ -9,6 +9,7 @@ import Foundation
 
 class APICommomCalls {
     public static let shared = APICommomCalls()
+    public var currentProfile: Profile? = nil
     
     func getProfileByUsername(_ username: String) async -> Profile {
         do {
@@ -41,6 +42,7 @@ class APICommomCalls {
             
             guard let profile else { throw APIError.NotFound }
             
+            currentProfile = profile.toProfile()
             return profile.toProfile()
         } catch {
             ErrorManager.shared.handle(error)
