@@ -140,25 +140,9 @@ struct PostView: View {
 }
 
 #Preview {
-    let post = Post(
-        id: "40479f2b-37f7-495b-a4e1-9f5eab9ba6b9",
-        recipe: Recipe(
-            name: "Cheese bread",
-            prepareTime: 25,
-            stepByStep: [
-                "Turn on the oven",
-                "Turn off the oven"
-            ]
-        ),
-        comments: [
-        ],
-        likes: 12,
-        author: "marischultz",
-        description: "A bread with cheese inside.",
-        createdAt: Date(),
-        imagePaths: ["437fded8-b4f7-466c-8d02-5cdc9e0f51eb_istockphoto-1024883060-612x612.jpg",
-                     "d6370711-82a5-4e60-b58a-2d73adbbf93f_8b963ddc5e21b66ba2022667c10e9bf6.jpg"]
-    )
+    let hmpv = HomepageViewModel()
+    Task { await hmpv.setup() }
+    let post = hmpv.posts.first!
     
     Task { await setupAuth() }
     

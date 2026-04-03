@@ -52,16 +52,6 @@
 		02BC11022F2FC3A600CE2E2F /* Cookly.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cookly.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
-/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		02884ED12F3236AC00977A00 /* Exceptions for "Response" folder in "CooklyTests" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				EmptyResponse.swift,
-			);
-			target = 02884EC12F32329900977A00 /* CooklyTests */;
-		};
-/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
-
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		0237F0EE2F30E1F800613B89 /* HomePage */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
@@ -105,9 +95,6 @@
 		};
 		02884EB42F3226A300977A00 /* Response */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				02884ED12F3236AC00977A00 /* Exceptions for "Response" folder in "CooklyTests" target */,
-			);
 			path = Response;
 			sourceTree = "<group>";
 		};

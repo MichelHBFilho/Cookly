@@ -22,18 +22,7 @@ struct ReadCommentView : View {
         }
         .task(id: comment.id) {
             profile = nil
-            profile = await APICommomCalls.shared.getProfileByUsername(comment.author)
+            profile = await APICommomCalls.shared.getProfileByUsername(comment.author.username)
         }
     }
-}
-
-#Preview {
-    ReadCommentView(
-        comment: Comment(
-            id: "24142",
-            author: "michelhbfilho",
-            content: "Muito top, super recomendo, da proxima vez farei uma porção maior.",
-            createdAt: Date()
-        )
-    )
 }

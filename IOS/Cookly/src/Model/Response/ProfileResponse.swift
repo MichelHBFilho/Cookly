@@ -13,13 +13,17 @@ struct ProfileResponse : Decodable {
     let fullName: String
     let username: String
     
-    static func toProfileObject(profile: ProfileResponse) -> Profile {
+    func toProfile() -> Profile {
         let dateFormatter = ISO8601DateFormatter()
         return Profile(
-            fullName: profile.fullName,
-            username: profile.username,
-            birthday: dateFormatter.date(from: profile.birthDay) ?? Date(),
-            profilePictureURL: profile.profilePictureURL
+            fullName: fullName,
+            username: username,
+            birthday: dateFormatter.date(from: birthDay) ?? Date(),
+            profilePictureURL: profilePictureURL
         )
     }
+}
+
+struct FollowResponse : Decodable {
+    let isFollowing: Bool
 }

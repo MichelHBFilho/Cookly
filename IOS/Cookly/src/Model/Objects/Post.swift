@@ -12,9 +12,10 @@ struct Post: Identifiable {
     let recipe: Recipe
     var comments: [Comment]
     let likes: Int
-    let author: String
+    let author: Profile
     let description: String
     let createdAt: Date
+    let isLiked: Bool
     let imagePaths: [String]
 }
 
@@ -26,7 +27,7 @@ struct Recipe {
 
 struct Comment: Identifiable {
     let id: String
-    let author: String
+    let author: Profile
     let content: String
     let createdAt: Date
 }

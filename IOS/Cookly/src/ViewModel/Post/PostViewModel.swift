@@ -20,10 +20,13 @@ class PostViewModel: ObservableObject {
     }
     
     func loadData() async {
-        profile = await APICommomCalls.shared.getProfileByUsername(post.author)
+        profile = await APICommomCalls.shared.getProfileByUsername(post.author.username)
+        
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         formattedCreatedAt = dateFormatter.string(from: post.createdAt)
+        
+        isPostLikedByUser = post.isLiked
     }
     
     func toggleLike() async {
@@ -76,16 +79,7 @@ class PostViewModel: ObservableObject {
             
             guard let post else { throw APIError.NotFound }
             
-            let newComments = post.comments.map(
-                { commentResponse in
-                    let dateFormatter = ISO8601DateFormatter()
-                    return Comment(
-                        id: commentResponse.id,
-                        author: commentResponse.author,
-                        content: commentResponse.text,
-                        createdAt: dateFormatter.date(from: commentResponse.createdAt) ?? Date()
-                    )
-            })
+            let newComments = post.comments.map { response in response.toComment() }
             
             self.post.comments.removeAll()
             self.post.comments.append(contentsOf: newComments)

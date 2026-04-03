@@ -1,7 +1,6 @@
 //
 //  ContentView.swift
 //  Cookly
-//
 //  Created by Michel Filho on 01/02/26.
 //
 
